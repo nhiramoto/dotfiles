@@ -53,7 +53,7 @@ plugins=(git zsh-syntax-highlighting zsh-notify themes zsh-256color zsh-output-h
 
 # User configuration
 
-export PATH="/home/toshiaki/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/lampp/bin"
+export PATH="/home/toshiaki/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/lampp/bin:/opt/node-v5.3.0-linux-x64/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -85,7 +85,7 @@ export EDITOR='gedit'
 # alias ohmyzsh="$editor ~/.oh-my-zsh"
 alias open=xdg-open
 
-source ~/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
@@ -94,3 +94,13 @@ eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
 stty -ixon -ixoff
 
 DISABLE_AUTO_TITLE=true
+
+PATH="/home/toshiaki/perl5/bin${PATH+:}${PATH}"; export PATH;
+PERL5LIB="/home/toshiaki/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/toshiaki/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/toshiaki/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/toshiaki/perl5"; export PERL_MM_OPT;
+
+export TERM="xterm-256color"
+
+alias cdd='cd ~/Desktop'

@@ -49,15 +49,18 @@ filetype plugin indent on
 " :PluginSearch foo
 " :PluginClean
 
-set background=dark
-colorscheme molokai
+if $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
+
+" set background=dark
+colorscheme jellybeans
 syntax on
 set mouse=a
 set showmatch
 " set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
 let g:airline_powerline_fonts = 1
 set laststatus=2
-set t_Co=256
 set number
 set relativenumber
 set nowrap
@@ -87,7 +90,7 @@ set tabstop=4 softtabstop=4 shiftwidth=4
 autocmd! bufreadpost * set expandtab | retab! 4
 
 " convert tabs to spaces before writing file
-" autocmd! bufwritepre * set expandtab | retab! 4
+autocmd! bufwritepre * set expandtab | retab! 4
 
 " cmap W w
 " cmap WQ wq
