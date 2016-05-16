@@ -54,7 +54,7 @@ if $COLORTERM == 'gnome-terminal'
 endif
 
 " set background=dark
-colorscheme jellybeans
+colorscheme wombat
 syntax on
 set mouse=a
 set showmatch

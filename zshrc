@@ -53,7 +53,7 @@ plugins=(git zsh-syntax-highlighting zsh-notify themes zsh-256color zsh-output-h
 
 # User configuration
 
-export PATH="/home/toshiaki/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/lampp/bin:/opt/node-v5.3.0-linux-x64/bin"
+export PATH="/home/toshiaki/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/lampp/bin:/opt/node-v5.3.0-linux-x64/bin:/home/toshiaki/scripts"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
