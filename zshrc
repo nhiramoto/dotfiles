@@ -53,8 +53,9 @@ plugins=(git zsh-syntax-highlighting zsh-notify themes zsh-256color zsh-output-h
 
 # User configuration
 
-export PATH="/home/toshiaki/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/lampp/bin:/opt/node-v5.3.0-linux-x64/bin:/home/toshiaki/scripts"
+export PATH="/home/toshiaki/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 # export MANPATH="/usr/local/man:$MANPATH"
+export PATH="/opt/apache-maven-3.3.9/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -86,7 +87,7 @@ export EDITOR='gedit'
 alias open=xdg-open
 
 source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
