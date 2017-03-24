@@ -5,7 +5,7 @@ export ZSH=/home/toshiaki/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="half-life"
+ZSH_THEME="fino"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -49,7 +49,7 @@ ZSH_THEME="half-life"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting zsh-notify themes zsh-256color zsh-output-highlighting)
+plugins=(git zsh-syntax-highlighting zsh-notify themes zsh-256color zsh-output-highlighting zsh-completions zsh-autopair zsh-autosuggestions)
 
 # User configuration
 
@@ -86,9 +86,6 @@ export EDITOR='gedit'
 # alias ohmyzsh="$editor ~/.oh-my-zsh"
 alias open=xdg-open
 
-source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
 
@@ -106,3 +103,5 @@ PERL_MM_OPT="INSTALL_BASE=/home/toshiaki/perl5"; export PERL_MM_OPT;
 export TERM="xterm-256color"
 
 alias cdd='cd ~/Desktop'
+
+autoload -U compinit && compinit
