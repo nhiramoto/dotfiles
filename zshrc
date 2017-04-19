@@ -5,7 +5,7 @@ export ZSH=/home/toshiaki/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="fino"
+ZSH_THEME="kennethreitz2"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -50,6 +50,7 @@ ZSH_THEME="fino"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git zsh-syntax-highlighting zsh-notify themes zsh-256color zsh-output-highlighting zsh-completions zsh-autopair zsh-autosuggestions)
+autoload -U compinit && compinit
 
 # User configuration
 
