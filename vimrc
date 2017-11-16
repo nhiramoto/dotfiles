@@ -36,6 +36,7 @@ Plugin 'bling/vim-bufferline'
 Plugin 'kien/ctrlp.vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'nlknguyen/papercolor-theme'
 
 set runtimepath^=~/.vim/bundle/vim-snipmate
 
@@ -53,8 +54,8 @@ if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
 
-" set background=dark
-colorscheme wombat
+set background=dark
+colorscheme hybrid
 syntax on
 set mouse=a
 set showmatch
