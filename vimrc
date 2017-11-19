@@ -3,16 +3,16 @@ filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-"call vundle#begin('~/some/path/here')
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-fugitive'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-surround'
 Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'airblade/vim-gitgutter'
 " Plugin 'mattn/emmet-vim'
-Plugin 'MarcWeber/vim-addon-mw-utils'
+"Plugin 'MarcWeber/vim-addon-mw-utils'
 " Plugin 'tomtom/tlib_vim'
 " Plugin 'garbas/vim-snipmate'
 " Plugin 'honza/vim-snippets'
@@ -20,6 +20,7 @@ Plugin 'raimondi/delimitmate'
 Plugin 'scrooloose/nerdtree'
 " Plugin 'scrooloose/syntastic'
 Plugin 'ap/vim-css-color'
+Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'ciaranm/inkpot'
 Plugin 'jonathanfilip/vim-lucius'
@@ -27,7 +28,6 @@ Plugin 'chriskempson/vim-tomorrow-theme'
 Plugin 'sheerun/vim-wombat-scheme'
 Plugin 'tomasr/molokai'
 Plugin 'w0ng/vim-hybrid'
-Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'Yggdroot/indentLine'
 " Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -37,6 +37,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'nlknguyen/papercolor-theme'
+Plugin 'PotatoesMaster/i3-vim-syntax'
 
 set runtimepath^=~/.vim/bundle/vim-snipmate
 
@@ -119,6 +120,13 @@ let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeWinPos = 'right'
+
+" NERDCommenter
+let g:NERDScapeDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
 
 " Rainbow Parentheses
 let g:rbpt_colorpairs = [
