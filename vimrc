@@ -19,7 +19,9 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'raimondi/delimitmate'
 Plugin 'scrooloose/nerdtree'
 " Plugin 'scrooloose/syntastic'
-Plugin 'ap/vim-css-color'
+Plugin 'jshint/jshint'
+" Plugin 'ap/vim-css-color'
+Plugin 'gko/vim-coloresque'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'ciaranm/inkpot'
@@ -33,11 +35,14 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'bling/vim-bufferline'
 " Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
-Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'nlknguyen/papercolor-theme'
 Plugin 'PotatoesMaster/i3-vim-syntax'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'romainl/Apprentice'
+Plugin 'joshdick/onedark.vim'
 
 set runtimepath^=~/.vim/bundle/vim-snipmate
 
@@ -51,12 +56,23 @@ filetype plugin indent on
 " :PluginSearch foo
 " :PluginClean
 
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
+"if $COLORTERM == 'gnome-terminal'
+    "set t_Co=256
+"endif
+
+"set foldmethod=syntax
+"set foldnestmax=1
+"let javaScript_fold=1         " JavaScript
+"let perl_fold=1               " Perl
+"let php_folding=1             " PHP
+"let r_syntax_folding=1        " R
+"let ruby_fold=1               " Ruby
+"let sh_fold_enabled=1         " sh
+"let vimsyn_folding='af'       " Vim script
+"let xml_syntax_folding=1      " XML
 
 set background=dark
-colorscheme hybrid
+colorscheme onedark
 syntax on
 set mouse=a
 set showmatch
@@ -102,15 +118,13 @@ autocmd! bufwritepre * set expandtab | retab! 4
 " Syntastic
 " let g:syntastic_check_on_open=1
 " let g:syntastic_javascript_checkers = ['jshint']
-" let g:syntastic_javascript_jshint_exec='/usr/local/bin/jshint'
+" let g:syntastic_javascript_jshint_exec='/usr/sbin/jshint'
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_wq = 0
 
 " NERDTree
 autocmd StdinReadPre * let s:std_in=1
@@ -119,7 +133,8 @@ map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
-let g:NERDTreeWinPos = 'right'
+let g:NERDTreeWinPos = 'left'
+let NERDTreeShowHidden=1
 
 " NERDCommenter
 let g:NERDScapeDelims = 1
@@ -166,8 +181,22 @@ let g:indentLine_char = '¦'
 let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_leadingSpaceChar = '·'
 
-" ctrlp
+" CtrlP
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_show_hidden = 1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
+
+" Multiple Cursors
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_next_key='<C-d>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<Esc>'
+
+" Show double quotes in json files
+let g:vim_json_syntax_conceal = 0
+
+highlight Comment cterm=italic
