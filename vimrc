@@ -22,7 +22,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'jshint/jshint'
 " Plugin 'ap/vim-css-color'
 Plugin 'gko/vim-coloresque'
-Plugin 'kien/rainbow_parentheses.vim'
+" Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'ciaranm/inkpot'
 Plugin 'jonathanfilip/vim-lucius'
@@ -43,6 +43,7 @@ Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'romainl/Apprentice'
 Plugin 'joshdick/onedark.vim'
+Plugin 'ying17zi/vim-live-latex-preview'
 
 set runtimepath^=~/.vim/bundle/vim-snipmate
 
@@ -144,36 +145,36 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 
 " Rainbow Parentheses
-let g:rbpt_colorpairs = [
-        \ ['blue',       '#FF6000'],
-        \ ['cyan', '#00FFFF'],
-        \ ['darkmagenta',    '#CC00FF'],
-        \ ['yellow',   '#FFFF00'],
-        \ ['red',     '#FF0000'],
-        \ ['darkgreen',    '#00FF00'],
-        \ ['White',         '#c0c0c0'],
-        \ ['blue',       '#FF6000'],
-        \ ['cyan', '#00FFFF'],
-        \ ['darkmagenta',    '#CC00FF'],
-        \ ['yellow',   '#FFFF00'],
-        \ ['red',     '#FF0000'],
-        \ ['darkgreen',    '#00FF00'],
-        \ ['White',         '#c0c0c0'],
-        \ ['blue',       '#FF6000'],
-        \ ['cyan', '#00FFFF'],
-        \ ['darkmagenta',    '#CC00FF'],
-        \ ['yellow',   '#FFFF00'],
-        \ ['red',     '#FF0000'],
-        \ ['darkgreen',    '#00FF00'],
-        \ ['White',         '#c0c0c0'],
-        \ ]
-
-let g:rbpt_max = 16
-let g:rbpt_loadcmd_toggle = 0
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+"let g:rbpt_colorpairs = [
+"        \ ['blue',       '#FF6000'],
+"        \ ['cyan', '#00FFFF'],
+"        \ ['darkmagenta',    '#CC00FF'],
+"        \ ['yellow',   '#FFFF00'],
+"        \ ['red',     '#FF0000'],
+"        \ ['darkgreen',    '#00FF00'],
+"        \ ['White',         '#c0c0c0'],
+"        \ ['blue',       '#FF6000'],
+"        \ ['cyan', '#00FFFF'],
+"        \ ['darkmagenta',    '#CC00FF'],
+"        \ ['yellow',   '#FFFF00'],
+"        \ ['red',     '#FF0000'],
+"        \ ['darkgreen',    '#00FF00'],
+"        \ ['White',         '#c0c0c0'],
+"        \ ['blue',       '#FF6000'],
+"        \ ['cyan', '#00FFFF'],
+"        \ ['darkmagenta',    '#CC00FF'],
+"        \ ['yellow',   '#FFFF00'],
+"        \ ['red',     '#FF0000'],
+"        \ ['darkgreen',    '#00FF00'],
+"        \ ['White',         '#c0c0c0'],
+"        \ ]
+"
+"let g:rbpt_max = 16
+"let g:rbpt_loadcmd_toggle = 0
+"au VimEnter * RainbowParenthesesToggle
+"au Syntax * RainbowParenthesesLoadRound
+"au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
 
 " Indent Lines
 let g:indentLine_color_term = 236

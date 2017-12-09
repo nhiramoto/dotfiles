@@ -9,14 +9,17 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #00000000
+background = #E5000000
 background-alt = #444
 ;foreground = ${xrdb:color7:#222}
 foreground = #ccffffff
 foreground-alt = #555
-primary = #ffb52a
+foreground-disabled= #600
+primary = #0070FF
 secondary = #e60053
-alert = #bd2c40
+;secondary = #00ff00
+warn = #FFE721
+alert = #FF3D17
 
 [bar/top]
 monitor = ${env:MONITOR:eDP1}
@@ -26,7 +29,7 @@ height = 22
 ;offset-y = 1%
 radius-top = 0
 radius-bottom = 3.0
-fixed-center = false
+fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -34,7 +37,7 @@ foreground = ${colors.foreground}
 line-size = 3
 line-color = #f00
 
-border-size = 4
+border-size = 0
 border-color = #00000000
 
 padding-left = 2
@@ -44,6 +47,7 @@ module-margin-left = 4
 module-margin = 1
 
 font-0 = Exo 2 Semibold:pixelsize=10;1
+;font-0 = Fantasque Sans Mono:pixelsize=11;1
 font-1 = Trebuchet MS:pixelsize=10;1
 font-2 = FontAwesome:pixelsize=10;1
 font-3 = unifont:fontformat=truetype:size=8:antialias=false;0
@@ -85,15 +89,15 @@ height = 22
 bottom = true
 radius-top = 3.0
 radius-bottom = 0
-fixed-center = false
+fixed-center = true
 
 background = ${bar/top.background}
 foreground = ${bar/top.foreground}
 
 line-size = 3
-line-color = #f00
+line-color = #00f
 
-border-size = 4
+border-size = 0
 border-color = #000000
 
 padding = 2
@@ -108,11 +112,44 @@ font-4 = ${bar/top.font-4}
 
 modules-left = i3
 modules-center = mpd
-modules-right = cpu memory temperature
+modules-right = cpu memory temperature netspeed
+
+[bar/bottom2]
+monitor = ${env:MONITOR:HDMI1}
+monitor-strict = true
+width = 100%
+height = 22
+bottom = true
+radius-top = 3.0
+radius-bottom = 0
+fixed-center = true
+
+background = ${bar/top.background}
+foreground = ${bar/top.foreground}
+
+line-size = 3
+line-color = #00f
+
+border-size = 0
+border-color = #000000
+
+padding = 2
+
+module-margin = 2
+
+font-0 = ${bar/top.font-0}
+font-1 = ${bar/top.font-1}
+font-2 = ${bar/top.font-2}
+font-3 = ${bar/top.font-3}
+font-4 = ${bar/top.font-4}
+
+modules-left = i3
+;modules-center =
+;modules-right =
 
 [module/xwindow]
 type = internal/xwindow
-label = Window: %title:0:30:...%
+label = %title%
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -127,11 +164,11 @@ format-prefix-underline = ${colors.secondary}
 label-layout = %layout%
 label-layout-underline = ${colors.secondary}
 
-label-indicator = 
-label-indicator-padding = 2
+label-indicator = 
+;label-indicator-padding = 2
 label-indicator-margin = 1
-label-indicator-background = ${colors.secondary}
-label-indicator-underline = ${colors.secondary}
+label-indicator-foreground = ${colors.secondary}
+;label-indicator-underline = ${colors.secondary}
 
 [module/filesystem]
 type = internal/fs
@@ -219,7 +256,7 @@ type = internal/i3
 wrapping-scroll = false
 
 ; Only show workspaces on the same output as the bar
-;pin-workspaces = true
+pin-workspaces = true
 ;strip-wsnumbers = true
 
 enable-click = true
@@ -234,8 +271,8 @@ ws-icon-4 = 5;
 ws-icon-5 = 6;
 ws-icon-6 = 7;
 ws-icon-7 = 8;
-ws-icon-8 = 9;
-ws-icon-9 = 10;
+ws-icon-8 = 9;
+ws-icon-9 = 10;
 ws-icon-default = ♟
 
 format = <label-state> <label-mode>
@@ -248,7 +285,7 @@ label-mode-background = ${colors.primary}
 label-focused = %index%: %icon%
 label-focused-foreground = #fff
 label-focused-background = #773f3f3f
-label-focused-underline = #c9665e
+label-focused-underline = ${colors.primary}
 ;label-focused-font = 4
 label-focused-padding = 4
 
@@ -275,12 +312,19 @@ type = internal/mpd
 format-online = <icon-prev> <icon-stop> <toggle> <icon-next>  <icon-repeat> <icon-random>  <bar-progress> <label-time> <label-song>
 
 icon-prev = 
+icon-prev-padding = 1
 icon-stop = 
+icon-stop-padding = 1
 icon-play = 
+icon-play-padding = 1
 icon-pause = 
+icon-pause-padding = 1
 icon-next = 
+icon-next-padding = 1
 icon-random = 
+icon-random-padding = 1
 icon-repeat = 
+icon-repeat-padding = 1
 
 toggle-on-foreground =
 toggle-off-foreground = #55
@@ -303,8 +347,10 @@ bar-progress-empty-foreground = #44
 [module/xbacklight]
 type = internal/xbacklight
 
-format = <label> <bar>
-label = 
+;format = <label> <bar>
+;label = 
+format =  <label>
+label = %percentage%%
 
 bar-width = 8
 bar-indicator = |
@@ -327,7 +373,7 @@ type = internal/cpu
 interval = 0.5
 ;format = <label> <ramp-coreload>
 format =  <label>
-label = %percentage%%
+label = %percentage:3:3:---%%
 
 ramp-coreload-0 = ▁
 ramp-coreload-0-font = 2
@@ -382,23 +428,40 @@ type = internal/network
 interface = wlo1
 interval = 3.0
 
-;format-connected = <ramp-signal> <label-connected>
-format-connected =  <label-connected>
-label-connected = %essid%
+format-connected = <ramp-signal> <label-connected>
+;format-connected =  <label-connected>
+label-connected = %signal%%
+;label-connected = %essid%
 
 ;format-disconnected =
 format-disconnected =  <label-disconnected>
-format-disconnected-foreground = ${colors.foreground-alt}
+format-disconnected-foreground = ${colors.foreground-disabled}
 ;label-disconnected = %ifname% disconnected
-label-disconnected = disconnected
+label-disconnected = 
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.foreground-alt}
+ramp-signal-0 = 
+ramp-signal-0-foreground = #222
+ramp-signal-1 = 
+ramp-signal-1-foreground = #444
+ramp-signal-2 = 
+ramp-signal-2-foreground = #777
+ramp-signal-3 = 
+ramp-signal-3-foreground = #AAA
+ramp-signal-4 = 
+ramp-signal-4-foreground = #fff
+;ramp-signal-foreground = ${colors.foreground-alt}
+
+[module/netspeed]
+type = internal/network
+interface = wlo1
+interval = 3.0
+
+format-connected = <label-connected>
+label-connected =  %downspeed% |  %upspeed%
+format-disconnected = <label-disconnected>
+label-disconnected =   |  
+format-disconnected-foreground = ${colors.foreground-alt}
 
 [module/eth]
 type = internal/network
@@ -420,24 +483,24 @@ format-disconnected =
 type = internal/date
 interval = 1
 
-date =   %{F#99}%Y-%m-%d%%{F-}  %%{F#fff}%H:%M%%{F-}
+date =  %{F#99}%Y-%m-%d%%{F-}  %%{F#fff}%H:%M%%{F-}
 date-alt = %%{F#fff}%A, %d %B %Y  %%{F#fff}%H:%M%%{F#666}:%%{F#fba922}%S%%{F-}
 
 [module/volume]
 type = internal/volume
 
 ;format-volume = <label-volume> <bar-volume>
-;format-volume =  <ramp-volume> <label-volume>
-format-volume =  <label-volume>
-format-muted =  <label-muted>
-format-muted-foreground = #66
+format-volume = <ramp-volume> <label-volume>
+;format-volume =  <label-volume>
+format-muted =  <label-muted>
+format-muted-foreground = ${colors.foreground-disabled}
 
-label-muted = X
+label-muted = 
 ;label-muted-foreground = #66
 
-ramp-volume-0 = 🔈
-ramp-volume-1 = 🔉
-ramp-volume-2 = 🔊
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
 
 [module/battery]
 type = internal/battery
@@ -483,7 +546,7 @@ format-warn = <ramp> <label-warn>
 
 label = %temperature%
 label-warn = %temperature%
-label-warn-foreground = ${colors.secondary}
+label-warn-foreground = ${colors.alert}
 
 ramp-0 = 
 ramp-1 = 
@@ -497,7 +560,7 @@ type = custom/menu
 
 format-spacing = 1
 
-label-open = 
+label-open = 
 ;label-open-foreground = ${colors.secondary}
 label-close =  cancel
 label-close-foreground = ${colors.secondary}
@@ -518,6 +581,25 @@ menu-2-0 = power off
 menu-2-0-exec = sudo poweroff
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
+
+[module/dropbox]
+type = custom/script
+exec = ~/.config/polybar/dropbox
+interval = 1
+label = %output%
+format = <label>
+click-left = ~/.config/polybar/dropbox toggle
+tail = true
+
+;[module/usb]
+;type = custom/script
+;interval = 10
+; Could be exec = ~/.config/polybar/usb.sh /media/$USER
+;exec = ~/.config/polybar/usb.sh /run/media/$USER
+; Unmount every devices on click
+;click-left = udiskie-umount -a
+;label = "%output:0:80%"
+;format = "<label>"
 
 [settings]
 screenchange-reload = true
