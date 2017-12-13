@@ -24,7 +24,7 @@ alert = #FF3D17
 [bar/top]
 monitor = ${env:MONITOR:eDP1}
 width = 100%
-height = 22
+height = 24
 ;offset-x = 1%
 ;offset-y = 1%
 radius-top = 0
@@ -46,9 +46,9 @@ padding-right = 1
 module-margin-left = 4
 module-margin = 1
 
-font-0 = Exo 2 Semibold:pixelsize=10;1
+font-0 = Exo 2 Semibold:pixelsize=11;1
 ;font-0 = Fantasque Sans Mono:pixelsize=11;1
-font-1 = Trebuchet MS:pixelsize=10;1
+font-1 = Material Design Icons:pixelsize=13;2
 font-2 = FontAwesome:pixelsize=10;1
 font-3 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-4 = siji:pixelsize=10;1
@@ -85,7 +85,7 @@ tray-background = ${root.background}
 [bar/bottom]
 monitor = ${env:MONITOR:eDP1}
 width = 100%
-height = 22
+height = 24
 bottom = true
 radius-top = 3.0
 radius-bottom = 0
@@ -149,7 +149,7 @@ modules-left = i3
 
 [module/xwindow]
 type = internal/xwindow
-label = %title%
+label = %title:0:100:...%
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -164,7 +164,7 @@ format-prefix-underline = ${colors.secondary}
 label-layout = %layout%
 label-layout-underline = ${colors.secondary}
 
-label-indicator = 
+label-indicator = 
 ;label-indicator-padding = 2
 label-indicator-margin = 1
 label-indicator-foreground = ${colors.secondary}
@@ -263,16 +263,16 @@ enable-click = true
 enable-scroll = false
 ;wrapping-scroll = false
 
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-ws-icon-3 = 4;
-ws-icon-4 = 5;
-ws-icon-5 = 6;
-ws-icon-6 = 7;
-ws-icon-7 = 8;
-ws-icon-8 = 9;
-ws-icon-9 = 10;
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;?
+ws-icon-4 = 5;?
+ws-icon-5 = 6;?
+ws-icon-6 = 7;?
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;
 ws-icon-default = ♟
 
 format = <label-state> <label-mode>
@@ -311,19 +311,19 @@ type = internal/mpd
 ;format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
 format-online = <icon-prev> <icon-stop> <toggle> <icon-next>  <icon-repeat> <icon-random>  <bar-progress> <label-time> <label-song>
 
-icon-prev = 
+icon-prev = 
 icon-prev-padding = 1
-icon-stop = 
+icon-stop = 
 icon-stop-padding = 1
-icon-play = 
+icon-play = 
 icon-play-padding = 1
-icon-pause = 
+icon-pause = 
 icon-pause-padding = 1
-icon-next = 
+icon-next = 
 icon-next-padding = 1
-icon-random = 
+icon-random = 
 icon-random-padding = 1
-icon-repeat = 
+icon-repeat = 
 icon-repeat-padding = 1
 
 toggle-on-foreground =
@@ -349,7 +349,7 @@ type = internal/xbacklight
 
 ;format = <label> <bar>
 ;label = 
-format =  <label>
+format =  <label>
 label = %percentage%%
 
 bar-width = 8
@@ -372,7 +372,7 @@ card = intel_backlight
 type = internal/cpu
 interval = 0.5
 ;format = <label> <ramp-coreload>
-format =  <label>
+format =  <label>
 label = %percentage:3:3:---%%
 
 ramp-coreload-0 = ▁
@@ -406,7 +406,7 @@ interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground}
 ;format = <label> <bar-used>
-format =  <label>
+format =  <label>
 label = %percentage_used%%
 
 bar-used-width = 10
@@ -428,27 +428,27 @@ type = internal/network
 interface = wlo1
 interval = 3.0
 
-format-connected = <ramp-signal> <label-connected>
+format-connected = %{A:nm-connection-editor&:}<ramp-signal> <label-connected>%{A}
 ;format-connected =  <label-connected>
 label-connected = %signal%%
 ;label-connected = %essid%
 
 ;format-disconnected =
-format-disconnected =  <label-disconnected>
+format-disconnected = <label-disconnected>
 format-disconnected-foreground = ${colors.foreground-disabled}
 ;label-disconnected = %ifname% disconnected
-label-disconnected = 
+label-disconnected = 
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
-ramp-signal-0 = 
+ramp-signal-0 = 
 ramp-signal-0-foreground = #222
-ramp-signal-1 = 
+ramp-signal-1 = 
 ramp-signal-1-foreground = #444
-ramp-signal-2 = 
+ramp-signal-2 = 
 ramp-signal-2-foreground = #777
-ramp-signal-3 = 
+ramp-signal-3 = 
 ramp-signal-3-foreground = #AAA
-ramp-signal-4 = 
+ramp-signal-4 = 
 ramp-signal-4-foreground = #fff
 ;ramp-signal-foreground = ${colors.foreground-alt}
 
@@ -458,9 +458,9 @@ interface = wlo1
 interval = 3.0
 
 format-connected = <label-connected>
-label-connected =  %downspeed% |  %upspeed%
+label-connected =  %downspeed% |  %upspeed%
 format-disconnected = <label-disconnected>
-label-disconnected =   |  
+label-disconnected =   |  
 format-disconnected-foreground = ${colors.foreground-alt}
 
 [module/eth]
@@ -483,8 +483,8 @@ format-disconnected =
 type = internal/date
 interval = 1
 
-date =  %{F#99}%Y-%m-%d%%{F-}  %%{F#fff}%H:%M%%{F-}
-date-alt = %%{F#fff}%A, %d %B %Y  %%{F#fff}%H:%M%%{F#666}:%%{F#fba922}%S%%{F-}
+date = %{A:gnome-calendar&:}%{F#99}%Y-%m-%d%%{F-}  %%{F#fff}%H:%M%%{F-}%{A}
+;date-alt = %%{F#fff}%A, %d %B %Y  %%{F#fff}%H:%M%%{F#666}:%%{F#fba922}%S%%{F-}
 
 [module/volume]
 type = internal/volume
@@ -492,15 +492,15 @@ type = internal/volume
 ;format-volume = <label-volume> <bar-volume>
 format-volume = <ramp-volume> <label-volume>
 ;format-volume =  <label-volume>
-format-muted =  <label-muted>
+format-muted = <label-muted>
 format-muted-foreground = ${colors.foreground-disabled}
 
-label-muted = 
+label-muted = 
 ;label-muted-foreground = #66
 
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
 
 [module/battery]
 type = internal/battery
@@ -508,32 +508,34 @@ battery = BAT1
 adapter = ACAD
 full-at = 98
 
-format-charging =  <animation-charging> <label-charging>
+format-charging = <animation-charging> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
-format-full =  <label-full>
+format-full = <label-full>
 
-ramp-capacity-0 = 
+label-charging = %percentage%%
+label-discharging = %percentage%%
+label-full =   %percentage%%
+
+ramp-capacity-0 = 
 ramp-capacity-0-foreground = #f53c3c
-ramp-capacity-1 = 
+ramp-capacity-1 = 
 ramp-capacity-1-foreground = #ffa900
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-5 = 
+ramp-capacity-6 = 
+ramp-capacity-7 = 
+ramp-capacity-8 = 
+ramp-capacity-9 = 
 
-bar-capacity-width = 10
-bar-capacity-format = %{+u}%{+o}%fill%%empty%%{-u}%{-o}
-bar-capacity-fill = █
-bar-capacity-fill-foreground = #ddffffff
-bar-capacity-fill-font = 3
-bar-capacity-empty = █
-bar-capacity-empty-font = 3
-bar-capacity-empty-foreground = #44ffffff
-
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-5 = 
+animation-charging-6 = 
 animation-charging-framerate = 750
 
 [module/temperature]
@@ -541,7 +543,8 @@ type = internal/temperature
 thermal-zone = 0
 warn-temperature = 60
 
-format = <ramp> <label>
+;format = <ramp> <label>
+format =  <label>
 format-warn = <ramp> <label-warn>
 
 label = %temperature%
@@ -560,7 +563,7 @@ type = custom/menu
 
 format-spacing = 1
 
-label-open = 
+label-open = 
 ;label-open-foreground = ${colors.secondary}
 label-close =  cancel
 label-close-foreground = ${colors.secondary}
@@ -600,6 +603,14 @@ tail = true
 ;click-left = udiskie-umount -a
 ;label = "%output:0:80%"
 ;format = "<label>"
+
+;[module/mail]
+;type = custom/script
+;interval = 10
+;format = <label>
+;format-prefix = "  "
+;format-prefix-foreground = ${colors.foreground-alt}
+;exec = ~/.config/polybar/mail
 
 [settings]
 screenchange-reload = true

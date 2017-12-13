@@ -133,7 +133,8 @@ bindsym $mod+Shift+minus   gaps inner current plus 5
 # start a terminal
 bindsym $mod+Return        exec $term
 
-bindsym $mod+space         exec rofi -show run -theme sidebar -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
+#bindsym $mod+space         exec rofi -show run -theme sidebar -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
+# Using albert
 #bindsym $mod+Shift+space   
 
 #bindsym $mod+Escape        exec $logout
@@ -328,8 +329,9 @@ exec --no-startup-id nm-applet
 exec --no-startup-id mpd
 # Load compositor for transparencies
 exec compton -b --config ~/.config/compton.conf
-exec --no-startup-id /usr/lib/kdeconnectd
-exec --no-startup-id indicator-kdeconnect
+# exec --no-startup-id /usr/lib/kdeconnectd
+# exec --no-startup-id indicator-kdeconnect
+exec --no-startup-id albert
 
 # i3blocks Key Indicators
 #bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
@@ -350,8 +352,8 @@ focus_follows_mouse no
 for_window [class="^.*"] border pixel 0
 
 # Gaps
-gaps inner 5
-gaps outer 5
+gaps inner 8
+gaps outer 8
 smart_gaps on
 for_window [class="Firefox"] gaps inner 0
 for_window [class="Firefox"] gaps outer 0
