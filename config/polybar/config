@@ -458,9 +458,9 @@ interface = wlo1
 interval = 3.0
 
 format-connected = <label-connected>
-label-connected =  %downspeed% |  %upspeed%
+label-connected =  %downspeed% |  %upspeed%
 format-disconnected = <label-disconnected>
-label-disconnected =   |  
+label-disconnected = 
 format-disconnected-foreground = ${colors.foreground-alt}
 
 [module/eth]
@@ -483,7 +483,7 @@ format-disconnected =
 type = internal/date
 interval = 1
 
-date = %{A:gnome-calendar&:}%{F#99}%Y-%m-%d%%{F-}  %%{F#fff}%H:%M%%{F-}%{A}
+date =  %{F#99}%Y-%m-%d%%{F-}  %%{F#fff}%H:%M%%{F-}
 ;date-alt = %%{F#fff}%A, %d %B %Y  %%{F#fff}%H:%M%%{F#666}:%%{F#fba922}%S%%{F-}
 
 [module/volume]
@@ -513,8 +513,10 @@ format-discharging = <ramp-capacity> <label-discharging>
 format-full = <label-full>
 
 label-charging = %percentage%%
+label-charging-foreground = #f9e73e
 label-discharging = %percentage%%
-label-full =   %percentage%%
+label-discharging-foreground = #ff7caa
+label-full =  %percentage%%
 
 ramp-capacity-0 = 
 ramp-capacity-0-foreground = #f53c3c
