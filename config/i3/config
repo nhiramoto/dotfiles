@@ -133,7 +133,7 @@ bindsym $mod+Shift+minus   gaps inner current plus 5
 # start a terminal
 bindsym $mod+Return        exec $term
 
-#bindsym $mod+space         exec rofi -show run -theme sidebar -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
+bindsym $mod+space         exec rofi -show drun -theme Monokai -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
 # Using albert
 #bindsym $mod+Shift+space   
 
@@ -331,7 +331,7 @@ exec --no-startup-id mpd
 exec compton -b --config ~/.config/compton.conf
 # exec --no-startup-id /usr/lib/kdeconnectd
 # exec --no-startup-id indicator-kdeconnect
-exec --no-startup-id albert
+# exec --no-startup-id albert
 
 # i3blocks Key Indicators
 #bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks

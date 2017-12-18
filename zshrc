@@ -12,7 +12,7 @@ ZSH_THEME="kennethreitz2"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
@@ -86,6 +86,10 @@ export EDITOR='vim'
 # alias zshconfig="$editor ~/.zshrc"
 # alias ohmyzsh="$editor ~/.oh-my-zsh"
 alias open=xdg-open
+alias cfgvim="$EDITOR ~/.vimrc"
+alias cfgzsh="$EDITOR ~/.zshrc"
+alias cfgi3="$EDITOR ~/.config/i3/config"
+alias cfgpolybar="$EDITOR ~/.config/polybar/config"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)

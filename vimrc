@@ -8,14 +8,14 @@ Plugin 'VundleVim/Vundle.vim'
 "Plugin 'tpope/vim-fugitive'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-surround'
-Plugin 'ervandew/supertab'
+" Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'airblade/vim-gitgutter'
 " Plugin 'mattn/emmet-vim'
-"Plugin 'MarcWeber/vim-addon-mw-utils'
-" Plugin 'tomtom/tlib_vim'
-" Plugin 'garbas/vim-snipmate'
-" Plugin 'honza/vim-snippets'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
 Plugin 'raimondi/delimitmate'
 Plugin 'scrooloose/nerdtree'
 " Plugin 'scrooloose/syntastic'
@@ -45,7 +45,7 @@ Plugin 'romainl/Apprentice'
 Plugin 'joshdick/onedark.vim'
 Plugin 'ying17zi/vim-live-latex-preview'
 
-set runtimepath^=~/.vim/bundle/vim-snipmate
+set runtimepath^=~/.vim/bundle/vim-snippets
 
 call vundle#end()
 filetype plugin indent on
@@ -117,15 +117,15 @@ autocmd! bufwritepre * set expandtab | retab! 4
 " cmap Q q
 
 " Syntastic
-" let g:syntastic_check_on_open=1
-" let g:syntastic_javascript_checkers = ['jshint']
-" let g:syntastic_javascript_jshint_exec='/usr/sbin/jshint'
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_wq = 0
+"let g:syntastic_check_on_open=1
+"let g:syntastic_javascript_checkers = ['jshint']
+"let g:syntastic_javascript_jshint_exec='/usr/sbin/jshint'
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_wq = 0
 
 " NERDTree
 autocmd StdinReadPre * let s:std_in=1
