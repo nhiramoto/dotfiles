@@ -201,3 +201,7 @@ let g:multi_cursor_quit_key='<Esc>'
 let g:vim_json_syntax_conceal = 0
 
 highlight Comment cterm=italic
+
+" Snipmate keys
+let g:snips_trigger_key = '<tab>'
+let g:snips_trigger_key_backwards = '<s-tab>'
