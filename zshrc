@@ -1,11 +1,11 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/home/toshiaki/.oh-my-zsh
+export ZSH=/home/segfault/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="kennethreitz2"
+ZSH_THEME="tjkirch_mod2"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -54,7 +54,7 @@ autoload -U compinit && compinit
 
 # User configuration
 
-export PATH="/home/toshiaki/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH="/home/segfault/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 # export MANPATH="/usr/local/man:$MANPATH"
 export PATH="/opt/apache-maven-3.3.9/bin:$PATH"
 
@@ -86,10 +86,16 @@ export EDITOR='vim'
 # alias zshconfig="$editor ~/.zshrc"
 # alias ohmyzsh="$editor ~/.oh-my-zsh"
 alias open=xdg-open
-alias cfgvim="$EDITOR ~/.vimrc"
-alias cfgzsh="$EDITOR ~/.zshrc"
-alias cfgi3="$EDITOR ~/.config/i3/config"
-alias cfgpolybar="$EDITOR ~/.config/polybar/config"
+alias cvim="$EDITOR ~/.vimrc"
+alias czsh="$EDITOR ~/.zshrc"
+alias cterm="$EDITOR ~/.config/termite/config"
+alias ci3="$EDITOR ~/.config/i3/config"
+alias cpol="$EDITOR ~/.config/polybar/config"
+alias pacsize="expac -S -H M '%k/t%n'"
+alias now="date +'%H:%M:%S'"
+alias today="date +'%A %d de %B de %Y'"
+alias up="cd .."
+alias x="exit"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
@@ -99,11 +105,11 @@ stty -ixon -ixoff
 
 DISABLE_AUTO_TITLE=true
 
-PATH="/home/toshiaki/perl5/bin${PATH+:}${PATH}"; export PATH;
-PERL5LIB="/home/toshiaki/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/toshiaki/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/toshiaki/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/toshiaki/perl5"; export PERL_MM_OPT;
+PATH="/home/segfault/perl5/bin${PATH+:}${PATH}"; export PATH;
+PERL5LIB="/home/segfault/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/segfault/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/segfault/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/segfault/perl5"; export PERL_MM_OPT;
 
 export TERM="xterm-256color"
 
@@ -116,3 +122,9 @@ PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Termite current directory
+if [[ $TERM == xterm-termite ]]; then
+  . /etc/profile.d/vte.sh
+  __vte_osc7
+fi
