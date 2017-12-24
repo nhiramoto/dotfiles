@@ -18,6 +18,8 @@ set $urgent-bg-color               #E53935
 set $font     "Exo 2 Medium 10"
 set $rofiFont "Exo 2 Medium 18"
 
+set $rofiTheme "Monokai"
+
 set $term i3-sensible-terminal
 
 # System power
@@ -37,6 +39,12 @@ set $left h
 set $down j
 set $up k
 set $right l
+
+# Resize directional keys
+set $rleft y
+set $rdown u
+set $rup i
+set $rright o
 
 # Set workspaces
 set $ws1 "1"
@@ -124,6 +132,12 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+# Resize window
+bindsym $mod+$rleft        resize shrink width 10px
+bindsym $mod+$rdown        resize shrink height 10px
+bindsym $mod+$rup          resize grow height 10px
+bindsym $mod+$rright       resize grow width 10px
+
 bindsym $mod+equal         gaps outer current minus 5
 bindsym $mod+Shift+equal   gaps inner current minus 5
 
@@ -131,9 +145,9 @@ bindsym $mod+minus         gaps outer current plus 5
 bindsym $mod+Shift+minus   gaps inner current plus 5
 
 # start a terminal
-bindsym $mod+Return        exec $term
+bindsym $mod+Return        exec $term -d "$PWD"
 
-bindsym $mod+space         exec rofi -show drun -theme Monokai -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
+bindsym $mod+space         exec rofi -show drun -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
 # Using albert
 #bindsym $mod+Shift+space   
 
@@ -160,8 +174,6 @@ bindsym $mod+Control+e     layout toggle split
 bindsym $mod+f             fullscreen toggle
 
 bindsym $mod+g             mode "$mode_gaps"
-
-bindsym $mod+i             exec $term -e htop
 
 bindsym $mod+m             exec $term -e ncmpcpp
 
@@ -191,6 +203,8 @@ bindsym $mod+Shift+y       resize shrink width 10 px or 10ppt
 
 bindsym $mod+z             gaps outer current plus 5
 bindsym $mod+Shift+z       gaps outer current minus 5
+
+bindsym $mod+F2            exec rofi -show run -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
 
 # switch to workspace
 bindsym $mod+1             workspace $ws1
@@ -310,7 +324,7 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec /usr/bin/setxkbmap -option "ctrl:swapcaps"
 
 # Set user wallpaper
-exec_always feh --bg-scale /home/toshiaki/Pictures/default.{jpg,png}
+exec_always feh --bg-scale /home/segfault/Pictures/default.{jpg,png}
 
 # Configure dual monitors
 exec xrandr --output HDMI1 --mode 1366x768 --pos 1366x0 --rotate normal --output DP1 --off --output eDP1 --primary --mode 1366x768 --pos 0x0 --rotate normal --output VIRTUAL --off
@@ -318,6 +332,7 @@ exec xrandr --output HDMI1 --mode 1366x768 --pos 1366x0 --rotate normal --output
 # Assign applications to specific workspaces
 assign [class="Google-chrome"] $ws1
 assign [class="Firefox"] $ws1
+assign [class="qutebrowser"] $ws1
 assign [class="Atom"] $ws2
 assign [class="Vlc"] $ws9
 assign [class="Clementine"] $ws10
