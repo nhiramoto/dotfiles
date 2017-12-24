@@ -9,6 +9,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-surround'
 " Plugin 'ervandew/supertab'
+Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'airblade/vim-gitgutter'
 " Plugin 'mattn/emmet-vim'
@@ -17,7 +18,6 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'raimondi/delimitmate'
-Plugin 'scrooloose/nerdtree'
 " Plugin 'scrooloose/syntastic'
 Plugin 'jshint/jshint'
 " Plugin 'ap/vim-css-color'
@@ -44,6 +44,8 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'romainl/Apprentice'
 Plugin 'joshdick/onedark.vim'
 Plugin 'ying17zi/vim-live-latex-preview'
+"Plugin 'ternjs/tern_for_vim'
+Plugin 'severin-lemaignan/vim-minimap'
 
 set runtimepath^=~/.vim/bundle/vim-snippets
 
@@ -81,7 +83,8 @@ set showmatch
 let g:airline_powerline_fonts = 1
 set laststatus=2
 set number
-set relativenumber
+set norelativenumber
+set number
 set nowrap
 set ttyfast " u got a fast terminal
 set ttyscroll=3
@@ -192,16 +195,27 @@ set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 
 " Multiple Cursors
 let g:multi_cursor_use_default_mapping=0
+" Map start key separately from next key
+"let g:multi_cursor_start_key='<F6>'
 let g:multi_cursor_next_key='<C-d>'
-let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_prev_key='<C-D>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
 " Show double quotes in json files
 let g:vim_json_syntax_conceal = 0
 
+" Commentaries in italic mode
 highlight Comment cterm=italic
 
-" Snipmate keys
-let g:snips_trigger_key = '<tab>'
-let g:snips_trigger_key_backwards = '<s-tab>'
+"enable keyboard shortcuts
+"let g:tern_map_keys=1
+"show argument hints
+"let g:tern_show_argument_hints='on_hold'
+
+" Minimap
+"let g:minimap_show='<leader>ms'
+"let g:minimap_update='<leader>mu'
+"let g:minimap_close='<leader>gc'
+"let g:minimap_toggle='<leader>gt'
+let g:minimap_highlight='Visual'
