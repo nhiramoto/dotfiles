@@ -434,7 +434,7 @@ label-connected = %signal%%
 ;label-connected = %essid%
 
 ;format-disconnected =
-format-disconnected = <label-disconnected>
+format-disconnected = %{A:nm-connection-editor&:} <label-disconnected> %{A}
 format-disconnected-foreground = ${colors.foreground-disabled}
 ;label-disconnected = %ifname% disconnected
 label-disconnected = 
