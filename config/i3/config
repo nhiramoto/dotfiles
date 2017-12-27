@@ -145,7 +145,7 @@ bindsym $mod+minus         gaps outer current plus 5
 bindsym $mod+Shift+minus   gaps inner current plus 5
 
 # start a terminal
-bindsym $mod+Return        exec $term -d "$PWD"
+bindsym $mod+Return        exec $term -d "$(xcwd)"
 
 bindsym $mod+space         exec rofi -show drun -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
 # Using albert
@@ -377,3 +377,5 @@ for_window [class="Chrome"] gaps outer 0
 for_window [class="Vlc"] gaps inner 0
 for_window [class="Vlc"] gaps outer 0
 
+# Disable touchpad on startup
+exec $touchpadOff
