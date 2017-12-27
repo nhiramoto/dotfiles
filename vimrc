@@ -84,13 +84,12 @@ let g:airline_powerline_fonts = 1
 set laststatus=2
 set number
 set norelativenumber
-set number
 set nowrap
 set ttyfast " u got a fast terminal
 set ttyscroll=3
 set lazyredraw " to avoid scrolling problems
 " Syntax coloring lines that are too long just slows down the world
-set synmaxcol=128
+set synmaxcol=200
 hi Normal ctermfg=252 ctermbg=none
 set conceallevel=0
 
