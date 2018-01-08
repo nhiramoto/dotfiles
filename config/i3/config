@@ -66,6 +66,7 @@ set $music $term -e ncmpcpp
 set $playPause --no-startup-id mpc toggle
 set $nextMusic --no-startup-id mpc next
 set $prevMusic --no-startup-id mpc prev
+set $stopMusic --no-startup-id mpc stop
 
 # AUDIO
 
@@ -88,6 +89,12 @@ set $muteVolume      --no-startup-id pactl set-sink-mute 1 toggle # mute sound
 # Brightness Commands
 set $brightUp      xbacklight -inc 20
 set $brightDown    xbacklight -dec 20
+
+set $mail          geary
+set $browser       firefox
+set $explorer      ranger
+set $calculator    gnome-calculator
+#set $favorite      
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -243,9 +250,19 @@ bindsym XF86MonBrightnessDown exec $brightDown
 bindsym XF86AudioPlay         exec $playPause
 bindsym XF86AudioNext         exec $nextMusic
 bindsym XF86AudioPrev         exec $prevMusic
+bindsym XF86AudioStop         exec $stopMusic
 
 # Display
-bindsym XF86Display           exec $monitors
+#bindsym XF86Display           exec $monitors
+bindsym XF86Explorer          exec $monitors
+
+# Others Media Keys
+bindsym XF86Mail              exec $mail
+bindsym XF86HomePage          exec $browser
+bindsym XF86Calculator        exec $calculator
+bindsym XF86Tools             exec $music
+bindsym XF86Search            exec rofi -show drun -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
+bindsym XF86Reload            restart
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -333,8 +350,10 @@ exec xrandr --output HDMI1 --mode 1366x768 --pos 1366x0 --rotate normal --output
 assign [class="Google-chrome"] $ws1
 assign [class="Firefox"] $ws1
 assign [class="qutebrowser"] $ws1
+assign [class="qutebrowser"] $ws1
 assign [class="Atom"] $ws2
 assign [class="Vlc"] $ws9
+assign [class="mpv"] $ws9
 assign [class="Clementine"] $ws10
 
 # Startup applications
