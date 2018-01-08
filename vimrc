@@ -84,6 +84,7 @@ let g:airline_powerline_fonts = 1
 set laststatus=2
 set number
 set norelativenumber
+set fillchars+=vert:\┃
 set nowrap
 set ttyfast " u got a fast terminal
 set ttyscroll=3
