@@ -119,6 +119,10 @@ autocmd! bufwritepre * set expandtab | retab! 4
 " cmap wQ wq
 " cmap Q q
 
+" Highlights Styles
+hi clear texItalStyle
+hi clear texBoldStyle
+
 " Syntastic
 "let g:syntastic_check_on_open=1
 "let g:syntastic_javascript_checkers = ['jshint']
@@ -219,3 +223,7 @@ highlight Comment cterm=italic
 "let g:minimap_close='<leader>gc'
 "let g:minimap_toggle='<leader>gt'
 let g:minimap_highlight='Visual'
+
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>

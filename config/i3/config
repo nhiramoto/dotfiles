@@ -375,9 +375,9 @@ exec compton -b --config ~/.config/compton.conf
 bindsym $mod+ctrl+shift+$left move workspace to output left
 bindsym $mod+ctrl+shift+$right move workspace to output right
 
-# Force floating terminte window
+# Force floating window
 #for_window [class="Termite"] floating enable
-for_window [class="Nautilus"] floating enable
+#for_window [class="Nautilus"] floating enable
 
 # Disable focus on mouse hover
 focus_follows_mouse no
