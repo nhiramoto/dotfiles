@@ -366,6 +366,7 @@ exec compton -b --config ~/.config/compton.conf
 # exec --no-startup-id /usr/lib/kdeconnectd
 # exec --no-startup-id indicator-kdeconnect
 # exec --no-startup-id albert
+exec --no-startup-id udiskie
 
 # i3blocks Key Indicators
 #bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
