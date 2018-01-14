@@ -227,3 +227,6 @@ let g:minimap_highlight='Visual'
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+map <C-s> :w<CR>
+map <C-q> :qa<CR>
