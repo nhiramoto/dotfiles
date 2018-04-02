@@ -25,7 +25,7 @@ set $term i3-sensible-terminal
 # System power
 set $lock      --no-startup-id "i3lock-fancy"
 set $logout    --no-startup-id "i3-nagbar -f 'Exo 2' -t warning -m 'Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-set $suspend   --no-startup-id "i3lock --color=#202020 && systemctl suspend"
+set $suspend   --no-startup-id "systemctl suspend && i3lock-fancy"
 set $hibernate --no-startup-id "systemctl hibernate"
 set $reboot    --no-startup-id "systemctl reboot"
 set $poweroff  --no-startup-id "systemctl poweroff"
@@ -63,10 +63,14 @@ set $monitors  --no-startup-id arandr
 
 # MPC
 set $music $term -e ncmpcpp
-set $playPause --no-startup-id mpc toggle
-set $nextMusic --no-startup-id mpc next
-set $prevMusic --no-startup-id mpc prev
-set $stopMusic --no-startup-id mpc stop
+#set $playPause --no-startup-id mpc toggle
+#set $nextMusic --no-startup-id mpc next
+#set $prevMusic --no-startup-id mpc prev
+#set $stopMusic --no-startup-id mpc stop
+set $playPause --no-startup-id playerctl play-pause
+set $nextMusic --no-startup-id playerctl next
+set $prevMusic --no-startup-id playerctl previous
+set $stopMusic --no-startup-id playerctl stop
 
 # AUDIO
 
@@ -77,18 +81,19 @@ set $stopMusic --no-startup-id mpc stop
 # Symbolic name for sink (numeric index not supported) (used with -s $sinkname)
 #   Recommended: comment out this setting and omit the -s option to use default sink
 #   List sink names: pacmd list-sinks | awk -F "[<>]" '/^\s+name: <.*>/{print $2}' 
-#set $sinkname alsa_output.pci-0000_00_1b.0.analog-stereo
+set $sinkname "alsa_output.pci-0000_00_1b.0.analog-stereo"
+set $sinkn    0
 
 #set $incVolume      $volumepath/volume -s $sinkname -i $volumestep -n
 #set $decVolume      $volumepath/volume -s $sinkname -d $volumestep -n
 #set $muteVolume     $volumepath/volume -s $sinkname -m -n
-set $incVolume       --no-startup-id pactl set-sink-volume 1 +5% # increase sound volume
-set $decVolume       --no-startup-id pactl set-sink-volume 1 -5% # decrease sound volume
-set $muteVolume      --no-startup-id pactl set-sink-mute 1 toggle # mute sound
+set $incVolume       --no-startup-id pactl set-sink-volume 0 +5%
+set $decVolume       --no-startup-id pactl set-sink-volume 0 -5%
+set $muteVolume      --no-startup-id pactl set-sink-mute 0 toggle
 
 # Brightness Commands
-set $brightUp      xbacklight -inc 20
-set $brightDown    xbacklight -dec 20
+set $brightUp      xbacklight -inc 5
+set $brightDown    xbacklight -dec 5
 
 set $mail          geary
 set $browser       firefox
@@ -154,8 +159,8 @@ bindsym $mod+Shift+minus   gaps inner current plus 5
 # start a terminal
 bindsym $mod+Return        exec $term -d "$(xcwd)"
 
-bindsym $mod+space         exec rofi -show drun -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
-# Using albert
+#bindsym $mod+space         exec rofi -show drun -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
+#bindsym $mod+space         exec j4-dmenu-desktop --dmenu="dmenu -i -fn 'DejaVu Sans-10' -l 20"
 #bindsym $mod+Shift+space   
 
 #bindsym $mod+Escape        exec $logout
@@ -174,7 +179,7 @@ bindsym $mod+Shift+c       reload
 bindsym $mod+d             floating toggle
 bindsym $mod+Shift+d       focus mode_toggle
 
-#bindsym $mod+e
+bindsym $mod+e             exec $mail
 bindsym $mod+Control+e     layout toggle split
 #bindsym $mod+Shift+e       
 
@@ -202,7 +207,7 @@ bindsym $mod+v             split v
 
 bindsym $mod+shift+x       exec $lock
 
-bindsym $mod+w             exec firefox
+bindsym $mod+w             exec env GTK_THEME=Adwaita:light firefox
 bindsym $mod+Control+w     layout tabbed
 
 #bindsym $mod+y       
@@ -211,7 +216,7 @@ bindsym $mod+Shift+y       resize shrink width 10 px or 10ppt
 bindsym $mod+z             gaps outer current plus 5
 bindsym $mod+Shift+z       gaps outer current minus 5
 
-bindsym $mod+F2            exec rofi -show run -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
+#bindsym $mod+F2            exec rofi -show run -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
 
 # switch to workspace
 bindsym $mod+1             workspace $ws1
@@ -261,7 +266,8 @@ bindsym XF86Mail              exec $mail
 bindsym XF86HomePage          exec $browser
 bindsym XF86Calculator        exec $calculator
 bindsym XF86Tools             exec $music
-bindsym XF86Search            exec rofi -show drun -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
+#bindsym XF86Search            exec rofi -show drun -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
+#bindsym XF86Search            exec j4-dmenu-desktop --dmenu="dmenu -i -fn 'DejaVu Sans-10' -l 20"
 bindsym XF86Reload            restart
 
 # resize window (you can also use the mouse for that)
@@ -334,9 +340,6 @@ client.urgent           $urgent-border-color           $urgent-bg-color   $text-
 #    }
 #}
 
-# Start polybar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-
 # Swap ctrl and caps lock keys
 exec /usr/bin/setxkbmap -option "ctrl:swapcaps"
 
@@ -345,6 +348,9 @@ exec_always feh --bg-scale /home/segfault/Pictures/default.{jpg,png}
 
 # Configure dual monitors
 exec xrandr --output HDMI1 --mode 1366x768 --pos 1366x0 --rotate normal --output DP1 --off --output eDP1 --primary --mode 1366x768 --pos 0x0 --rotate normal --output VIRTUAL --off
+
+# Start polybar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Assign applications to specific workspaces
 assign [class="Google-chrome"] $ws1
@@ -355,18 +361,19 @@ assign [class="Atom"] $ws2
 assign [class="Vlc"] $ws9
 assign [class="mpv"] $ws9
 assign [class="Clementine"] $ws10
+assign [class="JDownloader"] $ws8
 
 # Startup applications
 exec $HOME/.dropbox-dist/dropboxd
-exec geary --hidden
+#exec geary --hidden
 exec --no-startup-id nm-applet
-exec --no-startup-id mpd
-# Load compositor for transparencies
+#exec --no-startup-id mpd
 exec compton -b --config ~/.config/compton.conf
 # exec --no-startup-id /usr/lib/kdeconnectd
 # exec --no-startup-id indicator-kdeconnect
-# exec --no-startup-id albert
+exec --no-startup-id albert
 exec --no-startup-id udiskie
+exec --no-startup-id ~/.config/conky/launch.sh
 
 # i3blocks Key Indicators
 #bindsym --release Caps_Lock exec pkill -SIGRTMIN+11 i3blocks
@@ -387,8 +394,8 @@ focus_follows_mouse no
 for_window [class="^.*"] border pixel 0
 
 # Gaps
-gaps inner 8
-gaps outer 8
+gaps inner 6
+gaps outer 6
 smart_gaps on
 for_window [class="Firefox"] gaps inner 0
 for_window [class="Firefox"] gaps outer 0
@@ -397,5 +404,13 @@ for_window [class="Chrome"] gaps outer 0
 for_window [class="Vlc"] gaps inner 0
 for_window [class="Vlc"] gaps outer 0
 
+#smart_borders on
+
 # Disable touchpad on startup
 exec $touchpadOff
+
+## quick terminal
+#exec --no-startup-id terminator -name metask
+#for_window [instance="metask"] floating enable;
+#for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position 0px 22px; resize shrink height 300px; resize grow width 683px; move scratchpad
+#bindsym $mod+Shift+e [instance="metask"] scratchpad show

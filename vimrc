@@ -18,7 +18,7 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'raimondi/delimitmate'
-" Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 Plugin 'jshint/jshint'
 " Plugin 'ap/vim-css-color'
 "Plugin 'gko/vim-coloresque'
@@ -124,15 +124,15 @@ hi clear texItalStyle
 hi clear texBoldStyle
 
 " Syntastic
-"let g:syntastic_check_on_open=1
-"let g:syntastic_javascript_checkers = ['jshint']
-"let g:syntastic_javascript_jshint_exec='/usr/sbin/jshint'
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_open=1
+let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_javascript_jshint_exec='/usr/sbin/jshint'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_wq = 0
 
 " NERDTree
 autocmd StdinReadPre * let s:std_in=1

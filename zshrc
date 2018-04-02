@@ -49,7 +49,7 @@ HYPHEN_INSENSITIVE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting zsh-notify themes zsh-256color zsh-output-highlighting zsh-completions zsh-autopair zsh-autosuggestions)
+plugins=(git zsh-syntax-highlighting themes zsh-256color zsh-output-highlighting zsh-autopair zsh-autosuggestions command-not-found)
 autoload -U compinit && compinit
 
 # User configuration
@@ -96,6 +96,7 @@ alias now="date +'%H:%M:%S'"
 alias today="date +'%A %d de %B de %Y'"
 alias up="cd .."
 alias x="exit"
+alias fe="nautilus ."
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
