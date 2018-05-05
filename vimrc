@@ -83,12 +83,11 @@ set showmatch
 let g:airline_powerline_fonts = 1
 set laststatus=2
 set number
-set norelativenumber
+set relativenumber
 set fillchars+=vert:\┃
 set nowrap
 set ttyfast " u got a fast terminal
-set ttyscroll=3
-set lazyredraw " to avoid scrolling problems
+" set lazyredraw " to avoid scrolling problems
 " Syntax coloring lines that are too long just slows down the world
 set synmaxcol=200
 hi Normal ctermfg=252 ctermbg=none
@@ -109,7 +108,7 @@ set tabstop=4 softtabstop=4 shiftwidth=4
 " set list listchars=tab:❘-,trail:·,extends:»,precedes:«,nbsp:×
 
 " convert tabs to spaces when reading file
-autocmd! bufreadpost * set expandtab | retab! 4
+"autocmd! bufreadpost * set expandtab | retab! 4
 
 " convert tabs to spaces before writing file
 autocmd! bufwritepre * set expandtab | retab! 4
@@ -230,3 +229,11 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 
 map <C-s> :w<CR>
 map <C-q> :qa<CR>
+
+" nvim vs vim configurations
+if has('nvim')
+    " Neovim specific commands
+else
+    " Standard vim specific commands
+endif
+
