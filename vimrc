@@ -7,6 +7,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 "Plugin 'tpope/vim-fugitive'
 Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-surround'
 " Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdtree'
@@ -43,15 +44,18 @@ Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'romainl/Apprentice'
 Plugin 'joshdick/onedark.vim'
-Plugin 'ying17zi/vim-live-latex-preview'
+"Plugin 'ying17zi/vim-live-latex-preview'
 "Plugin 'ternjs/tern_for_vim'
 Plugin 'severin-lemaignan/vim-minimap'
+Plugin 'morhetz/gruvbox'
+"Plugin 'w0rp/ale'
+Plugin 'chriskempson/base16-vim'
+Plugin 'Reewr/vim-monokai-phoenix'
 
 set runtimepath^=~/.vim/bundle/vim-snippets
 
 call vundle#end()
 filetype plugin indent on
-"filetype plugin on
 
 " Brief help
 " :PluginList
@@ -75,25 +79,24 @@ filetype plugin indent on
 "let xml_syntax_folding=1      " XML
 
 set background=dark
-colorscheme onedark
+colorscheme gruvbox
 syntax on
+    
+    
 set mouse=a
 set showmatch
 " set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
-let g:airline_powerline_fonts = 1
 set laststatus=2
 set number
 set relativenumber
 set fillchars+=vert:\┃
 set nowrap
-set ttyfast " u got a fast terminal
+"set ttyfast " u got a fast terminal
 " set lazyredraw " to avoid scrolling problems
 " Syntax coloring lines that are too long just slows down the world
 set synmaxcol=200
 hi Normal ctermfg=252 ctermbg=none
 set conceallevel=0
-
-map <C-s> :update<CR>
 
 set nobackup
 set nowb
@@ -118,9 +121,17 @@ autocmd! bufwritepre * set expandtab | retab! 4
 " cmap wQ wq
 " cmap Q q
 
+" Airline
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='distinguished'
+
 " Highlights Styles
 hi clear texItalStyle
 hi clear texBoldStyle
+
+" Set default TeX flavour
+let g:tex_flavor = "latex"
 
 " Syntastic
 let g:syntastic_check_on_open=1
@@ -233,7 +244,13 @@ map <C-q> :qa<CR>
 " nvim vs vim configurations
 if has('nvim')
     " Neovim specific commands
+    "set termguicolors
 else
     " Standard vim specific commands
 endif
 
+map <F6> :setlocal spell! spelllang=en_us<CR>
+
+" Gruvbox theme
+let g:gruvbox_contrast_dark = 'medium'
+let g:gruvbox_termcolors=16

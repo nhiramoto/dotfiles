@@ -49,8 +49,7 @@ HYPHEN_INSENSITIVE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-#plugins=(git zsh-syntax-highlighting themes zsh-256color zsh-output-highlighting zsh-autopair zsh-autosuggestions command-not-found)
-plugins=(git zsh-syntax-highlighting themes zsh-256color zsh-output-highlighting zsh-autopair)
+plugins=(git zsh-syntax-highlighting themes zsh-256color zsh-output-highlighting zsh-autopair zsh-autosuggestions command-not-found)
 autoload -U compinit && compinit
 
 # User configuration
@@ -62,7 +61,9 @@ export PATH="/opt/apache-maven-3.3.9/bin:$PATH"
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG\='en_US.UTF-8'
+export LC_ALL\="en_US.UTF-8"
+export TERM\=xterm-256color
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -113,8 +114,6 @@ PERL_LOCAL_LIB_ROOT="/home/segfault/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LI
 PERL_MB_OPT="--install_base \"/home/segfault/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/segfault/perl5"; export PERL_MM_OPT;
 
-export TERM="xterm-256color"
-
 alias cdd='cd ~/Desktop'
 
 autoload -U compinit && compinit
@@ -129,4 +128,10 @@ export NVM_DIR="$HOME/.nvm"
 if [[ $TERM == xterm-termite ]]; then
   . /etc/profile.d/vte.sh
   __vte_osc7
+fi
+
+# Disable bracketed paste mode for terminals that
+#   doesn't support escape sequences (like Emacs shell)
+if [[ $TERM = dumb ]]; then
+  unset zle_bracketed_paste
 fi
