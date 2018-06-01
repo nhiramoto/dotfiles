@@ -1,0 +1,777 @@
+#+TITLE: Emacs Configuration
+#+AUTHOR: nhtoshiaki
+#+STARTIP: overview
+#+OPTIONS: toc:nil num:nil
+
+* Configuration File
+
+  Jump to this custom configuration file with a shortcut.
+
+  #+BEGIN_SRC emacs-lisp
+  (defun nh/visit-emacs-custom-config ()
+    (interactive)
+    (find-file "~/dotfiles/emacs.d/custom.org"))
+
+  (global-set-key (kbd "C-x C-,") 'nh/visit-emacs-custom-config)
+  #+END_SRC
+
+* Paths
+
+** Custom theme directory
+
+   #+BEGIN_SRC emacs-lisp
+     ;; (add-to-list 'custom-theme-load-path (expand-file-name "themes" user-emacs-directory))
+   #+END_SRC
+* Evil mode
+  
+  Use =evil-mode=.
+
+  #+BEGIN_SRC emacs-lisp
+    (evil-mode t)
+  #+END_SRC
+
+  Prevents to expand abbrevs when hit the escape.
+
+  #+BEGIN_SRC emacs-lisp
+  (setq evil-want-abbrev-expand-on-insert-exit nil)
+  #+END_SRC
+
+  Bind =C-p= to fuzzy-finding files in the current project.
+
+  #+BEGIN_SRC emacs-lisp
+  (define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
+  #+END_SRC
+
+** =<escape>= keybindings
+
+   Use =<escape>= key to quit command.
+
+   #+BEGIN_SRC emacs-lisp
+     ; Bind escape to quit minibuffers
+     (defun minibuffer-keyboard-quit ()
+         "Abort recursive edit.
+     In Delete Selection mode, if the mark is active, just deactivate it;
+     then it takes a second \\[keyboard-quit] to abort the minibuffer."
+         (interactive)
+         (if (and delete-selection-mode transient-mark-mode mark-active)
+         (setq deactivate-mark  t)
+         (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+         (abort-recursive-edit)))
+
+     (define-key evil-normal-state-map [escape] 'keyboard-quit)
+     (define-key evil-visual-state-map [escape] 'keyboard-quit)
+     (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+     (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+     (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+     (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+     (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+     (global-set-key [escape] 'evil-exit-emacs-state)
+   #+END_SRC
+
+** Cursor dynamic colors
+  
+   Change the cursor color according to current state.
+  
+   #+BEGIN_SRC emacs-lisp
+   (when (display-graphic-p)
+     (setq evil-emacs-state-cursor '("OrangeRed1" box))
+     (setq evil-normal-state-cursor '("LimeGreen" box))
+     (setq evil-visual-state-cursor '("orange" box))
+     (setq evil-insert-state-cursor '("SkyBlue" bar))
+     (setq evil-replace-state-cursor '("orchid" bar))
+     (setq evil-operator-state-cursor '("gold1" hollow))
+   )
+   #+END_SRC
+
+** Custom evil mode tags for mode-line.
+
+   #+BEGIN_SRC emacs-lisp
+    (setq evil-normal-state-tag   (propertize " <N> " 'face '((:background "LimeGreen" :foreground "black")))
+          evil-emacs-state-tag    (propertize " <E> " 'face '((:background "OrangeRed1"       :foreground "black")))
+          evil-insert-state-tag   (propertize " <I> " 'face '((:background "SkyBlue"    :foreground "black")))
+          evil-replace-state-tag  (propertize " <R> " 'face '((:background "orchid"      :foreground "black")))
+          evil-motion-state-tag   (propertize " <M> " 'face '((:background "plum3"          :foreground "black")))
+          evil-visual-state-tag   (propertize " <V> " 'face '((:background "orange"           :foreground "black")))
+          evil-operator-state-tag (propertize " <O> " 'face '((:background "gold1"    :foreground "black"))))
+   #+END_SRC
+
+** =dired= in evil-mode
+   
+   Use =j= and =k= to move around in =dired=.
+   
+   #+BEGIN_SRC emacs-lisp
+     (evil-define-key 'normal dired-mode-map (kbd "j") 'dired-next-line)
+     (evil-define-key 'normal dired-mode-map (kbd "k") 'dired-previous-line)
+   #+END_SRC
+
+* UI preferences
+** Frame Preferences
+
+   Disable menu bar, tool bar and scroll bar.
+
+   #+BEGIN_SRC emacs-lisp
+  (tool-bar-mode -1)
+  (menu-bar-mode -1)
+  (scroll-bar-mode -1)
+   #+END_SRC
+
+   Use the current project name as frame title.
+
+   #+BEGIN_SRC emacs-lisp
+  (setq frame-title-format '((:eval (projectile-project-name))))
+   #+END_SRC
+** Inhibit statup message
+
+   #+BEGIN_SRC emacs-lisp
+   (setq inhibit-startup-message t)
+   #+END_SRC
+** Mode line
+   
+   Set a custom mode line format.
+   
+   #+BEGIN_SRC emacs-lisp
+     ;; (defun nh/set-mode-line-format ()
+        ;; (setq-default mode-line-format
+            ;; (list
+            ;; mode-line-front-space
+            ;; evil-mode-line-tag
+            ;; " "
+            ;; mode-line-frame-identification
+            ;; " "
+            ;; mode-line-modified
+            ;; "["
+            ;; mode-line-buffer-identification
+            ;; "]  "
+            ;; ;; (vc-mode vc-mode)
+            ;; mode-line-modes
+            ;; " "
+            ;; mode-line-position
+            ;; mode-line-misc-info
+            ;; mode-line-end-spaces
+            ;; )
+        ;; ))
+     ;; (add-hook 'after-init-hook 'nh/set-mode-line-format)
+   #+END_SRC
+
+** Theme
+
+   #+BEGIN_SRC emacs-lisp
+    ;; (load-theme 'atom-one-dark)
+   #+END_SRC
+
+** Disable Visual Bell
+
+   #+BEGIN_SRC emacs-lisp
+  (setq ring-bell-function 'ignore)
+   #+END_SRC
+
+** Mouse
+
+   Throw mouse pointer to outside of emacs when typing.
+
+   #+BEGIN_SRC emacs-lisp
+  (mouse-avoidance-mode 'banish)
+   #+END_SRC
+
+** Hide certain modes from the modeline
+
+   #+BEGIN_SRC emacs-lisp
+  (defmacro diminish-minor-mode (filename mode &optional abbrev)
+    `(eval-after-load (symbol-name ,filename)
+       '(diminish ,mode ,abbrev)))
+
+  (defmacro diminish-major-mode (mode-hook abbrev)
+    `(add-hook ,mode-hook
+               (lambda () (setq mode-name ,abbrev))))
+
+  (diminish-minor-mode 'abbrev 'abbrev-mode)
+  (diminish-minor-mode 'simple 'auto-fill-function)
+  (diminish-minor-mode 'company 'company-mode)
+  (diminish-minor-mode 'eldoc 'eldoc-mode)
+  (diminish-minor-mode 'flycheck 'flycheck-mode)
+  (diminish-minor-mode 'flyspell 'flyspell-mode)
+  (diminish-minor-mode 'global-whitespace 'global-whitespace-mode)
+  (diminish-minor-mode 'projectile 'projectile-mode)
+  (diminish-minor-mode 'ruby-end 'ruby-end-mode)
+  (diminish-minor-mode 'subword 'subword-mode)
+  (diminish-minor-mode 'undo-tree 'undo-tree-mode)
+  (diminish-minor-mode 'yard-mode 'yard-mode)
+  (diminish-minor-mode 'yasnippet 'yas-minor-mode)
+  (diminish-minor-mode 'linum-relative 'linum-relative-mode)
+  (diminish-minor-mode 'git-gutter 'git-gutter-mode)
+
+  (diminish-minor-mode 'paredit 'paredit-mode " π")
+  (diminish-minor-mode 'wrap-region 'wrap-region-mode " ")
+
+  (diminish-major-mode 'emacs-lisp-mode-hook "el")
+  (diminish-major-mode 'haskell-mode-hook "λ=")
+  (diminish-major-mode 'lisp-interaction-mode-hook "λ")
+  (diminish-major-mode 'python-mode-hook "")
+   #+END_SRC
+
+** Line numbers
+
+   #+BEGIN_SRC emacs-lisp
+   (setq linum-relative-current-symbol "")
+   (setq linum-relative-format "%3s ")
+   (setq linum-relative-global-mode nil)
+   #+END_SRC
+
+   Use =linum-relative= in specifics modes.
+
+   #+BEGIN_SRC emacs-lisp
+   (require 'linum-relative)
+   (add-hook 'prog-mode-hook (lambda () (linum-relative-mode t)))
+   (add-hook 'LaTeX-mode-hook (lambda () (linum-relative-mode t)))
+   (add-hook 'text-mode-hook (lambda () (linum-relative-mode t)))
+   #+END_SRC
+
+   Disable for specific modes.
+
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'org-mode-hook (lambda () (linum-relative-mode nil)))
+   #+END_SRC
+
+** Ask for y/n instead of yes/no
+
+   #+BEGIN_SRC emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+   #+END_SRC
+
+** Window resizing
+
+   #+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
+  (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
+  (global-set-key (kbd "S-C-<down>") 'shrink-window)
+  (global-set-key (kbd "S-C-<up>") 'enlarge-window)
+   #+END_SRC
+
+** Blinking cursor
+
+   #+BEGIN_SRC emacs-lisp
+  (setq blink-cursor-mode nil)
+   #+END_SRC
+
+** Column number mode
+
+   #+BEGIN_SRC emacs-lisp
+  (setq column-number-mode t)
+   #+END_SRC
+
+** Confirm when leaving Emacs
+
+   #+BEGIN_SRC emacs-lisp
+  (setq confirm-kill-emacs 'y-or-n-p)
+   #+END_SRC
+
+** Cursor
+
+*** Default cursor
+
+    #+BEGIN_SRC emacs-lisp
+  (setq cursor-type 'bar)
+    #+END_SRC
+
+*** In non selected window
+
+    #+BEGIN_SRC emacs-lisp
+  (setq cursor-in-non-selected-window 'hbar)
+    #+END_SRC
+
+*** Stretch cursor to character width
+    #+BEGIN_SRC emacs-lisp
+      (setq x-stretch-cursor t)
+    #+END_SRC
+
+*** Beacon Mode
+
+    #+BEGIN_SRC emacs-lisp
+      (beacon-mode t)
+      (setq beacon-push-mark 25)
+      (setq beacon-color "green")
+    #+END_SRC
+
+** Temporary buffers
+
+   #+BEGIN_SRC emacs-lisp
+  (defun nh/split-horizontally-for-temp-buffers ()
+    (when (one-window-p t)
+      (split-window-horizontally)))
+
+  (add-hook 'temp-buffer-window-setup-hook
+            'nh/split-horizontally-for-temp-buffers)
+   #+END_SRC
+
+** Use fancy lambdas
+   #+BEGIN_SRC emacs-lisp
+     (global-prettify-symbols-mode t)
+   #+END_SRC
+** Splitting
+
+   Automatically switch to the new window when split.
+
+   #+BEGIN_SRC emacs-lisp
+     (defun nh/split-window-below-and-switch ()
+       "Split the window horizontally, then switch to the new window."
+       (interactive)
+       (split-window-below)
+       (balance-windows)
+       (other-window 1)
+       )
+     (defun nh/split-window-right-and-switch ()
+       "Split the window vertically, then switch to the new window."
+       (interactive)
+       (split-window-right)
+       (balance-windows)
+       (other-window 1)
+       )
+     
+     (global-set-key (kbd "C-x 2") 'nh/split-window-below-and-switch)
+     (global-set-key (kbd "C-x 3") 'nh/split-window-right-and-switch)
+   #+END_SRC
+
+* Editing
+** Scroll conservatively
+
+   Only scroll as far as point goes.
+
+   #+BEGIN_SRC emacs-lisp
+  (setq scroll-conservatively 100)
+   #+END_SRC
+
+** Highlight the current line
+
+   #+BEGIN_SRC emacs-lisp
+  (global-hl-line-mode t)
+   #+END_SRC
+
+** Highlight matched brackets
+
+   #+BEGIN_SRC emacs-lisp
+  (show-paren-mode t)
+   #+END_SRC
+** Tab width
+
+   #+BEGIN_SRC emacs-lisp
+  (setq-default tab-width 4)
+   #+END_SRC
+** Subword
+
+   Treat CamelCase symbols as separate words.
+
+   #+BEGIN_SRC emacs-lisp
+  (global-subword-mode t)
+   #+END_SRC
+** Save my location within a file
+
+   Save the location of point for every file.
+
+   #+BEGIN_SRC emacs-lisp
+   (save-place-mode t)
+   #+END_SRC
+** Always indent with spaces
+
+   #+BEGIN_SRC emacs-lisp
+  (setq-default indent-tabs-mode nil)
+   #+END_SRC
+
+* Spell check
+
+  Enables spell checking to specific modes.
+
+  #+BEGIN_SRC emacs-lisp
+  (add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode t)))
+  (add-hook 'org-mode-hook (lambda () (flyspell-mode t)))
+  #+END_SRC
+
+  Enables spell checking for comments in prog-mode.
+
+  #+BEGIN_SRC emacs-lisp
+  (add-hook 'prog-mode-hook (lambda () (flyspell-prog-mode t)))
+  #+END_SRC
+
+** Change dictionary
+
+   #+BEGIN_SRC emacs-lisp
+(defun fd-switch-dictionary()
+      (interactive)
+      (let* ((dic ispell-current-dictionary)
+    	 (change (if (string= dic "english") "brasileiro" "english")))
+        (ispell-change-dictionary change)
+        (message "Dictionary switched from %s to %s" dic change)
+        ))
+    
+      (global-set-key (kbd "<f8>")   'fd-switch-dictionary)
+   #+END_SRC
+
+* Syntax check
+  
+  #+BEGIN_SRC emacs-lisp
+    (require 'flycheck)
+    (add-hook 'after-init-hook #'global-flycheck-mode)
+  #+END_SRC
+
+* Specific modes preferences
+
+** LaTeX mode
+
+   #+BEGIN_SRC emacs-lisp
+  (add-hook 'LaTeX-mode-hook (lambda () (visual-line-mode t)))
+  (add-hook 'LaTeX-mode-hook (lambda () (LaTeX-math-mode t)))
+  (setq TeX-PDF-mode t)
+   #+END_SRC
+
+** Org mode
+   
+   #+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook (lambda () (visual-line-mode t)))
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode t)))
+   #+END_SRC
+
+   Use a different symbol for fold state.
+
+   #+BEGIN_SRC emacs-lisp
+  (setq org-ellipsis " {...}")
+   #+END_SRC
+
+   Enable syntax highlighting in source blocks while editing.
+
+   #+BEGIN_SRC emacs-lisp
+  (setq org-src-fontify-natively t)
+   #+END_SRC
+
+   When editing a code snippet, use the current window rather than popping open a
+   new one (which shows the same information).
+
+   #+BEGIN_SRC emacs-lisp
+  (setq org-src-window-setup 'current-window)
+   #+END_SRC
+
+   Quickly insert a block of elisp:
+
+   #+BEGIN_SRC emacs-lisp
+  (add-to-list 'org-structure-template-alist
+               '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
+   #+END_SRC
+
+*** Code Blocks
+
+    Allow =babel= to evaluate code blocks.
+
+    #+BEGIN_SRC emacs-lisp
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '((emacs-lisp . t)
+    (ruby . t)
+    (python . t)
+    (sh . t)
+    (js . t)))
+    #+END_SRC
+
+    Don't ask before evaluating code blocks.
+
+    #+BEGIN_SRC emacs-lisp
+  (setq org-confirm-babel-evaluate nil)
+    #+END_SRC
+
+*** Exporting
+
+    Don't include a footer with my contact of every exported HTML document.
+
+    #+BEGIN_SRC emacs-lisp
+  (setq org-html-postamble nil)
+    #+END_SRC
+
+* =dired=
+
+  Kill buffers of files/directories that are deleted in =dired=.
+  
+  #+BEGIN_SRC emacs-lisp
+    (setq dired-clean-up-buffers-too t)
+  #+END_SRC
+  
+  Ask before recursively delete a directory.
+  
+  #+BEGIN_SRC emacs-lisp
+    (setq dired-recursive-deletes 'top)
+  #+END_SRC
+
+* Packages
+
+** Git gutter
+
+   #+BEGIN_SRC emacs-lisp
+  (require 'git-gutter)
+  (global-git-gutter-mode t)
+  (git-gutter:linum-setup)
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+;; (custom-set-variables
+;;  '(git-gutter:modified-sign "  ") ;; two space
+;;  '(git-gutter:added-sign "++")    ;; multiple character is OK
+;;  '(git-gutter:deleted-sign "--"))
+   #+END_SRC
+
+   Set custom background colors.
+
+   #+BEGIN_SRC emacs-lisp
+(set-face-background 'git-gutter:modified "yellow")
+(set-face-foreground 'git-gutter:added "green")
+(set-face-foreground 'git-gutter:deleted "red")
+   #+END_SRC
+
+** Multiple cursors
+
+   #+BEGIN_SRC emacs-lisp
+   (require 'multiple-cursors)
+   (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+   (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+   #+END_SRC
+** Pretty symbols
+
+   #+BEGIN_SRC emacs-lips
+  (require 'pretty-symbols)
+  (add-hook 'emacs-lisp-mode-hook (lambda () (pretty-symbols-mode t)))
+   #+END_SRC
+
+** auto-complete
+
+   #+BEGIN_SRC emacs-lisp
+   (require 'auto-complete-config)
+   (ac-config-default)
+   #+END_SRC
+
+** Paredit
+
+   #+BEGIN_SRC emacs-lisp
+   (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+   (add-hook 'emacs-lisp-mode-hook                     #'enable-paredit-mode)
+   (add-hook 'eval-expression-minibuffer-setup-hook    #'enable-paredit-mode)
+   (add-hook 'ielm-mode-hook                           #'enable-paredit-mode)
+   (add-hook 'lisp-mode-hook                           #'enable-paredit-mode)
+   (add-hook 'lisp-interaction-mode-hook               #'enable-paredit-mode)
+   (add-hook 'scheme-mode-hook                         #'enable-paredit-mode)
+   (add-hook 'TeX-mode-hook                            #'enable-paredit-mode)
+   (add-hook 'prog-mode-hook                           #'enable-paredit-mode)
+   (global-set-key (kbd "{") 'paredit-open-curly)
+   (global-set-key (kbd "}") 'paredit-close-curly)
+   #+END_SRC
+
+** Rainbow delimiters
+
+   #+BEGIN_SRC emacs-lisp
+    (require 'rainbow-delimiters)
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+   #+END_SRC
+
+** Yasnippet
+
+   #+BEGIN_SRC emacs-lisp
+        (require 'yasnippet)
+        ;; (autoload 'yasnippet "yasnippet" "Select yasnippet" t)
+        (require 'yasnippet-snippets)
+        ;; (autoload 'yasnippet-snippets "yasnippet-snippets" "Select yasnippet snippets" t)
+        (yas-reload-all)
+        ;;;; Enable languages snippets
+        ;; (add-hook 'js-mode-hook 'yas-minor-mode)
+        ;; (add-hook 'java-mode-hook 'yas-minor-mode)
+        ;; (add-hook 'python-mode-hook 'yas-minor-mode)
+        ;; (add-hook 'c-mode-hook 'yas-minor-mode)
+        ;; (add-hook 'c++-mode-hook 'yas-minor-mode)
+        ;; (add-hook 'latex-mode-hook 'yas-minor-mode)
+        (yas-global-mode)
+   #+END_SRC
+
+** expand-region
+
+   #+BEGIN_SRC emacs-lisp
+    (require 'expand-region)
+    (global-set-key (kbd "C-q") 'er/expand-region)
+   #+END_SRC
+
+** Magit
+
+   #+BEGIN_SRC emacs-lisp
+   (require 'magit)
+   (global-set-key (kbd "C-x g") 'magit-status)
+   #+END_SRC
+
+** Projectile
+
+   #+BEGIN_SRC emacs-lisp
+   (require 'projectile)
+   (projectile-global-mode t)
+   #+END_SRC
+
+** Helm
+
+   #+BEGIN_SRC emacs-lisp
+   (require 'helm-config)
+   ;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+   (global-set-key (kbd "C-x C-f") 'helm-find-files)
+   (global-set-key (kbd "M-x") 'helm-M-x)
+   (global-set-key (kbd "C-x b") 'helm-buffers-list)
+   (global-set-key (kbd "C-x r b") 'helm-bookmarks)
+   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+   #+END_SRC
+   
+   Helm display function.
+
+   #+BEGIN_SRC emacs-lisp
+   ;; (setq helm-default-display-buffer-functions 'display-buffer-in-side-window)
+   #+END_SRC
+
+*** helm-projectile
+
+    #+BEGIN_SRC emacs-lisp
+    (require 'helm-projectile)
+    (helm-projectile-on)
+    #+END_SRC
+** which-key
+
+   #+BEGIN_SRC emacs-lisp
+   (require 'which-key)
+   (which-key-mode)
+   #+END_SRC
+
+** ace-window
+
+   #+BEGIN_SRC emacs-lisp
+   (require 'ace-window)
+   (global-set-key (kbd "M-g M-w") 'ace-window)
+   ; Set initial window labels
+   ;(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+   ; Set temporarily background to switch window
+   ;(setq aw-background nil)
+   ; Ignore current window
+   (setq aw-ignore-current t)
+   #+END_SRC
+** Powerline
+
+   #+BEGIN_SRC emacs-lisp
+     (require 'powerline)
+     (setq powerline-default-separator "arrow-fade")
+     (powerline-default-theme)
+   #+END_SRC
+ 
+   Integrates powerline with evil mode.
+
+   #+BEGIN_SRC emacs-lisp
+    (require 'powerline-evil)
+    (powerline-evil-vim-color-theme)
+   #+END_SRC
+
+** Disabled (for backup)
+*** Jedi
+
+    #+BEGIN_SRC emacs-lisp
+;; ;; jedi
+;; (require 'jedi)
+;; ;; Hook up to auto-complete
+;; (add-to-list 'ac-source 'ac-source-jedi-direct)
+;; ;; Enable for python-mode
+;; (add-hook 'python-mode-hook 'jedi:setup)
+    #+END_SRC
+
+*** Company
+
+    #+BEGIN_SRC emacs-lisp
+;; ;; Company
+;; (require 'company)
+;; (setq company-idle-delay 0)
+;; (setq company-minimum-prefix-length 1)
+
+;; ;; Change default company navigation keys
+;; ;; (with-eval-after-load 'company
+;; ;;   (define-key company-active-map (kbd "M-n") nil)
+;; ;;   (define-key company-active-map (kbd "M-n") nil)
+;; ;;   (define-key company-active-map (kbd "C-n") #'company-select-next)
+;; ;;   (define-key company-active-map (kbd "C-p") #'company-select-previous)
+;; ;;   )
+
+;; (require 'company-irony)
+;; (add-to-list 'company-backends 'company-irony)
+
+;; (require 'irony)
+;; (add-hook 'c++-mode-hook (lambda () (irony-mode t)))
+;; (add-hook 'c-mode-hook (lambda () (irony-mode t)))
+;; (add-hook 'irony-mode-hook (lambda () (irony-cdb-autosetup-compile-options t)))
+
+;; (defun my-latex-mode-setup ()
+;;   (setq-local company-backends
+;;               (append '((company-math-symbols-latex company-math-symbols-unicode))
+;;                       company-backends)))
+
+;; (add-hook 'LaTeX-mode-hook (lambda () (my-latex-mode-setup t)))
+
+;; (with-eval-after-load 'company
+;;   (add-hook 'c++-mode-hook 'company-mode)
+;;   (add-hook 'c-mode-hook 'company-mode)
+;;   (add-hook 'LaTeX-mode-hook 'company-mode)
+;;   )
+    #+END_SRC
+*** Helm-swoop
+
+    #+BEGIN_SRC emacs-lisp
+  ;; ;;;; Helm Swoop
+  ;; (global-set-key (kbd "C-s") 'helm-swoop)
+  ;; (global-set-key (kbd "C-r") 'helm-swoop)
+  ;; (with-eval-after-load 'helm-swoop
+  ;;     (setq helm-swoop-pre-input-function
+  ;;         (lambda () nil)))
+  ;; ;; C-s or C-r in helm-swoop with empty search field: activate previous search.
+  ;; ;; C-s in helm-swoop with non-empty search field: go to next match.
+  ;; ;; C-r in helm-swoop with non-empty search field: go to previous match.
+  ;; (with-eval-after-load 'helm-swoop
+  ;;   (define-key helm-swoop-map (kbd "C-s") 'tl/helm-swoop-C-s))
+  ;; (with-eval-after-load 'helm-swoop
+  ;;   (define-key helm-swoop-map (kbd "C-r") 'tl/helm-swoop-C-r))
+
+  ;; (defun tl/helm-swoop-C-s ()
+  ;;     (interactive)
+  ;;     (if (boundp 'helm-swoop-pattern)
+  ;;             (if (equal helm-swoop-pattern "")
+  ;;                     (previous-history-element 1)
+  ;;                 (helm-next-line))
+  ;;     (helm-next-line)
+  ;;     ))
+  ;; (defun tl/helm-swoop-C-r ()
+  ;;     (interactive)
+  ;;     (if (boundp 'helm-swoop-pattern)
+  ;;             (if (equal helm-swoop-pattern "")
+  ;;                     (previous-history-element 1)
+  ;;                 (helm-previous-line))
+  ;;     (helm-previous-line)
+  ;;     ))
+    #+END_SRC
+*** neotree
+
+    #+BEGIN_SRC emacs-lisp
+    (require 'neotree)
+    (global-set-key (kbd "M-g M-d") 'neotree-show)
+    (global-set-key (kbd "M-g M-h") 'neotree-hide)
+    (global-set-key (kbd "M-g M-r") 'neotree-dir)
+    #+END_SRC
+*** perspective
+    #+BEGIN_SRC  emacs-lisp
+  ;; (require 'perspective)
+    #+END_SRC
+*** smart-mode-line
+   
+    Choose the theme.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; (setq sml/theme 'dark)
+    #+END_SRC
+   
+    Activate smart-mode-line.
+
+    #+BEGIN_SRC emacs-lisp
+      ;; (setq sml/no-confirm-load-theme t)
+      ;; (sml/setup)
+      ;; (sml/apply-theme 'smart-mode-line-powerline)
+    #+END_SRC
