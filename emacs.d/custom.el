@@ -4,13 +4,21 @@
 
 (global-set-key (kbd "C-x C-,") 'nh/visit-emacs-custom-config)
 
-;; (add-to-list 'custom-theme-load-path (expand-file-name "themes" user-emacs-directory))
+(defun nh/load-init-file ()
+  (interactive)
+  (load-file "~/dotfiles/emacs.d/init.el"))
+
+(global-set-key (kbd "C-x C-.") 'nh/load-init-file)
+
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
 (evil-mode t)
 
 (setq evil-want-abbrev-expand-on-insert-exit nil)
 
 (define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
+
+(define-key evil-normal-state-map (kbd "C-n") 'treemacs)
 
 ; Bind escape to quit minibuffers
 (defun minibuffer-keyboard-quit ()
@@ -33,10 +41,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key [escape] 'evil-exit-emacs-state)
 
 (when (display-graphic-p)
-  (setq evil-emacs-state-cursor '("OrangeRed1" box))
-  (setq evil-normal-state-cursor '("LimeGreen" box))
+  (setq evil-emacs-state-cursor '("Magenta" box))
+  (setq evil-normal-state-cursor '("red3" box))
   (setq evil-visual-state-cursor '("orange" box))
-  (setq evil-insert-state-cursor '("SkyBlue" bar))
+  (setq evil-insert-state-cursor '("Green3" bar))
   (setq evil-replace-state-cursor '("orchid" bar))
   (setq evil-operator-state-cursor '("gold1" hollow))
 )
@@ -52,6 +60,20 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'normal dired-mode-map (kbd "j") 'dired-next-line)
 (evil-define-key 'normal dired-mode-map (kbd "k") 'dired-previous-line)
 
+;; (ido-mode t)
+
+(ivy-mode t)
+(setq ivy-use-virtual-buffers t)
+(setq enable-recursive-minibuffers t)
+(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key (kbd "<f6>") 'ivy-resume)
+(counsel-mode t)
+(counsel-projectile-mode t)
+
+(define-key ivy-minibuffer-map (kbd "M-j") 'ivy-next-line)
+(define-key ivy-minibuffer-map (kbd "M-k") 'ivy-previous-line)
+
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -59,6 +81,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq frame-title-format '((:eval (projectile-project-name))))
 
 (setq inhibit-startup-message t)
+
+(add-hook 'focus-out-hook (lambda ()
+   (when (windowp (active-minibuffer-window))
+   (abort-recursive-edit))
+   ))
 
 ;; (defun nh/set-mode-line-format ()
    ;; (setq-default mode-line-format
@@ -82,11 +109,27 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    ;; ))
 ;; (add-hook 'after-init-hook 'nh/set-mode-line-format)
 
-;; (load-theme 'atom-one-dark)
+(defun nh/apply-solarized-theme ()
+  (setq solarized-use-variable-pitch nil)
+  (setq solarized-height-plus-1 1.0)
+  (setq solarized-height-plus-2 1.0)
+  (setq solarized-height-plus-3 1.0)
+  (setq solarized-height-plus-4 1.0)
+  ;; (setq solarized-high-contrast-mode-line t)
+  (setq solarized-emphasize-indicators nil)
+  (setq x-underline-at-descent-line t)
+  (load-theme 'solarized-dark t)
+  )
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+                  (nh/apply-solarized-theme)))
+  (nh/apply-solarized-theme))
 
 (setq ring-bell-function 'ignore)
 
-(mouse-avoidance-mode 'banish)
+;; (mouse-avoidance-mode 'banish)
 
 (defmacro diminish-minor-mode (filename mode &optional abbrev)
   `(eval-after-load (symbol-name ,filename)
@@ -140,7 +183,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq blink-cursor-mode nil)
 
-(setq column-number-mode t)
+;; (setq column-number-mode t)
 
 (setq confirm-kill-emacs 'y-or-n-p)
 
@@ -152,7 +195,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (beacon-mode t)
 (setq beacon-push-mark 25)
-(setq beacon-color "green")
+(setq beacon-color "red3")
 
 (defun nh/split-horizontally-for-temp-buffers ()
   (when (one-window-p t)
@@ -224,7 +267,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq org-src-fontify-natively t)
 
-(setq org-src-window-setup 'current-window)
+;; (setq org-src-window-setup 'current-window)
 
 (add-to-list 'org-structure-template-alist
              '("el" "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"))
@@ -235,9 +278,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (ruby . t)
     (python . t)
     (sh . t)
-    (js . t)))
+    (js . t)
+    (C . t)))
 
 (setq org-confirm-babel-evaluate nil)
+
+(add-to-list 'org-babel-default-header-args:python
+  '(:results . "output"))
 
 (setq org-html-postamble nil)
 
@@ -249,14 +296,24 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-git-gutter-mode t)
 (git-gutter:linum-setup)
 
-;; (custom-set-variables
-;;  '(git-gutter:modified-sign "  ") ;; two space
-;;  '(git-gutter:added-sign "++")    ;; multiple character is OK
-;;  '(git-gutter:deleted-sign "--"))
+(custom-set-variables
+    '(git-gutter:modified-sign "**") ;; two space
+    '(git-gutter:added-sign "++")    ;; multiple character is OK
+    '(git-gutter:deleted-sign "--"))
 
 (set-face-background 'git-gutter:modified "yellow")
 (set-face-foreground 'git-gutter:added "green")
 (set-face-foreground 'git-gutter:deleted "red")
+
+(require 'telephone-line)
+
+(setq telephone-line-primary-left-separator 'telephone-line-cos-left
+      telephone-line-secondary-left-separator 'telephone-line-cos-hollow-left
+      telephone-line-primary-right-separator 'telephone-line-cos-right
+      telephone-line-secondary-right-separator 'telephone-line-cos-hollow-right)
+;; (setq telephone-line-evil-use-short-tag t)
+
+(telephone-line-mode t)
 
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -267,17 +324,17 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'auto-complete-config)
 (ac-config-default)
 
-(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-(add-hook 'emacs-lisp-mode-hook                     #'enable-paredit-mode)
-(add-hook 'eval-expression-minibuffer-setup-hook    #'enable-paredit-mode)
-(add-hook 'ielm-mode-hook                           #'enable-paredit-mode)
-(add-hook 'lisp-mode-hook                           #'enable-paredit-mode)
-(add-hook 'lisp-interaction-mode-hook               #'enable-paredit-mode)
-(add-hook 'scheme-mode-hook                         #'enable-paredit-mode)
-(add-hook 'TeX-mode-hook                            #'enable-paredit-mode)
-(add-hook 'prog-mode-hook                           #'enable-paredit-mode)
-(global-set-key (kbd "{") 'paredit-open-curly)
-(global-set-key (kbd "}") 'paredit-close-curly)
+;; (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+;; (add-hook 'emacs-lisp-mode-hook                     #'enable-paredit-mode)
+;; (add-hook 'eval-expression-minibuffer-setup-hook    #'enable-paredit-mode)
+;; (add-hook 'ielm-mode-hook                           #'enable-paredit-mode)
+;; (add-hook 'lisp-mode-hook                           #'enable-paredit-mode)
+;; (add-hook 'lisp-interaction-mode-hook               #'enable-paredit-mode)
+;; (add-hook 'scheme-mode-hook                         #'enable-paredit-mode)
+;; (add-hook 'TeX-mode-hook                            #'enable-paredit-mode)
+;; (add-hook 'prog-mode-hook                           #'enable-paredit-mode)
+;; (global-set-key (kbd "{") 'paredit-open-curly)
+;; (global-set-key (kbd "}") 'paredit-close-curly)
 
 (require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
@@ -299,24 +356,24 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'expand-region)
 (global-set-key (kbd "C-q") 'er/expand-region)
 
-(require 'magit)
-(global-set-key (kbd "C-x g") 'magit-status)
+;; (require 'magit)
+;; (global-set-key (kbd "C-x g") 'magit-status)
 
 (require 'projectile)
 (projectile-global-mode t)
 
-(require 'helm-config)
+;; (require 'helm-config)
 ;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x b") 'helm-buffers-list)
-(global-set-key (kbd "C-x r b") 'helm-bookmarks)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
+;; (global-set-key (kbd "M-x") 'helm-M-x)
+;; (global-set-key (kbd "C-x b") 'helm-buffers-list)
+;; (global-set-key (kbd "C-x r b") 'helm-bookmarks)
+;; (global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
 ;; (setq helm-default-display-buffer-functions 'display-buffer-in-side-window)
 
-(require 'helm-projectile)
-(helm-projectile-on)
+;; (require 'helm-projectile)
+;; (helm-projectile-on)
 
 (require 'which-key)
 (which-key-mode)
@@ -330,12 +387,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ; Ignore current window
 (setq aw-ignore-current t)
 
-(require 'powerline)
-(setq powerline-default-separator "arrow-fade")
-(powerline-default-theme)
+;; (require 'sr-speedbar)
 
-(require 'powerline-evil)
-(powerline-evil-vim-color-theme)
+(require 'treemacs)
 
 ;; ;; jedi
 ;; (require 'jedi)
@@ -409,10 +463,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;;     (helm-previous-line)
 ;;     ))
 
-(require 'neotree)
-(global-set-key (kbd "M-g M-d") 'neotree-show)
-(global-set-key (kbd "M-g M-h") 'neotree-hide)
-(global-set-key (kbd "M-g M-r") 'neotree-dir)
+;; (require 'neotree)
+;; (global-set-key (kbd "M-g M-d") 'neotree-show)
+;; (global-set-key (kbd "M-g M-h") 'neotree-hide)
+;; (global-set-key (kbd "M-g M-r") 'neotree-dir)
 
 ;; (require 'perspective)
 
@@ -421,3 +475,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (setq sml/no-confirm-load-theme t)
 ;; (sml/setup)
 ;; (sml/apply-theme 'smart-mode-line-powerline)
+
+;; (require 'powerline)
+;; (setq powerline-default-separator "arrow-fade")
+;; (powerline-default-theme)
+
+;; (require 'powerline-evil)
+;; (powerline-evil-vim-color-theme)
