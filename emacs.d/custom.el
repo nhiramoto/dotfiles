@@ -41,12 +41,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key [escape] 'evil-exit-emacs-state)
 
 (when (display-graphic-p)
-  (setq evil-emacs-state-cursor '("Magenta" box))
-  (setq evil-normal-state-cursor '("red3" box))
-  (setq evil-visual-state-cursor '("orange" box))
-  (setq evil-insert-state-cursor '("Green3" bar))
-  (setq evil-replace-state-cursor '("orchid" bar))
-  (setq evil-operator-state-cursor '("gold1" hollow))
+  (setq evil-emacs-state-cursor '("DarkViolet" box))
+  (setq evil-normal-state-cursor '("DodgerBlue" box))
+  (setq evil-insert-state-cursor '("LimeGreen" bar))
+  (setq evil-motion-state-cursor '("LightSlateBlue" box))
+  (setq evil-operator-state-cursor '("VioletRed" hollow))
+  (setq evil-visual-state-cursor '("OrangeRed" box))
+  (setq evil-replace-state-cursor '("red" bar))
 )
 
 (setq evil-normal-state-tag   (propertize " <N> " 'face '((:background "LimeGreen" :foreground "black")))
@@ -195,7 +196,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (beacon-mode t)
 (setq beacon-push-mark 25)
-(setq beacon-color "red3")
+(setq beacon-color "DodgerBlue")
 
 (defun nh/split-horizontally-for-temp-buffers ()
   (when (one-window-p t)
@@ -312,6 +313,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       telephone-line-primary-right-separator 'telephone-line-cos-right
       telephone-line-secondary-right-separator 'telephone-line-cos-hollow-right)
 ;; (setq telephone-line-evil-use-short-tag t)
+
+(custom-set-faces
+  '(telephone-line-evil-emacs ((t (:inherit telephone-line-evil :background "DarkViolet"))))
+  '(telephone-line-evil-normal ((t (:inherit telephone-line-evil :background "MidnightBlue"))))
+  '(telephone-line-evil-insert ((t (:inherit telephone-line-evil :background "ForestGreen"))))
+  '(telephone-line-evil-motion ((t (:inherit telephone-line-evil :background "DarkSlateBlue"))))
+  '(telephone-line-evil-operator ((t (:inherit telephone-line-evil :background "VioletRed"))))
+  '(telephone-line-evil-visual ((t (:inherit telephone-line-evil :background "OrangeRed"))))
+  '(telephone-line-evil-replace ((t (:inherit telephone-line-evil :background "DarkRed"))))
+  )
 
 (telephone-line-mode t)
 
