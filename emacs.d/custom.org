@@ -32,6 +32,14 @@
    #+BEGIN_SRC emacs-lisp
      (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
    #+END_SRC
+
+* Server configurations
+
+  #+BEGIN_SRC emacs-lisp
+    (setq server-name "emacs-server")
+    (setq server-socket-dir "/tmp/emacs$UID")
+  #+END_SRC
+
 * Evil mode
   
   Use =evil-mode=.
@@ -55,7 +63,7 @@
   Bind =C-n= to show sidebar projects tree view.
 
   #+BEGIN_SRC emacs-lisp
-    (define-key evil-normal-state-map (kbd "C-n") 'treemacs)
+    ;; (define-key evil-normal-state-map (kbd "C-n") 'treemacs)
   #+END_SRC
 
 ** =<escape>= keybindings
@@ -167,6 +175,14 @@
    #+BEGIN_SRC emacs-lisp
    (setq inhibit-startup-message t)
    #+END_SRC
+** Inhibit to use X resources
+
+   When start from emacsclient, inhibit to use X resource.
+
+   #+BEGIN_SRC emacs-lisp
+     ;; (setq inhibit-x-resources t)
+   #+END_SRC
+
 ** Kill minibuffer when lose focus
 
    #+BEGIN_SRC emacs-lisp
@@ -214,7 +230,7 @@
        (setq solarized-height-plus-3 1.0)
        (setq solarized-height-plus-4 1.0)
        ;; (setq solarized-high-contrast-mode-line t)
-       (setq solarized-emphasize-indicators nil)
+       (setq solarized-emphasize-indicators t)
        (setq x-underline-at-descent-line t)
        (load-theme 'solarized-dark t)
        )
@@ -273,8 +289,6 @@
   (diminish-minor-mode 'git-gutter 'git-gutter-mode)
 
   (diminish-minor-mode 'paredit 'paredit-mode " π")
-  (diminish-minor-mode 'wrap-region 'wrap-region-mode " ")
-
   (diminish-major-mode 'emacs-lisp-mode-hook "el")
   (diminish-major-mode 'haskell-mode-hook "λ=")
   (diminish-major-mode 'lisp-interaction-mode-hook "λ")
@@ -293,15 +307,16 @@
 
    #+BEGIN_SRC emacs-lisp
    (require 'linum-relative)
+   (add-hook 'text-mode-hook (lambda () (linum-relative-mode nil)))
    (add-hook 'prog-mode-hook (lambda () (linum-relative-mode t)))
    (add-hook 'LaTeX-mode-hook (lambda () (linum-relative-mode t)))
-   (add-hook 'text-mode-hook (lambda () (linum-relative-mode t)))
+   (add-hook 'bibtex-mode-hook (lambda () (linum-relative-mode t)))
    #+END_SRC
 
    Disable for specific modes.
 
    #+BEGIN_SRC emacs-lisp
-   (add-hook 'org-mode-hook (lambda () (linum-relative-mode nil)))
+   ;; (add-hook 'org-mode-hook (lambda () (linum-relative-mode nil)))
    #+END_SRC
 
 ** Ask for y/n instead of yes/no
@@ -404,6 +419,12 @@
    #+END_SRC
 
 * Editing
+** Use UTF-8 by default
+
+   #+BEGIN_SRC emacs-lisp
+     (set-language-environment "UTF-8")
+   #+END_SRC
+
 ** Scroll conservatively
 
    Only scroll as far as point goes.
@@ -469,7 +490,7 @@
 (defun fd-switch-dictionary()
       (interactive)
       (let* ((dic ispell-current-dictionary)
-    	 (change (if (string= dic "english") "brasileiro" "english")))
+         (change (if (string= dic "english") "brasileiro" "english")))
         (ispell-change-dictionary change)
         (message "Dictionary switched from %s to %s" dic change)
         ))
@@ -537,7 +558,7 @@
   '((emacs-lisp . t)
     (ruby . t)
     (python . t)
-    (sh . t)
+    (sh . t)  ; emacs-24 uses sh instead of shell
     (js . t)
     (C . t)))
     #+END_SRC
@@ -582,30 +603,42 @@
 ** Git gutter
 
    #+BEGIN_SRC emacs-lisp
-    (require 'git-gutter)
-    (global-git-gutter-mode t)
-    (git-gutter:linum-setup)
+     ;; (require 'git-gutter)
+     ;; (global-git-gutter-mode t)
+     ;; (git-gutter:linum-setup)
    #+END_SRC
 
    #+BEGIN_SRC emacs-lisp
-    (custom-set-variables
-        '(git-gutter:modified-sign "**") ;; two space
-        '(git-gutter:added-sign "++")    ;; multiple character is OK
-        '(git-gutter:deleted-sign "--"))
+    ;; (custom-set-variables
+        ;; '(git-gutter:modified-sign "**") ;; two space
+        ;; '(git-gutter:added-sign "++")    ;; multiple character is OK
+        ;; '(git-gutter:deleted-sign "--"))
    #+END_SRC
 
    Set custom background colors.
 
    #+BEGIN_SRC emacs-lisp
-    (set-face-background 'git-gutter:modified "yellow")
-    (set-face-foreground 'git-gutter:added "green")
-    (set-face-foreground 'git-gutter:deleted "red")
+    ;; (set-face-background 'git-gutter:modified "yellow")
+    ;; (set-face-foreground 'git-gutter:added "green")
+    ;; (set-face-foreground 'git-gutter:deleted "red")
+   #+END_SRC
+
+** Diff HL
+
+   #+BEGIN_SRC emacs-lisp
+     ;; (require 'diff-hl)
+     ;; (add-hook 'text-mode-hook 'diff-hl-flydiff-mode)
+     ;; (add-hook 'text-mode-hook 'diff-hl-margin-mode)
+     ;; (add-hook 'text-mode-hook 'diff-hl-mode)
+     ;; (add-hook 'prog-mode-hook 'diff-hl-flydiff-mode)
+     ;; (add-hook 'prog-mode-hook 'diff-hl-margin-mode)
+     ;; (add-hook 'prog-mode-hook 'diff-hl-mode)
    #+END_SRC
 
 ** Telephone-line
    
    #+BEGIN_SRC emacs-lisp
-     (require 'telephone-line)
+     ;; (require 'telephone-line)
    #+END_SRC
    
    telephone-line settings.
@@ -776,7 +809,7 @@
 ** Treemacs
 
    #+BEGIN_SRC emacs-lisp
-     (require 'treemacs)
+     ;; (require 'treemacs)
    #+END_SRC
 
 ** Disabled (for backup)

@@ -98,9 +98,11 @@ alias pacsize="expac -S -H M '%k/t%n'"
 alias now="date +'%H:%M:%S'"
 alias today="date +'%A %d de %B de %Y'"
 alias up="cd .."
-alias x="exit"
 alias fe="nautilus ."
 alias edit="$EDITOR"
+alias tasks="ps -ef | grep -i"
+alias install="pacman -S"
+alias search="pacman -Ss"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
