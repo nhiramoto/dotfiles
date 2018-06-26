@@ -98,13 +98,12 @@
   
    #+BEGIN_SRC emacs-lisp
    (when (display-graphic-p)
-     (setq evil-emacs-state-cursor '("DarkViolet" box))
-     (setq evil-normal-state-cursor '("DodgerBlue" box))
-     (setq evil-insert-state-cursor '("LimeGreen" bar))
-     (setq evil-motion-state-cursor '("LightSlateBlue" box))
-     (setq evil-operator-state-cursor '("VioletRed" hollow))
-     (setq evil-visual-state-cursor '("OrangeRed" box))
-     (setq evil-replace-state-cursor '("red" bar))
+     (setq evil-emacs-state-cursor '("Magenta" box))
+     (setq evil-normal-state-cursor '("red3" box))
+     (setq evil-visual-state-cursor '("orange" box))
+     (setq evil-insert-state-cursor '("Green3" bar))
+     (setq evil-replace-state-cursor '("orchid" bar))
+     (setq evil-operator-state-cursor '("gold1" hollow))
    )
    #+END_SRC
 
@@ -376,7 +375,7 @@
     #+BEGIN_SRC emacs-lisp
       (beacon-mode t)
       (setq beacon-push-mark 25)
-      (setq beacon-color "DodgerBlue")
+      (setq beacon-color "red3")
     #+END_SRC
 
 ** Temporary buffers
@@ -649,20 +648,6 @@
            telephone-line-primary-right-separator 'telephone-line-cos-right
            telephone-line-secondary-right-separator 'telephone-line-cos-hollow-right)
      ;; (setq telephone-line-evil-use-short-tag t)
-   #+END_SRC
-   
-   Set custom telephone-line faces.
-
-   #+BEGIN_SRC emacs-lisp
-     (custom-set-faces
-       '(telephone-line-evil-emacs ((t (:inherit telephone-line-evil :background "DarkViolet"))))
-       '(telephone-line-evil-normal ((t (:inherit telephone-line-evil :background "MidnightBlue"))))
-       '(telephone-line-evil-insert ((t (:inherit telephone-line-evil :background "ForestGreen"))))
-       '(telephone-line-evil-motion ((t (:inherit telephone-line-evil :background "DarkSlateBlue"))))
-       '(telephone-line-evil-operator ((t (:inherit telephone-line-evil :background "VioletRed"))))
-       '(telephone-line-evil-visual ((t (:inherit telephone-line-evil :background "OrangeRed"))))
-       '(telephone-line-evil-replace ((t (:inherit telephone-line-evil :background "DarkRed"))))
-       )
    #+END_SRC
    
    Enable telephone-line.
