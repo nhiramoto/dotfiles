@@ -422,7 +422,7 @@
 ** Use UTF-8 by default
 
    #+BEGIN_SRC emacs-lisp
-     (set-language-environment "UTF-8")
+     ;; (set-language-environment "UTF-8")
    #+END_SRC
 
 ** Scroll conservatively
@@ -738,8 +738,8 @@
 ** expand-region
 
    #+BEGIN_SRC emacs-lisp
-    (require 'expand-region)
-    (global-set-key (kbd "C-q") 'er/expand-region)
+    ;; (require 'expand-region)
+    ;; (global-set-key (kbd "C-q") 'er/expand-region)
    #+END_SRC
 
 ** Magit
