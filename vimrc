@@ -79,7 +79,7 @@ filetype plugin indent on
 "let xml_syntax_folding=1      " XML
 
 set background=dark
-colorscheme gruvbox
+colorscheme onedark
 syntax on
     
     

@@ -72,7 +72,7 @@ export TERM\=xterm-256color
 # else
 #   export EDITOR='mvim'
 # fi
-export EDITOR='vim'
+export EDITOR='emacsclient -c --alternate-editor=""'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -94,6 +94,7 @@ alias czsh="$EDITOR ~/.zshrc"
 alias cterm="$EDITOR ~/.config/termite/config"
 alias ci3="$EDITOR ~/.config/i3/config"
 alias cpol="$EDITOR ~/.config/polybar/config"
+alias cfgemacs="$EDITOR ~/.emacs.d/custom.org"
 alias pacsize="expac -S -H M '%k/t%n'"
 alias now="date +'%H:%M:%S'"
 alias today="date +'%A %d de %B de %Y'"
@@ -103,6 +104,7 @@ alias edit="$EDITOR"
 alias tasks="ps -ef | grep -i"
 alias install="pacman -S"
 alias search="pacman -Ss"
+alias cdd='cd ~/Desktop'
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
@@ -117,8 +119,6 @@ PERL5LIB="/home/segfault/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5L
 PERL_LOCAL_LIB_ROOT="/home/segfault/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
 PERL_MB_OPT="--install_base \"/home/segfault/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/segfault/perl5"; export PERL_MM_OPT;
-
-alias cdd='cd ~/Desktop'
 
 autoload -U compinit && compinit
 
@@ -145,3 +145,4 @@ if [[ $(ps --no-header -p $PPID -o comm) =~ '^yakuake|konsole$' ]]; then
         for wid in $(xdotool search --pid $PPID); do
             xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -id $wid; done
 fi
+

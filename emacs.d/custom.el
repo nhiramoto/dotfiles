@@ -12,13 +12,15 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
+;; (setq server-name "emacs-server")
+
 (evil-mode t)
 
 (setq evil-want-abbrev-expand-on-insert-exit nil)
 
 (define-key evil-normal-state-map (kbd "C-p") 'projectile-find-file)
 
-(define-key evil-normal-state-map (kbd "C-n") 'treemacs)
+;; (define-key evil-normal-state-map (kbd "C-n") 'treemacs)
 
 ; Bind escape to quit minibuffers
 (defun minibuffer-keyboard-quit ()
@@ -41,12 +43,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key [escape] 'evil-exit-emacs-state)
 
 (when (display-graphic-p)
-  (setq evil-emacs-state-cursor '("Magenta" box))
-  (setq evil-normal-state-cursor '("red3" box))
-  (setq evil-visual-state-cursor '("orange" box))
-  (setq evil-insert-state-cursor '("Green3" bar))
-  (setq evil-replace-state-cursor '("orchid" bar))
-  (setq evil-operator-state-cursor '("gold1" hollow))
+  (setq evil-emacs-state-cursor '("DarkViolet" box))
+  (setq evil-normal-state-cursor '("DodgerBlue" box))
+  (setq evil-motion-state-cursor '("LightSlateBlue" box))
+  (setq evil-visual-state-cursor '("OrangeRed" box))
+  (setq evil-insert-state-cursor '("LimeGreen" bar))
+  (setq evil-replace-state-cursor '("red" bar))
+  (setq evil-operator-state-cursor '("VioletRed" hollow))
 )
 
 (setq evil-normal-state-tag   (propertize " <N> " 'face '((:background "LimeGreen" :foreground "black")))
@@ -82,6 +85,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq inhibit-startup-message t)
 
+;; (setq inhibit-x-resources t)
+
 (add-hook 'focus-out-hook (lambda ()
    (when (windowp (active-minibuffer-window))
    (abort-recursive-edit))
@@ -116,16 +121,19 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (setq solarized-height-plus-3 1.0)
   (setq solarized-height-plus-4 1.0)
   ;; (setq solarized-high-contrast-mode-line t)
-  (setq solarized-emphasize-indicators nil)
+  (setq solarized-emphasize-indicators t)
   (setq x-underline-at-descent-line t)
   (load-theme 'solarized-dark t)
   )
+(defun nh/apply-theme ()
+   (load-theme 'atom-one-dark t)
+   )
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions
               (lambda (frame)
-                  (nh/apply-solarized-theme)))
-  (nh/apply-solarized-theme))
+                  (nh/apply-theme)))
+  (nh/apply-theme))
 
 (setq ring-bell-function 'ignore)
 
@@ -156,8 +164,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (diminish-minor-mode 'git-gutter 'git-gutter-mode)
 
 (diminish-minor-mode 'paredit 'paredit-mode " π")
-(diminish-minor-mode 'wrap-region 'wrap-region-mode " ")
-
 (diminish-major-mode 'emacs-lisp-mode-hook "el")
 (diminish-major-mode 'haskell-mode-hook "λ=")
 (diminish-major-mode 'lisp-interaction-mode-hook "λ")
@@ -168,11 +174,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq linum-relative-global-mode nil)
 
 (require 'linum-relative)
+(add-hook 'text-mode-hook (lambda () (linum-relative-mode nil)))
 (add-hook 'prog-mode-hook (lambda () (linum-relative-mode t)))
 (add-hook 'LaTeX-mode-hook (lambda () (linum-relative-mode t)))
-(add-hook 'text-mode-hook (lambda () (linum-relative-mode t)))
+(add-hook 'bibtex-mode-hook (lambda () (linum-relative-mode t)))
 
-(add-hook 'org-mode-hook (lambda () (linum-relative-mode nil)))
+;; (add-hook 'org-mode-hook (lambda () (linum-relative-mode nil)))
 
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -224,6 +231,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-x 2") 'nh/split-window-below-and-switch)
 (global-set-key (kbd "C-x 3") 'nh/split-window-right-and-switch)
 
+;; (set-language-environment "UTF-8")
+
 (setq scroll-conservatively 100)
 
 (global-hl-line-mode t)
@@ -241,12 +250,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode t)))
 (add-hook 'org-mode-hook (lambda () (flyspell-mode t)))
 
-(add-hook 'prog-mode-hook (lambda () (flyspell-prog-mode t)))
-
 (defun fd-switch-dictionary()
       (interactive)
       (let* ((dic ispell-current-dictionary)
-    	 (change (if (string= dic "english") "brasileiro" "english")))
+         (change (if (string= dic "english") "brasileiro" "english")))
         (ispell-change-dictionary change)
         (message "Dictionary switched from %s to %s" dic change)
         ))
@@ -277,7 +284,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   '((emacs-lisp . t)
     (ruby . t)
     (python . t)
-    (sh . t)
+    (sh . t)  ; emacs-24 uses sh instead of shell
     (js . t)
     (C . t)))
 
@@ -292,26 +299,44 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq dired-recursive-deletes 'top)
 
-(require 'git-gutter)
-(global-git-gutter-mode t)
-(git-gutter:linum-setup)
+;; (require 'git-gutter)
+;; (global-git-gutter-mode t)
+;; (git-gutter:linum-setup)
 
-(custom-set-variables
-    '(git-gutter:modified-sign "**") ;; two space
-    '(git-gutter:added-sign "++")    ;; multiple character is OK
-    '(git-gutter:deleted-sign "--"))
+;; (custom-set-variables
+    ;; '(git-gutter:modified-sign "**") ;; two space
+    ;; '(git-gutter:added-sign "++")    ;; multiple character is OK
+    ;; '(git-gutter:deleted-sign "--"))
 
-(set-face-background 'git-gutter:modified "yellow")
-(set-face-foreground 'git-gutter:added "green")
-(set-face-foreground 'git-gutter:deleted "red")
+;; (set-face-background 'git-gutter:modified "yellow")
+;; (set-face-foreground 'git-gutter:added "green")
+;; (set-face-foreground 'git-gutter:deleted "red")
 
-(require 'telephone-line)
+;; (require 'diff-hl)
+;; (add-hook 'text-mode-hook 'diff-hl-flydiff-mode)
+;; (add-hook 'text-mode-hook 'diff-hl-margin-mode)
+;; (add-hook 'text-mode-hook 'diff-hl-mode)
+;; (add-hook 'prog-mode-hook 'diff-hl-flydiff-mode)
+;; (add-hook 'prog-mode-hook 'diff-hl-margin-mode)
+;; (add-hook 'prog-mode-hook 'diff-hl-mode)
+
+;; (require 'telephone-line)
 
 (setq telephone-line-primary-left-separator 'telephone-line-cos-left
       telephone-line-secondary-left-separator 'telephone-line-cos-hollow-left
       telephone-line-primary-right-separator 'telephone-line-cos-right
       telephone-line-secondary-right-separator 'telephone-line-cos-hollow-right)
 ;; (setq telephone-line-evil-use-short-tag t)
+
+(custom-set-faces
+  '(telephone-line-evil-emacs ((t (:inherit telephone-line-evil :background "DarkViolet"))))
+  '(telephone-line-evil-normal ((t (:inherit telephone-line-evil :background "MidnightBlue"))))
+  '(telephone-line-evil-insert ((t (:inherit telephone-line-evil :background "ForestGreen"))))
+  '(telephone-line-evil-motion ((t (:inherit telephone-line-evil :background "DarkSlateBlue"))))
+  '(telephone-line-evil-operator ((t (:inherit telephone-line-evil :background "VioletRed"))))
+  '(telephone-line-evil-visual ((t (:inherit telephone-line-evil :background "OrangeRed"))))
+  '(telephone-line-evil-replace ((t (:inherit telephone-line-evil :background "DarkRed"))))
+  )
 
 (telephone-line-mode t)
 
@@ -353,8 +378,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (add-hook 'latex-mode-hook 'yas-minor-mode)
 (yas-global-mode)
 
-(require 'expand-region)
-(global-set-key (kbd "C-q") 'er/expand-region)
+;; (require 'expand-region)
+;; (global-set-key (kbd "C-q") 'er/expand-region)
 
 ;; (require 'magit)
 ;; (global-set-key (kbd "C-x g") 'magit-status)
@@ -389,7 +414,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; (require 'sr-speedbar)
 
-(require 'treemacs)
+;; (require 'treemacs)
 
 ;; ;; jedi
 ;; (require 'jedi)
