@@ -247,6 +247,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq-default indent-tabs-mode nil)
 
+(smartparens-global-mode t)
+
 (add-hook 'LaTeX-mode-hook (lambda () (flyspell-mode t)))
 (add-hook 'org-mode-hook (lambda () (flyspell-mode t)))
 

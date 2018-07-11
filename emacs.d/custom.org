@@ -458,6 +458,7 @@
    #+BEGIN_SRC emacs-lisp
   (global-subword-mode t)
    #+END_SRC
+
 ** Save my location within a file
 
    Save the location of point for every file.
@@ -469,6 +470,11 @@
 
    #+BEGIN_SRC emacs-lisp
   (setq-default indent-tabs-mode nil)
+   #+END_SRC
+** Smartparens
+
+   #+BEGIN_SRC emacs-lisp
+     (smartparens-global-mode t)
    #+END_SRC
 
 * Spell check
