@@ -14,6 +14,14 @@ ZSH_THEME="tjkirch_mod2"
 # sensitive completion must be off. _ and - will be interchangeable.
 HYPHEN_INSENSITIVE="true"
 
+# bgnotify
+bgnotify_threshold=4
+function bgnotify_formatted {
+  ## $1=exit_status, $2=command, $3=elapsed_time
+  [ $1 -eq 0 ] && title="Done!" || title="Failed!"
+  bgnotify "$title" "<b>Command</b>: \"$2\"\n<b>Elapsed</b>: $3"
+}
+
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
 
@@ -50,7 +58,7 @@ HYPHEN_INSENSITIVE="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # plugins=(git zsh-syntax-highlighting themes zsh-256color zsh-output-highlighting zsh-autopair zsh-autosuggestions command-not-found)
-plugins=(git zsh-syntax-highlighting themes zsh-256color zsh-output-highlighting zsh-autopair)
+plugins=(git bgnotify zsh-syntax-highlighting themes zsh-256color zsh-output-highlighting zsh-autopair)
 autoload -U compinit && compinit
 
 # User configuration
@@ -146,3 +154,5 @@ if [[ $(ps --no-header -p $PPID -o comm) =~ '^yakuake|konsole$' ]]; then
             xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -id $wid; done
 fi
 
+# Use most as pager
+export PAGER="most"
