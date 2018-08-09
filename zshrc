@@ -19,7 +19,7 @@ bgnotify_threshold=4
 function bgnotify_formatted {
   ## $1=exit_status, $2=command, $3=elapsed_time
   [ $1 -eq 0 ] && title="Done!" || title="Failed!"
-  bgnotify "$title" "<b>Command</b>: \"$2\"\n<b>Elapsed</b>: $3"
+  bgnotify "$title" "<b>Command</b>: \"$2\"\n<b>Elapsed</b>: $3 s"
 }
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
@@ -58,7 +58,7 @@ function bgnotify_formatted {
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # plugins=(git zsh-syntax-highlighting themes zsh-256color zsh-output-highlighting zsh-autopair zsh-autosuggestions command-not-found)
-plugins=(git bgnotify zsh-syntax-highlighting themes zsh-256color zsh-output-highlighting zsh-autopair)
+plugins=(git bgnotify themes zsh-256color zsh-output-highlighting zsh-autopair)
 autoload -U compinit && compinit
 
 # User configuration
@@ -80,7 +80,7 @@ export TERM\=xterm-256color
 # else
 #   export EDITOR='mvim'
 # fi
-export EDITOR='emacsclient -c --alternate-editor=""'
+export EDITOR='vim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -155,4 +155,7 @@ if [[ $(ps --no-header -p $PPID -o comm) =~ '^yakuake|konsole$' ]]; then
 fi
 
 # Use most as pager
-export PAGER="most"
+# export PAGER="most"
+
+# Default Terminal
+export TERMINAL="termite"

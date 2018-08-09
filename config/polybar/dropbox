@@ -1,27 +1,20 @@
 #!/usr/bin/env sh
-# polybar Dropbox module by github.com/ylwghst
-# Feel free to use, share or change it without any restrictions
+# A polybar module for dropbox using dropbox-cli
 
-# These can be changed to hex codes of your favourite colours
-colorRunning="#dfdfdf"
+colorRunning="abb2bf"
 colorStopped="#555"
 
-pid=`pgrep -x "dropbox"`
-
-function isRunning {
-  if pgrep -x "dropbox" > /dev/null; then
-    return 0
-  fi
-    return 1
-}
+dropbox-cli running
+isrunning=$?
 
 if [[ $# -gt 0 ]]; then
   case "$1" in
       toggle)
-          if isRunning; then
-              kill $pid; exit 0
+          if [ $isrunning -ne 0 ]; then
+              dropbox-cli stop
+          else
+              dropbox-cli start
           fi
-          (bash "/home/toshiaki/.dropbox-dist/dropboxd &");
           ;;
           *)
               echo 'error: wrong argument'; exit 1
@@ -29,8 +22,8 @@ if [[ $# -gt 0 ]]; then
   esac
 fi
 
-if isRunning; then
-    echo "%{F$colorRunning}%{F-}"; exit 0
+if [ $isrunning -ne 0 ]; then
+    echo "%{F$colorRunning}%{F-}"; exit 0
+else
+    echo "%{F$colorStopped}%{F-}"; exit 0
 fi
-echo "%{F$colorStopped}%{F-}"
-exit 0

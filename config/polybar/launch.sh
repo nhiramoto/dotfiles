@@ -12,6 +12,7 @@ export MONITOR2=${2:-HDMI1}
 # Launch bars
 polybar -r top &
 polybar -r bottom &
+#polybar -r top2 &
 polybar -r bottom2 &
 
 echo "Bars launched..."
