@@ -5,7 +5,20 @@ export ZSH=/home/segfault/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="tjkirch_mod2"
+#ZSH_THEME="tjkirch_mod2"
+ZSH_THEME="spaceship"
+
+# SPACESHIP theme configurations
+SPACESHIP_PROMPT_ADD_NEWLINE=false
+SPACESHIP_PROMPT_ORDER=(user host time dir line_sep vi_mode char)
+SPACESHIP_RPROMPT_ORDER=(git hg node package ruby exit_code)
+SPACESHIP_CHAR_PREFIX=""
+SPACESHIP_CHAR_SYMBOL="λ"
+SPACESHIP_CHAR_SUFFIX=" "
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_USER_SHOW=always
+SPACESHIP_HOST_SHOW=always
+SPACESHIP_EXIT_CODE_SHOW=true
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -18,7 +31,7 @@ HYPHEN_INSENSITIVE="true"
 bgnotify_threshold=4
 function bgnotify_formatted {
   ## $1=exit_status, $2=command, $3=elapsed_time
-  [ $1 -eq 0 ] && title="Done!" || title="Failed!"
+  [ $1 -eq 0 ] && title="Command Done!" || title="Command Failed!"
   bgnotify "$title" "<b>Command</b>: \"$2\"\n<b>Elapsed</b>: $3 s"
 }
 
@@ -58,7 +71,7 @@ function bgnotify_formatted {
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # plugins=(git zsh-syntax-highlighting themes zsh-256color zsh-output-highlighting zsh-autopair zsh-autosuggestions command-not-found)
-plugins=(git bgnotify themes zsh-256color zsh-output-highlighting zsh-autopair)
+plugins=(git bgnotify zsh-syntax-highlighting themes zsh-256color zsh-output-highlighting zsh-autopair zsh-autosuggestions)
 autoload -U compinit && compinit
 
 # User configuration

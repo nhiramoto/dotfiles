@@ -19,7 +19,7 @@ set $indicator                     #8CB8D9
 set $font     "Exo 2 Medium 10"
 set $rofiFont "Exo 2 Medium 18"
 
-set $rofiTheme "Monokai"
+set $rofiTheme "sidebar"
 
 set $term      termite
 
@@ -163,7 +163,7 @@ bindsym $mod+Shift+minus   gaps inner current plus 5
 bindsym $mod+Return        exec "$term -d $(xcwd)"
 
 bindsym $mod+space         exec rofi -show drun -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
-#bindsym $mod+space         exec j4-dmenu-desktop --dmenu="dmenu -i -fn 'DejaVu Sans-10' -l 20"
+#bindsym $mod+space         exec j4-dmenu-desktop --dmenu="dmenu -i -fn 'DejaVu Sans-10' -l 20" --term="termite"
 #bindsym $mod+Shift+space   
 
 #bindsym $mod+Escape        exec $logout
@@ -219,7 +219,7 @@ bindsym $mod+Shift+y       resize shrink width 10 px or 10ppt
 bindsym $mod+z             gaps outer current plus 5
 bindsym $mod+Shift+z       gaps outer current minus 5
 
-#bindsym $mod+F2            exec rofi -show run -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
+bindsym $mod+F2            exec rofi -show run -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
 
 # switch to workspace
 bindsym $mod+1             workspace $ws1
@@ -371,10 +371,10 @@ exec $HOME/.dropbox-dist/dropboxd
 #exec geary --hidden
 exec --no-startup-id nm-applet
 #exec --no-startup-id mpd
-exec compton -b --config ~/.config/compton.conf
+exec_always --no-startup-id ~/.config/compton/launch.sh
 # exec --no-startup-id /usr/lib/kdeconnectd
 # exec --no-startup-id indicator-kdeconnect
-exec --no-startup-id albert
+# exec --no-startup-id albert
 exec --no-startup-id udiskie
 exec --no-startup-id ~/.config/conky/launch.sh
 
@@ -401,7 +401,7 @@ for_window [class="^.*"] border pixel 0
 # Gaps
 gaps inner 6
 gaps outer 6
-#smart_gaps on
+smart_gaps on
 for_window [class="Firefox"] gaps inner 0
 for_window [class="Firefox"] gaps outer 0
 for_window [class="Chrome"] gaps inner 0
