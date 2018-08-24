@@ -6,13 +6,18 @@ killall -q polybar
 # Wait until the processes have been shut down
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
-export MONITOR1=${1:-eDP1}
-export MONITOR2=${2:-HDMI1}
+export MONITOR1=$(xrandr | awk '{ if ($2 == "connected" && $3 == "primary") { print $1 } }')
+export MONITOR2=$(xrandr | awk '{ if ($2 == "connected" && $3 ~ /^[1-9]/) { print $1 } }' | head -n 1)
 
 # Launch bars
-polybar -r top &
-polybar -r bottom &
-#polybar -r top2 &
-polybar -r bottom2 &
+if [[ $MONITOR1 ]]; then
+    polybar -r top &
+    polybar -r bottom &
+fi
+
+if [[ $MONITOR2 ]]; then
+    #polybar -r top2 &
+    polybar -r bottom2 &
+fi
 
 echo "Bars launched..."

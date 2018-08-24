@@ -9,10 +9,10 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #5521252B
+background = #ff111111
 background-alt = #444
 ;foreground = ${xrdb:color7:#222}
-foreground = #ccabb2bf
+foreground = #ffffff
 foreground-alt = #55abb2bf
 foreground-disabled= #88be5046
 primary = #0070FF
@@ -40,8 +40,8 @@ line-color = #f00
 border-size = 0
 border-color = #00000000
 
-padding-left = 2
-padding-right = 1
+padding-left = 3
+padding-right = 3
 
 module-margin-left = 4
 module-margin = 1
@@ -55,18 +55,19 @@ font-4 = siji:pixelsize=10;1
 
 modules-left = powermenu xwindow
 ;modules-center = 
-modules-right = xkeyboard ufw dropbox xbacklight volume wlan battery date
+modules-right = xkeyboard httpd updates ufw dropbox touchpad xbacklight volume network wlan battery date
 
 ;separator = |
 
 locale = pt_BR.UTF-8
 
 tray-position = right
+tray-detached = false
 tray-padding = 2
-;tray-offset-x = 0
+;tray-offset-x = -10
 ;tray-offset-y = 0
-;tray-scale = 1.0
-tray-maxsize = 22
+tray-scale = 0.9
+tray-maxsize = 24
 ;tray-transparent = true
 ;tray-background = #0063ff
 tray-background = ${root.background}
@@ -452,18 +453,28 @@ bar-used-empty = ─
 bar-used-empty-font = 6
 bar-used-empty-foreground = #444444
 
+[module/network]
+type = custom/script
+exec = ~/.config/polybar/network.sh
+tail = false
+interval = 3.0
+
+format = <label>
+
+label = %output%
+
 [module/wlan]
 type = internal/network
 interface = wlo1
 interval = 3.0
 
-format-connected = %{A:nm-connection-editor&:}<ramp-signal> <label-connected>%{A}
+format-connected = %{A:nm-connection-editor&:}<label-connected>%{A}
 ;format-connected =  <label-connected>
-label-connected = %signal%%
+label-connected = %essid% (%signal%%)
 ;label-connected = %essid%
 
-;format-disconnected =
-format-disconnected = %{A:nm-connection-editor&:} <label-disconnected> %{A}
+; Use custom network.sh script for other connections.
+format-disconnected = 
 format-disconnected-foreground = ${colors.foreground-disabled}
 ;label-disconnected = %ifname% disconnected
 label-disconnected = 
@@ -480,6 +491,16 @@ ramp-signal-3-foreground = #AAA
 ramp-signal-4 = 
 ramp-signal-4-foreground = #fff
 ;ramp-signal-foreground = ${colors.foreground-alt}
+
+[module/touchpad]
+type = custom/script
+exec = ~/.config/polybar/touchpad.sh
+tail = true
+interval = 1.0
+
+format = <label>
+
+label = %output%
 
 [module/netspeed]
 type = internal/network
@@ -512,8 +533,8 @@ format-disconnected =
 type = internal/date
 interval = 1
 
-date =  %{F#99}%Y-%m-%d%%{F-}  %%{F#fff}%H:%M%%{F-}
-date-alt = %%{F#fff}%A, %d %B %Y  %%{F#fff}%H:%M%%{F#666}:%%{F#fba922}%S%%{F-}
+date =  %Y-%m-%d  %H:%M
+date-alt = %A, %d %B %Y  %H:%M:%S
 
 [module/volume]
 type = internal/volume
@@ -542,9 +563,9 @@ format-discharging = <ramp-capacity> <label-discharging>
 format-full = <label-full>
 
 label-charging = %percentage%%
-label-charging-foreground = #f9e73e
+label-charging-foreground = #e5c07b
 label-discharging = %percentage%%
-label-discharging-foreground = #ff7caa
+label-discharging-foreground = #c678dd
 label-full =  %percentage%%
 
 ramp-capacity-0 = 
@@ -627,11 +648,27 @@ tail = true
 
 [module/ufw]
 type = custom/script
-exec = ~/.config/polybar/ufw.sh
+exec = ~/.config/polybar/service.sh ufw 
 interval = 1
 label = %output%
 format = <label>
 ;click-left = 
+tail = true
+
+[module/updates]
+type = custom/script
+exec = ~/.config/polybar/updates-arch.sh
+interval = 180
+format = <label>
+label = %output%
+tail = false
+
+[module/httpd]
+type = custom/script
+exec = ~/.config/polybar/service.sh httpd 
+interval = 1
+label = %output%
+format = <label>
 tail = true
 
 ;[module/usb]
