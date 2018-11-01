@@ -1,3 +1,7 @@
+
+" When use fish-shell
+set shell=/bin/bash
+
 set nocompatible
 filetype off
 
@@ -51,6 +55,10 @@ Plugin 'morhetz/gruvbox'
 "Plugin 'w0rp/ale'
 Plugin 'chriskempson/base16-vim'
 Plugin 'Reewr/vim-monokai-phoenix'
+Plugin 'micha/vim-colors-solarized'
+Plugin 'dag/vim-fish'
+Plugin 'JamshedVesuna/vim-markdown-preview'
+Plugin 'nhooyr/elysian.vim'
 
 set runtimepath^=~/.vim/bundle/vim-snippets
 
@@ -79,7 +87,7 @@ filetype plugin indent on
 "let xml_syntax_folding=1      " XML
 
 set background=dark
-colorscheme onedark
+colorscheme apprentice
 syntax on
     
     
