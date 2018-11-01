@@ -10,15 +10,34 @@ ZSH_THEME="spaceship"
 
 # SPACESHIP theme configurations
 SPACESHIP_PROMPT_ADD_NEWLINE=false
+SPACESHIP_PROMPT_FIRST_PREFIX_SHOW=true
+SPACESHIP_PROMPT_DEFAULT_PREFIX=""
+SPACESHIP_PROMPT_DEFAULT_SUFFIX=" "
 SPACESHIP_PROMPT_ORDER=(user host time dir line_sep vi_mode char)
-SPACESHIP_RPROMPT_ORDER=(git hg node package ruby exit_code)
-SPACESHIP_CHAR_PREFIX=""
-SPACESHIP_CHAR_SYMBOL="λ"
+SPACESHIP_RPROMPT_ORDER=(git hg node package ruby venv conda exit_code)
+SPACESHIP_CHAR_PREFIX="╰"
+SPACESHIP_CHAR_SYMBOL="─❖"
 SPACESHIP_CHAR_SUFFIX=" "
 SPACESHIP_TIME_SHOW=true
+SPACESHIP_TIME_PREFIX="─❬"
+SPACESHIP_TIME_SUFFIX="❭"
 SPACESHIP_USER_SHOW=always
+SPACESHIP_USER_PREFIX="╭─❬"
+SPACESHIP_USER_SUFFIX=""
+SPACESHIP_USER_COLOR=green
 SPACESHIP_HOST_SHOW=always
+SPACESHIP_HOST_PREFIX="@"
+SPACESHIP_HOST_SUFFIX="❭"
+SPACESHIP_DIR_PREFIX="─❬"
+SPACESHIP_DIR_SUFFIX="❭"
 SPACESHIP_EXIT_CODE_SHOW=true
+SPACESHIP_GIT_SHOW=true
+SPACESHIP_GIT_PREFIX="❬"
+SPACESHIP_GIT_SUFFIX="❭"
+SPACESHIP_PACKAGE_PREFIX="─❬"
+SPACESHIP_PACKAGE_SUFFIX="❭"
+SPACESHIP_VENV_PREFIX="❬"
+SPACESHIP_VENV_SUFFIX="❭"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -76,9 +95,8 @@ autoload -U compinit && compinit
 
 # User configuration
 
-export PATH="/home/segfault/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH="$PATH:/home/segfault/.local/bin:/home/segfault/.script:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/apache-maven-3.3.9/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
-export PATH="/opt/apache-maven-3.3.9/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -172,3 +190,8 @@ fi
 
 # Default Terminal
 export TERMINAL="termite"
+
+# Python Virtualenv
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/bin/virtualenvwrapper_lazy.sh
+
