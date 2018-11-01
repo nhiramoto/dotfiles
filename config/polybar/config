@@ -40,15 +40,15 @@ line-color = #f00
 border-size = 0
 border-color = #00000000
 
-padding-left = 3
-padding-right = 3
+padding-left = 0
+padding-right = 0
 
-module-margin-left = 4
-module-margin = 1
+module-margin-left = 0
+module-margin = 4
 
-font-0 = Exo 2 Semibold:pixelsize=11;1
+font-0 = Exo 2 Medium:pixelsize=10;1
 ;font-0 = Fantasque Sans Mono:pixelsize=11;1
-font-1 = Material Design Icons:pixelsize=13;2
+font-1 = Material Design Icons:pixelsize=12;2
 font-2 = FontAwesome:pixelsize=10;1
 font-3 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-4 = siji:pixelsize=10;1
@@ -72,7 +72,7 @@ tray-maxsize = 24
 ;tray-background = #0063ff
 tray-background = ${root.background}
 
-;wm-restack = bspwm
+wm-restack = bspwm
 ;wm-restack = i3
 
 ;override-redirect = true
@@ -111,7 +111,7 @@ font-2 = ${bar/top.font-2}
 font-3 = ${bar/top.font-3}
 font-4 = ${bar/top.font-4}
 
-modules-left = i3
+modules-left = bspwm i3
 modules-center = mpd
 modules-right = cpu memory temperature netspeed
 
@@ -144,11 +144,12 @@ font-2 = ${bar/top.font-2}
 font-3 = ${bar/top.font-3}
 font-4 = ${bar/top.font-4}
 
-modules-left = i3
+modules-left = bspwm i3
 modules-center = date
 
 [bar/bottom2]
-monitor = ${env:MONITOR2}
+#monitor = ${env:MONITOR2}
+monitor = HDMI1
 monitor-strict = true
 width = 100%
 height = 22
@@ -213,38 +214,38 @@ label-unmounted-foreground = ${colors.foreground-alt}
 [module/bspwm]
 type = internal/bspwm
 
-ws-icon-0 = term;
+ws-icon-0 = : 
 ws-icon-1 = web;
 ws-icon-2 = code;
 ws-icon-3 = music;
 ws-icon-4 = irssi;
-ws-icon-default = 
+ws-icon-default =
 
 format = <label-state> <label-mode>
 
 label-dimmed-underline = ${BAR.background}
 
-label-active = %icon%
+label-active = %name%%icon%
 label-active-foreground = #fff
 label-active-background = #773f3f3f
-label-active-underline = #c9665e
+label-active-underline = ${colors.primary}
 label-active-font = 4
 label-active-padding = 4
 
-label-occupied = %icon%
-label-occupied-foreground = #dd
+label-occupied = %name%%icon%
+label-occupied-foreground = #aaa
 label-occupied-underline = #666
 label-occupied-font = 4
 label-occupied-padding = 4
 
-label-urgent = %icon%
+label-urgent = %name%%icon%
 label-urgent-foreground = #000000
 label-urgent-background = #bd2c40
 label-urgent-underline = #9b0a20
 label-urgent-font = 4
 label-urgent-padding = 4
 
-label-empty = %icon%
+label-empty = %name%%icon%
 label-empty-foreground = #55
 label-empty-font = 4
 label-empty-padding = 4
@@ -339,7 +340,7 @@ label-urgent-padding = 4
 [module/mpd]
 type = internal/mpd
 ;format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
-format-online = <icon-prev> <icon-stop> <toggle> <icon-next>  <icon-repeat> <icon-random>  <bar-progress> <label-time> <label-song>
+format-online = <icon-prev> <icon-stop> <toggle> <icon-next>  <icon-repeat> <icon-random> <label-song>
 
 icon-prev = 
 icon-prev-padding = 1
@@ -400,7 +401,7 @@ card = intel_backlight
 
 [module/cpu]
 type = internal/cpu
-interval = 0.5
+interval = 1
 ;format = <label> <ramp-coreload>
 format =  <label>
 label = %percentage:3:3:---%%
