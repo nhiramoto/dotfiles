@@ -1,0 +1,39 @@
+! vi:syntax=xdefaults
+! Exported from http://terminal.sexy
+
+! special
+URxvt*foreground:   #8ca68c
+URxvt*background:   #131513
+URxvt*cursorColor:  #8ca68c
+
+! black
+URxvt*color0:       #131513
+URxvt*color8:       #687d68
+
+! red
+URxvt*color1:       #e6193c
+URxvt*color9:       #e6193c
+
+! green
+URxvt*color2:       #29a329
+URxvt*color10:      #29a329
+
+! yellow
+URxvt*color3:       #c3c322
+URxvt*color11:      #c3c322
+
+! blue
+URxvt*color4:       #3d62f5
+URxvt*color12:      #3d62f5
+
+! magenta
+URxvt*color5:       #ad2bee
+URxvt*color13:      #ad2bee
+
+! cyan
+URxvt*color6:       #1999b3
+URxvt*color14:      #1999b3
+
+! white
+URxvt*color7:       #8ca68c
+URxvt*color15:      #f0fff0

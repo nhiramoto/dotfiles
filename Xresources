@@ -1,0 +1,21 @@
+! vi:syntax=xdefaults
+
+#include ".Xresources.d/rxvt-unicode"
+
+Xft.lcdfilter: lcddefault
+XTerm.termName: xterm-256color
+XTerm.vt100.locale: true
+XTerm.vt100.metaSendsEscape: true
+XTerm.vt100.scrollBar: true
+XTerm.vt100.scrollbar.width: 8
+XTerm.vt100.foreground: white
+XTerm.vt100.background: black
+!XTerm.vt100.faceName: Menlo:size=10:antialias=true
+!XTerm.vt100.renderFont: false
+
+rofi.font: Exo 2, Medium, 20
+rofi.color-enabled: true
+rofi.color-normal: argb:ffffffff , #353535 , argb:ffffffff , #ff372c , #1b2b34
+rofi.color-urgent: argb:ffffffff , #ff372c , argb:ffffffff , #ff372c , #1b2b34
+rofi.color-active: argb:ffffffff , #6699cc , argb:ffffffff , #6699cc , #1b2b34
+rofi.color-window: argb:ffffffff

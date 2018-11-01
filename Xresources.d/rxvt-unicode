@@ -1,0 +1,21 @@
+! vi:syntax=xdefaults
+
+#include "colors/apprentice.dark"
+
+URxvt*.termName: rxvt-unicode-256color
+
+! Font
+URxvt.font: xft:FiraCode:medium:size=9
+
+URxvt.scrollBar: false
+
+! Extensions
+URxvt.perl-ext-common: fullscreen
+
+! Key Bindings
+URxvt.keysym.F11: perl:fullscreen:switch
+
+!! Switch Fonts
+URxvt.keysym.M-C-1: command:\033]50;xft:FiraCode:medium:size=9\007
+URxvt.keysym.M-C-2: command:\033]50;9x15bold\007
+
