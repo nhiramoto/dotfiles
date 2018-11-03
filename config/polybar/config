@@ -8,18 +8,19 @@
 ;=====================================================
 
 [colors]
-;background = ${xrdb:color0:#222}
-background = #ff111111
+background = ${xrdb:URxvt*background:#000}
+;background = #ff262626
 background-alt = #444
-;foreground = ${xrdb:color7:#222}
-foreground = #ffffff
-foreground-alt = #55abb2bf
-foreground-disabled= #88be5046
-primary = #0070FF
-secondary = #e60053
+foreground = ${xrdb:URxvt*foreground:#fff}
+;foreground = #fff
+;foreground = #ffbcbcbc
+foreground-alt = ${xrdb:URxvt*color15:#55abb2bf}
+foreground-disabled= ${xrdb:URxvt*color8:#88be5046}
+primary = ${xrdb:URxvt*color4:#00f}
+secondary = ${xrdb:URxvt*color7:#e60053}
 ;secondary = #00ff00
-warn = #e5c07b
-alert = #e06c75
+warn = ${xrdb:URxvt*color11:#e5c07b}
+alert = ${xrdb:URxvt*color9:#e06c75 }
 
 [bar/top]
 monitor = ${env:MONITOR1}
@@ -40,11 +41,11 @@ line-color = #f00
 border-size = 0
 border-color = #00000000
 
-padding-left = 0
-padding-right = 0
+padding-left = 3
+padding-right = 3
 
-module-margin-left = 0
-module-margin = 4
+module-margin-left = 4
+module-margin = 1
 
 font-0 = Exo 2 Medium:pixelsize=10;1
 ;font-0 = Fantasque Sans Mono:pixelsize=11;1
@@ -148,8 +149,7 @@ modules-left = bspwm i3
 modules-center = date
 
 [bar/bottom2]
-#monitor = ${env:MONITOR2}
-monitor = HDMI1
+monitor = ${env:MONITOR2}
 monitor-strict = true
 width = 100%
 height = 22
@@ -177,7 +177,7 @@ font-2 = ${bar/top.font-2}
 font-3 = ${bar/top.font-3}
 font-4 = ${bar/top.font-4}
 
-modules-left = i3
+modules-left = bspwm i3
 ;modules-center =
 ;modules-right =
 

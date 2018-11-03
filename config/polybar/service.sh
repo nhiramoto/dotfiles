@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 # A polybar module to check service status.
 
-colorRunning="#ffffff"
-colorStopped="#555"
+colorRunning=$(xgetres URxvt.foreground || echo "#fff")
+colorStopped=$(xgetres URxvt.color8 || echo "#555")
 
 service="$1" # service name
 icon="$2"    # icon for the service status

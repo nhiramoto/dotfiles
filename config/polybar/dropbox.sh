@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 # A polybar module for dropbox using dropbox-cli
 
-colorRunning="#ffffff"
-colorStopped="#555"
+colorRunning=$(xgetres URxvt.foreground || echo "#fff")
+colorStopped=$(xgetres URxvt.color8 || echo "#555")
 
 dropbox-cli running
 isrunning=$?

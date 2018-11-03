@@ -1,7 +1,7 @@
 #!/bin/bash
 
-colorHas="#abb2bf"
-colorNo="#555"
+colorRunning=$(xgetres URxvt.foreground || echo "#fff")
+colorStopped=$(xgetres URxvt.color8 || echo "#555")
 
 ping -q -c 1 8.8.8.8 2> /dev/null > /dev/null
 

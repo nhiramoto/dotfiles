@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 # A polybar module to check a network interface status.
 
-colorRunning="#ffffff"
-colorStopped="#555"
+colorRunning=$(xgetres URxvt.foreground || echo "#fff")
+colorStopped=$(xgetres URxvt.color8 || echo "#555")
 
 # Interfaces name pattern (regex)
 wlan=^wlo1$

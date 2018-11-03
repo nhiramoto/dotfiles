@@ -1,7 +1,7 @@
 #!/bin/bash
 
-colorRunning="#abb2bf"
-colorStopped="#88be5046"
+colorRunning=$(xgetres URxvt.foreground || echo "#fff")
+colorStopped=$(xgetres URxvt.color8 || echo "#555")
 
 state=`~/.script/touchpad.sh`
 
