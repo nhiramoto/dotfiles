@@ -18,6 +18,7 @@ set -xU LESS_TERMCAP_us (printf "\e[01;32m")
 export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
 export LESS="-R "
 export LGOPATH="$HOME/go/bin"
+export GOPATH="$HOME/go"
 
 # bspwm sxhkd
 export SXHKD_SHELL=sh
