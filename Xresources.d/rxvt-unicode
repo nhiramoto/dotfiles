@@ -4,8 +4,16 @@
 
 URxvt*.termName: rxvt-unicode-256color
 
+URxvt*cursorBlink: true
+
+! Transparency
+URxvt*.transparent: false
+!URxvt*.shading: 10
+
 ! Font
 URxvt.font: xft:FiraCode:medium:size=9
+URxvt.boldFont: xft:FiraCode:bold:size=9
+URxvt.italicFont: xft:FiraCode:italic:size=9
 
 URxvt.scrollBar: false
 
@@ -17,5 +25,9 @@ URxvt.keysym.F11: perl:fullscreen:switch
 
 !! Switch Fonts
 URxvt.keysym.M-C-1: command:\033]50;xft:FiraCode:medium:size=9\007
-URxvt.keysym.M-C-2: command:\033]50;9x15bold\007
+URxvt.keysym.M-C-2: command:\033]50;xft:SourceCodePro:medium:size=9\007
+URxvt.keysym.M-C-3: command:\033]50;xft:FantasqueSansMono:medium:size=10\007
+URxvt.keysym.M-C-4: command:\033]50;xft:Hermit:medium:size=9\007
+URxvt.keysym.M-C-5: command:\033]50;xft:Inconsolata:medium:size=9\007
+URxvt.keysym.M-C-0: command:\033]50;9x15bold\007
 
