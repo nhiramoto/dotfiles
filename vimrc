@@ -90,6 +90,8 @@ set background=dark
 colorscheme apprentice
 syntax on
     
+" Use system clipboard (tested on Arch Linux)
+set clipboard=unnamedplus
     
 set mouse=a
 set showmatch

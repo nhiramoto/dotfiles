@@ -4,7 +4,7 @@ rofi.font: Exo 2, Medium, 20
 !rofi.theme: Monokai
 rofi.lines: 7
 rofi.color-enabled: true
-rofi.color-window: #262626, #5f87af
+rofi.color-window: #262626, #262626, #262626
 rofi.color-normal: #262626, #bcbcbc, #262626, #8fafd7, #262626
 rofi.color-active: #262626, #bcbcbc, #262626, #87af87, #262626
 rofi.color-urgent: #262626, #bcbcbc, #262626, #ffffaf, #262626
