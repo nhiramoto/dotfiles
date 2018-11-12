@@ -103,7 +103,7 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 export LANG\='en_US.UTF-8'
 export LC_ALL\="en_US.UTF-8"
-export TERM\=xterm-256color
+#export TERM\=xterm-256color
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -127,13 +127,13 @@ export EDITOR='vim'
 # Example aliases
 # alias zshconfig="$editor ~/.zshrc"
 # alias ohmyzsh="$editor ~/.oh-my-zsh"
-alias open=xdg-open
-alias cvim="$EDITOR ~/.vimrc"
-alias czsh="$EDITOR ~/.zshrc"
-alias cterm="$EDITOR ~/.config/termite/config"
-alias ci3="$EDITOR ~/.config/i3/config"
-alias cpol="$EDITOR ~/.config/polybar/config"
+alias cfgvim="$EDITOR ~/.vimrc"
+alias cfgzsh="$EDITOR ~/.zshrc"
+alias cfgterm="$EDITOR ~/.config/termite/config"
+alias cfgi3="$EDITOR ~/.config/i3/config"
+alias cfgpol="$EDITOR ~/.config/polybar/config"
 alias cfgemacs="$EDITOR ~/.emacs.d/custom.org"
+alias open=xdg-open
 alias pacsize="expac -S -H M '%k/t%n'"
 alias now="date +'%H:%M:%S'"
 alias today="date +'%A %d de %B de %Y'"
@@ -194,4 +194,7 @@ export TERMINAL="termite"
 # Python Virtualenv
 export WORKON_HOME=$HOME/.virtualenvs
 source /usr/bin/virtualenvwrapper_lazy.sh
+
+# Zsh Line Editor: Enable vi mode
+#bindkey -v
 
