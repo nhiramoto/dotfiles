@@ -73,10 +73,10 @@ tray-maxsize = 24
 ;tray-background = #0063ff
 tray-background = ${root.background}
 
-;wm-restack = bspwm
+wm-restack = bspwm
 ;wm-restack = i3
 
-;override-redirect = true
+override-redirect = false
 
 ;scroll-up = bspwm-desknext
 ;scroll-down = bspwm-deskprev
@@ -112,6 +112,9 @@ font-2 = ${bar/top.font-2}
 font-3 = ${bar/top.font-3}
 font-4 = ${bar/top.font-4}
 
+wm-restack = bspwm
+override-redirect = false
+
 modules-left = bspwm i3
 modules-center = mpd
 modules-right = cpu memory temperature netspeed
@@ -145,6 +148,9 @@ font-2 = ${bar/top.font-2}
 font-3 = ${bar/top.font-3}
 font-4 = ${bar/top.font-4}
 
+wm-restack = bspwm
+override-redirect = false
+
 modules-left = bspwm i3
 modules-center = date
 
@@ -176,6 +182,9 @@ font-1 = ${bar/top.font-1}
 font-2 = ${bar/top.font-2}
 font-3 = ${bar/top.font-3}
 font-4 = ${bar/top.font-4}
+
+wm-restack = bspwm
+override-redirect = false
 
 modules-left = bspwm i3
 ;modules-center =
@@ -226,8 +235,8 @@ format = <label-state> <label-mode>
 label-dimmed-underline = ${BAR.background}
 
 label-active = %name%%icon%
-label-active-foreground = #fff
-label-active-background = #773f3f3f
+label-active-foreground = ${colors.foreground}
+label-active-background = ${colors.background-alt}
 label-active-underline = ${colors.primary}
 label-active-font = 4
 label-active-padding = 4
@@ -239,14 +248,14 @@ label-occupied-font = 4
 label-occupied-padding = 4
 
 label-urgent = %name%%icon%
-label-urgent-foreground = #000000
-label-urgent-background = #bd2c40
-label-urgent-underline = #9b0a20
+label-urgent-foreground = ${colors.foreground}
+label-urgent-background = ${colors.background}
+label-urgent-underline = ${colors.alert}
 label-urgent-font = 4
 label-urgent-padding = 4
 
 label-empty = %name%%icon%
-label-empty-foreground = #55
+label-empty-foreground = ${colors.foreground-disabled}
 label-empty-font = 4
 label-empty-padding = 4
 
@@ -360,7 +369,7 @@ icon-repeat-padding = 1
 toggle-on-foreground =
 toggle-off-foreground = #55
 
-label-song-maxlen = 25
+label-song-maxlen = 50
 label-song-ellipsis = true
 
 bar-progress-width = 10
