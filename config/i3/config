@@ -21,7 +21,7 @@ set $rofiFont "Exo 2 Medium 18"
 
 set $rofiTheme "sidebar"
 
-set $term      urxvt
+set $term      termite
 
 # System power
 set $lock      --no-startup-id "i3lock-fancy -g -p"
@@ -160,7 +160,7 @@ bindsym $mod+minus         gaps outer current plus 5
 bindsym $mod+Shift+minus   gaps inner current plus 5
 
 # start a terminal
-bindsym $mod+Return        exec "$term -cd $(xcwd)"
+bindsym $mod+Return        exec "$term -d $(xcwd)"
 
 bindsym $mod+space         exec rofi -show drun -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
 #bindsym $mod+space         exec j4-dmenu-desktop --dmenu="dmenu -i -fn 'DejaVu Sans-10' -l 20" --term="termite"
