@@ -26,7 +26,7 @@ Plugin 'raimondi/delimitmate'
 Plugin 'scrooloose/syntastic'
 Plugin 'jshint/jshint'
 " Plugin 'ap/vim-css-color'
-"Plugin 'gko/vim-coloresque'
+" Plugin 'gko/vim-coloresque'
 " Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'ciaranm/inkpot'
@@ -48,17 +48,20 @@ Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'romainl/Apprentice'
 Plugin 'joshdick/onedark.vim'
-"Plugin 'ying17zi/vim-live-latex-preview'
-"Plugin 'ternjs/tern_for_vim'
+" Plugin 'ying17zi/vim-live-latex-preview'
+" Plugin 'ternjs/tern_for_vim'
 Plugin 'severin-lemaignan/vim-minimap'
 Plugin 'morhetz/gruvbox'
-"Plugin 'w0rp/ale'
+" Plugin 'w0rp/ale'
 Plugin 'chriskempson/base16-vim'
 Plugin 'Reewr/vim-monokai-phoenix'
 Plugin 'micha/vim-colors-solarized'
 Plugin 'dag/vim-fish'
 Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'nhooyr/elysian.vim'
+Plugin 'arcticicestudio/nord-vim'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'maksimr/vim-jsbeautify'
 
 set runtimepath^=~/.vim/bundle/vim-snippets
 
@@ -86,9 +89,20 @@ filetype plugin indent on
 "let vimsyn_folding='af'       " Vim script
 "let xml_syntax_folding=1      " XML
 
+" Nord Theme
+let g:nord_italic = 1
+let g:nord_underline = 1
+let g:nord_italic_comments = 1
+let g:nord_uniform_status_lines = 1
+
+" Gruvbox theme
+let g:gruvbox_contrast_dark = 'medium'
+let g:gruvbox_termcolors=16
+
 set background=dark
 colorscheme apprentice
 syntax on
+"hi Normal ctermfg=252 ctermbg=none
     
 " Use system clipboard (tested on Arch Linux)
 set clipboard=unnamedplus
@@ -101,11 +115,11 @@ set number
 set relativenumber
 set fillchars+=vert:\┃
 set nowrap
-"set ttyfast " u got a fast terminal
-" set lazyredraw " to avoid scrolling problems
+set ttyfast " u got a fast terminal
+set lazyredraw " to avoid scrolling problems
 " Syntax coloring lines that are too long just slows down the world
 set synmaxcol=200
-hi Normal ctermfg=252 ctermbg=none
+
 set conceallevel=0
 
 set nobackup
@@ -132,9 +146,26 @@ autocmd! bufwritepre * set expandtab | retab! 4
 " cmap Q q
 
 " Airline
+let g:airline_detect_modified = 1
+let g:airline_inactive_collapse = 1
 let g:airline_powerline_fonts = 1
+let g:airline_symbols_ascii = 1
+let g:airline_skip_empty_sections = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='distinguished'
+let g:airline_theme='angr'
+let g:airline_mode_map = {
+  \ '__' : '-',
+  \ 'n'  : 'N',
+  \ 'i'  : 'I',
+  \ 'R'  : 'R',
+  \ 'c'  : 'C',
+  \ 'v'  : 'V',
+  \ 'V'  : 'V',
+  \ '' : 'V',
+  \ 's'  : 'S',
+  \ 'S'  : 'S',
+  \ '' : 'S',
+  \ }
 
 " Highlights Styles
 hi clear texItalStyle
@@ -221,8 +252,8 @@ set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 let g:multi_cursor_use_default_mapping=0
 " Map start key separately from next key
 "let g:multi_cursor_start_key='<F6>'
-let g:multi_cursor_next_key='<C-d>'
-let g:multi_cursor_prev_key='<C-D>'
+let g:multi_cursor_next_key='*'
+let g:multi_cursor_prev_key='#'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
@@ -248,9 +279,6 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-map <C-s> :w<CR>
-map <C-q> :qa<CR>
-
 " nvim vs vim configurations
 if has('nvim')
     " Neovim specific commands
@@ -261,6 +289,25 @@ endif
 
 map <F6> :setlocal spell! spelllang=en_us<CR>
 
-" Gruvbox theme
-let g:gruvbox_contrast_dark = 'medium'
-let g:gruvbox_termcolors=16
+" js-beautify
+autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+autocmd FileType json noremap <buffer> <c-f> :call JsonBeautify()<cr>
+autocmd FileType jsx noremap <buffer> <c-f> :call JsxBeautify()<cr>
+autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+
+" Save and Quit Keybindings
+map <C-s> :w<CR>
+map <C-q> :qa<CR>
+
+" Clear Search Highlights
+nnoremap <Esc> :nohl<cr>
+
+" Toggle fold at current line
+nnoremap <Tab> za
+
+" Navigate without a prefix
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
