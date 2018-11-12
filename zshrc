@@ -103,7 +103,7 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 export LANG\='en_US.UTF-8'
 export LC_ALL\="en_US.UTF-8"
-#export TERM\=xterm-256color
+export TERM\=xterm-256color
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -197,4 +197,8 @@ source /usr/bin/virtualenvwrapper_lazy.sh
 
 # Zsh Line Editor: Enable vi mode
 #bindkey -v
+
+# fzf
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
 
