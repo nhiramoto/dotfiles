@@ -13,17 +13,18 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-commentary'
 " Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
+" Plugin 'scrooloose/nerdcommenter'
 Plugin 'airblade/vim-gitgutter'
-" Plugin 'mattn/emmet-vim'
+Plugin 'mattn/emmet-vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'raimondi/delimitmate'
-Plugin 'scrooloose/syntastic'
+" Plugin 'scrooloose/syntastic'
 Plugin 'jshint/jshint'
 " Plugin 'ap/vim-css-color'
 " Plugin 'gko/vim-coloresque'
@@ -35,12 +36,12 @@ Plugin 'chriskempson/vim-tomorrow-theme'
 Plugin 'sheerun/vim-wombat-scheme'
 Plugin 'tomasr/molokai'
 Plugin 'w0ng/vim-hybrid'
-Plugin 'Yggdroot/indentLine'
+" Plugin 'Yggdroot/indentLine'
 " Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'bling/vim-bufferline'
 " Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
-Plugin 'ctrlpvim/ctrlp.vim'
+" Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'nlknguyen/papercolor-theme'
@@ -52,7 +53,7 @@ Plugin 'joshdick/onedark.vim'
 " Plugin 'ternjs/tern_for_vim'
 Plugin 'severin-lemaignan/vim-minimap'
 Plugin 'morhetz/gruvbox'
-" Plugin 'w0rp/ale'
+Plugin 'w0rp/ale'
 Plugin 'chriskempson/base16-vim'
 Plugin 'Reewr/vim-monokai-phoenix'
 Plugin 'micha/vim-colors-solarized'
@@ -62,6 +63,16 @@ Plugin 'nhooyr/elysian.vim'
 Plugin 'arcticicestudio/nord-vim'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'maksimr/vim-jsbeautify'
+Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'christoomey/vim-titlecase'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'christoomey/vim-tmux-runner'
+Plugin 'editorconfig/editorconfig-vim'
+" Installed via pacman
+Plugin 'junegunn/fzf.vim'
+
+" Use conceal to replace keywords with unicode symbols
+Plugin 'khzaw/vim-conceal'
 
 set runtimepath^=~/.vim/bundle/vim-snippets
 
@@ -120,10 +131,8 @@ set lazyredraw " to avoid scrolling problems
 " Syntax coloring lines that are too long just slows down the world
 set synmaxcol=200
 
-set conceallevel=0
-
 set nobackup
-set nowb
+set nowritebackup
 set noswapfile
 
 set mouse=c
@@ -174,16 +183,16 @@ hi clear texBoldStyle
 " Set default TeX flavour
 let g:tex_flavor = "latex"
 
-" Syntastic
-let g:syntastic_check_on_open=1
-let g:syntastic_javascript_checkers = ['jshint']
-let g:syntastic_javascript_jshint_exec='/usr/sbin/jshint'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_wq = 0
+" " Syntastic
+" let g:syntastic_check_on_open=1
+" let g:syntastic_javascript_checkers = ['jshint']
+" let g:syntastic_javascript_jshint_exec='/usr/sbin/jshint'
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" let g:syntastic_always_populate_loc_list = 0
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_wq = 0
 
 " NERDTree
 autocmd StdinReadPre * let s:std_in=1
@@ -234,19 +243,21 @@ let g:NERDTrimTrailingWhitespace = 1
 "au Syntax * RainbowParenthesesLoadSquare
 "au Syntax * RainbowParenthesesLoadBraces
 
-" Indent Lines
-let g:indentLine_color_term = 236
-let g:indentLine_char = '¦'
-let g:indentLine_leadingSpaceEnabled = 1
-let g:indentLine_leadingSpaceChar = '·'
+" " Indent Lines
+" let g:indentLine_color_term = 236
+" let g:indentLine_char = '¦'
+" let g:indentLine_leadingSpaceEnabled = 1
+" let g:indentLine_leadingSpaceChar = '·'
+" let g:indentLine_setConceal = 2
+" let g:indentLine_fileTypeExclude = ['json', 'md']
 
-" CtrlP
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_show_hidden = 1
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
+" " CtrlP
+" let g:ctrlp_map = '<c-p>'
+" let g:ctrlp_cmd = 'CtrlP'
+" let g:ctrlp_working_path_mode = 'ra'
+" let g:ctrlp_show_hidden = 1
+" set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+" set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 
 " Multiple Cursors
 let g:multi_cursor_use_default_mapping=0
@@ -296,6 +307,11 @@ autocmd FileType jsx noremap <buffer> <c-f> :call JsxBeautify()<cr>
 autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 
+" VTR - Vim Tmux Runner
+let g:VtrStripLeadingWhitespace = 0
+let g:VtrClearEmptyLines = 0
+let g:VtrAppendNewline = 1
+
 " Save and Quit Keybindings
 map <C-s> :w<CR>
 map <C-q> :qa<CR>
@@ -311,3 +327,21 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" fzf
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Default fzf layout
+" - down / up / left / right
+let g:fzf_layout = { 'down': '~40%' }
+
+let g:fzf_command_prefix = 'Fzf'
+
+nnoremap <C-p> :FzfFiles<cr>
+
+" Conceal
+set conceallevel=1
+set concealcursor="nc"
