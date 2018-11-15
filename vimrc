@@ -58,7 +58,6 @@ Plugin 'chriskempson/base16-vim'
 Plugin 'Reewr/vim-monokai-phoenix'
 Plugin 'micha/vim-colors-solarized'
 Plugin 'dag/vim-fish'
-Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'nhooyr/elysian.vim'
 Plugin 'arcticicestudio/nord-vim'
 Plugin 'ryanoasis/vim-devicons'
@@ -68,6 +67,10 @@ Plugin 'christoomey/vim-titlecase'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'christoomey/vim-tmux-runner'
 Plugin 'editorconfig/editorconfig-vim'
+" Plugin 'suan/vim-instant-markdown'
+" Plugin 'JamshedVesuna/vim-markdown-preview'
+Plugin 'drewtempelmeyer/palenight.vim'
+Plugin 'ayu-theme/ayu-vim'
 " Installed via pacman
 Plugin 'junegunn/fzf.vim'
 
@@ -75,6 +78,7 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'khzaw/vim-conceal'
 
 set runtimepath^=~/.vim/bundle/vim-snippets
+set runtimepath^=~/.vim/after/my-snippets
 
 call vundle#end()
 filetype plugin indent on
@@ -89,7 +93,9 @@ filetype plugin indent on
     "set t_Co=256
 "endif
 
-"set foldmethod=syntax
+" Fold
+set nofoldenable
+set foldmethod=indent
 "set foldnestmax=1
 "let javaScript_fold=1         " JavaScript
 "let perl_fold=1               " Perl
@@ -100,25 +106,21 @@ filetype plugin indent on
 "let vimsyn_folding='af'       " Vim script
 "let xml_syntax_folding=1      " XML
 
-" Nord Theme
-let g:nord_italic = 1
-let g:nord_underline = 1
-let g:nord_italic_comments = 1
-let g:nord_uniform_status_lines = 1
-
 " Gruvbox theme
 let g:gruvbox_contrast_dark = 'medium'
 let g:gruvbox_termcolors=16
+
+" Ayu theme
+let ayucolor="mirage"
 
 set background=dark
 colorscheme apprentice
 syntax on
 "hi Normal ctermfg=252 ctermbg=none
-    
+
 " Use system clipboard (tested on Arch Linux)
 set clipboard=unnamedplus
-    
-set mouse=a
+
 set showmatch
 " set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
 set laststatus=2
@@ -131,23 +133,29 @@ set lazyredraw " to avoid scrolling problems
 " Syntax coloring lines that are too long just slows down the world
 set synmaxcol=200
 
+" Backup/tmp files
 set nobackup
 set nowritebackup
 set noswapfile
 
-set mouse=c
+" Enable mouse for all modes
+set mouse=a
 
-" use 4 spaces for tabs
-set tabstop=4 softtabstop=4 shiftwidth=4
+" Indentation
+set autoindent
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 
 " display indentation guides
-" set list listchars=tab:❘-,trail:·,extends:»,precedes:«,nbsp:×
+set list listchars=tab:❘-,trail:·,extends:»,precedes:«,nbsp:×
 
 " convert tabs to spaces when reading file
 "autocmd! bufreadpost * set expandtab | retab! 4
 
 " convert tabs to spaces before writing file
-autocmd! bufwritepre * set expandtab | retab! 4
+"autocmd! bufwritepre * set expandtab | retab! 4
 
 " cmap W w
 " cmap WQ wq
@@ -161,7 +169,7 @@ let g:airline_powerline_fonts = 1
 let g:airline_symbols_ascii = 1
 let g:airline_skip_empty_sections = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='angr'
+let g:airline_theme='wombat'
 let g:airline_mode_map = {
   \ '__' : '-',
   \ 'n'  : 'N',
@@ -204,12 +212,12 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeWinPos = 'left'
 let NERDTreeShowHidden=1
 
-" NERDCommenter
-let g:NERDScapeDelims = 1
-let g:NERDCompactSexyComs = 1
-let g:NERDDefaultAlign = 'left'
-let g:NERDCommentEmptyLines = 1
-let g:NERDTrimTrailingWhitespace = 1
+" " NERDCommenter
+" let g:NERDScapeDelims = 1
+" let g:NERDCompactSexyComs = 1
+" let g:NERDDefaultAlign = 'left'
+" let g:NERDCommentEmptyLines = 1
+" let g:NERDTrimTrailingWhitespace = 1
 
 " Rainbow Parentheses
 "let g:rbpt_colorpairs = [
@@ -268,9 +276,6 @@ let g:multi_cursor_prev_key='#'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
-" Show double quotes in json files
-let g:vim_json_syntax_conceal = 0
-
 " Commentaries in italic mode
 highlight Comment cterm=italic
 
@@ -293,7 +298,7 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 " nvim vs vim configurations
 if has('nvim')
     " Neovim specific commands
-    "set termguicolors
+    set termguicolors
 else
     " Standard vim specific commands
 endif
@@ -333,15 +338,30 @@ let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
-
-" Default fzf layout
-" - down / up / left / right
 let g:fzf_layout = { 'down': '~40%' }
-
 let g:fzf_command_prefix = 'Fzf'
-
 nnoremap <C-p> :FzfFiles<cr>
+
+" " vim-instant-markdown
+" let g:instant_markdown_autostart = 1 " Autostart
+" let g:instant_markdown_open_to_the_world = 0 " Allow remote connection?
+" let g:instant_markdown_allow_unsafe_content = 0 " Allow scripts to run?
+" let g:instant_markdown_allow_external_content = 1 " Allow external content such as images, stylesheets and frames
+
+" vim-markdown-preview
+" let vim_markdown_preview_hotkey='<C-m>'
+" let vim_markdown_preview_browser=''
+" let vim_markdown_preview_pandoc=0
+" let vim_markdown_preview_use_xdg_open=1
+
+" Open typora for markdown preview
+autocmd FileType markdown noremap <silent> <C-m> :exec 'silent !typora % &'<cr>
 
 " Conceal
 set conceallevel=1
 set concealcursor="nc"
+" Show double quotes in json files
+let g:vim_json_syntax_conceal = 0
+
+" Automatically reload files changed outside vim
+au FocusGained,BufEnter * :checktime
