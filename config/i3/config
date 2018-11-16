@@ -32,8 +32,8 @@ set $reboot    --no-startup-id "systemctl reboot"
 set $poweroff  --no-startup-id "systemctl poweroff"
 
 # Touchpad
-set $touchpadOff --no-startup-id bash ~/.script/touchpad.sh 0
-set $touchpadToggle --no-startup-id bash ~/.script/touchpadToggle.sh
+set $touchpadOff --no-startup-id bash ~/.script/touchpad.sh disable
+set $touchpadToggle --no-startup-id bash ~/.script/touchpad.sh toggle
 
 # Set directional keys
 set $left h
@@ -68,10 +68,10 @@ set $music $term -e ncmpcpp
 #set $nextMusic --no-startup-id mpc next
 #set $prevMusic --no-startup-id mpc prev
 #set $stopMusic --no-startup-id mpc stop
-set $playPause --no-startup-id playerctl play-pause
-set $nextMusic --no-startup-id playerctl next
-set $prevMusic --no-startup-id playerctl previous
-set $stopMusic --no-startup-id playerctl stop
+set $playPause --no-startup-id mpc toggle || playerctl play-pause
+set $nextMusic --no-startup-id mpc next || playerctl next
+set $prevMusic --no-startup-id mpc prev || playerctl previous
+set $stopMusic --no-startup-id mpc stop || playerctl stop
 
 # AUDIO
 
@@ -162,7 +162,7 @@ bindsym $mod+Shift+minus   gaps inner current plus 5
 # start a terminal
 bindsym $mod+Return        exec "$term -d $(xcwd)"
 
-bindsym $mod+space         exec rofi -show drun -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
+bindsym $mod+space         exec rofi -show drun
 #bindsym $mod+space         exec j4-dmenu-desktop --dmenu="dmenu -i -fn 'DejaVu Sans-10' -l 20" --term="termite"
 #bindsym $mod+Shift+space   
 
@@ -219,7 +219,7 @@ bindsym $mod+Shift+y       resize shrink width 10 px or 10ppt
 bindsym $mod+z             gaps outer current plus 5
 bindsym $mod+Shift+z       gaps outer current minus 5
 
-bindsym $mod+F2            exec rofi -show run -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
+bindsym $mod+F2            exec rofi -show run
 
 # switch to workspace
 bindsym $mod+1             workspace $ws1
@@ -269,7 +269,7 @@ bindsym XF86Mail              exec $mail
 bindsym XF86HomePage          exec $browser
 bindsym XF86Calculator        exec $calculator
 bindsym XF86Tools             exec $music
-#bindsym XF86Search            exec rofi -show drun -theme $rofiTheme -lines 5 -width 60 -padding 400 -bw 0 -font $rofiFont
+#bindsym XF86Search            exec rofi -show drun
 #bindsym XF86Search            exec j4-dmenu-desktop --dmenu="dmenu -i -fn 'DejaVu Sans-10' -l 20"
 bindsym XF86Reload            restart
 
