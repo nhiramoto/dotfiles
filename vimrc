@@ -134,8 +134,8 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
 " Use <Tab> and <S-Tab> to move between matches
-cnoremap <expr> <Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<CR>/<C-r>/' : '<C-z>'
-cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<CR>?<C-r>/': '<S-Tab>'
+" cnoremap <expr> <Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<CR>/<C-r>/' : '<C-z>'
+" cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<CR>?<C-r>/': '<S-Tab>'
 
 " Open typora for markdown preview
 autocmd FileType markdown noremap <silent> <C-m> :exec 'silent !typora "%" &'<cr>
