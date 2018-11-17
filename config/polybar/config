@@ -55,8 +55,8 @@ font-3 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-4 = siji:pixelsize=10;1
 
 modules-left = powermenu xwindow
-;modules-center = 
-modules-right = xkeyboard httpd updates ufw dropbox touchpad xbacklight volume network wlan battery date
+modules-center = date
+modules-right = xkeyboard httpd updates ufw dropbox touchpad xbacklight volume network wlan battery
 
 ;separator = |
 
@@ -546,8 +546,8 @@ format-disconnected =
 type = internal/date
 interval = 1
 
-date =  %Y-%m-%d  %H:%M
-date-alt = %A, %d %B %Y  %H:%M:%S
+date =  %H:%M
+date-alt =  %Y-%m-%d  %H:%M
 
 [module/volume]
 type = internal/volume
