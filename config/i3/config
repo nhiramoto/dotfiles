@@ -13,7 +13,7 @@ set $urgent-border-color           #030303
 set $inactive-bg-color             #19191A
 set $text-color                    #fdfdfd
 set $inactive-text-color           #515662
-set $indicator                     #8CB8D9
+set $indicator                     #285577
 
 # Set font
 set $font     "Exo 2 Medium 10"
@@ -394,9 +394,10 @@ bindsym $mod+ctrl+shift+$right move workspace to output right
 focus_follows_mouse no
 
 # Container border
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 3
 #new_window 1pixel
 #hide_edge_borders smart
+smart_borders on
 
 # Gaps
 gaps inner 6
@@ -409,13 +410,3 @@ for_window [class="Chrome"] gaps outer 0
 for_window [class="Vlc"] gaps inner 0
 for_window [class="Vlc"] gaps outer 0
 
-#smart_borders on
-
-# Disable touchpad on startup
-exec $touchpadOff
-
-## quick terminal
-#exec --no-startup-id terminator -name metask
-#for_window [instance="metask"] floating enable;
-#for_window [instance="metask"] move scratchpad; [instance="metask"] scratchpad show; move position 0px 22px; resize shrink height 300px; resize grow width 683px; move scratchpad
-#bindsym $mod+Shift+e [instance="metask"] scratchpad show
