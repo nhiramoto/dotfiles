@@ -1,6 +1,7 @@
 " Global Settings {{{
 
 filetype plugin indent on   " Enable filetype detection, filetype scripts & indent scripts
+let g:python_host_prog='/usr/bin/python'
 
 set autoread                " Auto-reload changed files
 set encoding=utf-8          " Encode characters as utf-8
@@ -13,7 +14,6 @@ set ignorecase              " Ignore case in regex
 set smartcase
 set incsearch               " Enable incremental search
 set iskeyword-=_            " Assume underscore as word delimiter
-set lazyredraw              " Better performance when scrolling
 set matchpairs+=<:>         " Show matching angle brackets <>'s
 set nobackup                " Disable backup files creation
 set nowritebackup           ""
@@ -178,8 +178,9 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'mattn/emmet-vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
+" Plugin 'garbas/vim-snipmate'
+Plugin 'SirVer/ultisnips'
+" Plugin 'honza/vim-snippets'
 Plugin 'raimondi/delimitmate'
 " Plugin 'scrooloose/syntastic'
 Plugin 'jshint/jshint'
@@ -281,6 +282,12 @@ let g:airline_mode_map = {
   \ 'S'  : 'S',
   \ '' : 'S',
   \ }
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_section_b = '%{airline#util#wrap(airline#extensions#hunks#get_hunks(),0)}'
+let g:airline_section_z = '%2l%#__restore__#%#__accent_bold#/%L%{g:airline_symbols.maxlinenr}%#__restore__# :%2v'
 
 " }}}
 
@@ -420,6 +427,18 @@ nnoremap <C-t> :FzfFiles<CR>
 " let vim_markdown_preview_browser=''
 " let vim_markdown_preview_pandoc=0
 " let vim_markdown_preview_use_xdg_open=1
+" }}}
+
+" Plugin: UltiSnips {{{
+
+let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsExpandTrigger="<Tab>"
+let g:UltiSnipsJumpForwardTrigger="<Tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
+let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips'
+
 " }}}
 
 " Custom Functions {{{
