@@ -123,13 +123,20 @@ keys.extend([
 ])
 # }}}
 
+layout_theme = {
+    "border_width": 2,
+    "border_normal": "#1c1c1c",
+    "border_focus": "#8fafd7",
+    "margin": 2
+}
+
 layouts = [
-    layout.Max(),
-    layout.RatioTile(),
-    layout.Matrix(),
-    layout.MonadTall(),
-    layout.Bsp(),
-    layout.Zoomy()
+    layout.Max(**layout_theme),
+    layout.RatioTile(**layout_theme),
+    layout.Matrix(**layout_theme),
+    layout.MonadTall(**layout_theme),
+    layout.Bsp(**layout_theme),
+    layout.Zoomy(**layout_theme)
 ]
 
 widget_defaults = dict(

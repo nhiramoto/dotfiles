@@ -13,7 +13,4 @@ udiskie &
 . "$HOME/.dropbox-dist/dropboxd" &
 
 # Setup Monitors
-#. "$HOME/.script/mon" "er"
-
-# Conky
-. "$HOME/.config/conky/launch.sh" &
+. "$HOME/.script/mon" "er"
