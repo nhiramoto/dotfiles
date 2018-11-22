@@ -38,24 +38,26 @@ keys = [
     Key([sup], "l", lazy.layout.right()),
 
     # Move windows up or down in current stack
-    Key([sup, ctrl], "k", lazy.layout.shuffle_down()),
-    Key([sup, ctrl], "j", lazy.layout.shuffle_up()),
+    Key([sup, shift], "k", lazy.layout.shuffle_down()),
+    Key([sup, shift], "j", lazy.layout.shuffle_up()),
+    Key([sup, shift], "h", lazy.layout.swap_left()),
+    Key([sup, shift], "l", lazy.layout.swap_right()),
 
-    Key([sup], 'u', lazy.grow()),
-    Key([sup], 'i', lazy.shrink()),
+    Key([sup], 'u', lazy.layout.grow()),
+    Key([sup], 'i', lazy.layout.shrink()),
 
     Key([sup, ctrl], 'n', lazy.layout.normalize()),
     Key([sup, ctrl], 'm', lazy.layout.maximize()),
 
-    # Switch window focus to other pane(s) of stack
-    Key([sup], "Tab", lazy.layout.next()),
-    Key([sup, shift], "Tab", lazy.layout.previous()),
+    # Switch layout
+    Key([sup], "Tab", lazy.next_layout()),
+    Key([sup, shift], "Tab", lazy.previous_layout()),
 
-    # Next Layout
-    Key([sup], 's', lazy.next_layout()),
+    Key([sup], ',', lazy.layout.previous()),
+    Key([sup], '.', lazy.layout.next()),
 
     # Swap panes of split stack
-    Key([sup], 'd', lazy.layout.rotate()),
+    Key([sup, ctrl], 'r', lazy.layout.rotate()),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
