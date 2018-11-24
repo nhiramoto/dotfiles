@@ -14,11 +14,29 @@ import XMonad.Layout.DragPane
 import XMonad.Layout.Dwindle
 import XMonad.Layout.FixedColumn
 import XMonad.Layout.Grid
+import XMonad.Layout.GridVariants
+import XMonad.Layout.HintedGrid
+import XMonad.Layout.HintedTile
+import XMonad.Layout.Mosaic
+import XMonad.Layout.MosaicAlt
+import XMonad.Layout.MultiColumns
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.MouseResizableTile
+import XMonad.Layout.OneBig
+import XMonad.Layout.Roledex
+import XMonad.Layout.SimpleFloat
+import XMonad.Layout.SimplestFloat
+import XMonad.Layout.Simplest
+import XMonad.Layout.Spiral
+import XMonad.Layout.StackTile
+import XMonad.Layout.Tabbed
 import XMonad.Layout.ZoomRow
+import XMonad.Layout.SubLayouts
+import XMonad.Layout.WindowNavigation
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.SetWMName
 import Graphics.X11.ExtraTypes.XF86
 
 import Data.Char
@@ -26,7 +44,7 @@ import Data.Bits ((.|.))
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
-myBar         = "xmobar"
+myBar         = "xmobar /home/segfault/.xmonad/xmobar/xmobarrc"
 myTerminal    = "termite"
 myLauncher    = "rofi -show drun"
 myModMask     = mod4Mask -- Win key or Super_L
@@ -45,11 +63,12 @@ myStartupHook = do
     spawn "udiskie"
 
 -- Workspaces
-myWorkspaces = map show $ [1..9] ++ [0]
+myWorkspaces = ["1: \xf0ac", "2: \xf121"] ++ map show ([3..9]) ++ ["10: \xf001"]
 myWorkspaceKeys = [xK_1..xK_9] ++ [xK_0]
 
 -- Layouts
-myLayouts = emptyBSP ||| mouseResizableTile ||| zoomRow
+--myLayouts = windowNavigation $ subTabbed $ Tall 1 (3/100) (1/2) ||| Accordion ||| Circle ||| zoomRow
+myLayouts = Accordion ||| emptyBSP ||| Circle ||| Column (16/10) ||| simpleCross ||| Dishes 2 (1/6) ||| dragPane Horizontal (1/10) (1/2) ||| Dwindle R CW (3/2) (11/10) ||| FixedColumn 1 20 80 10 ||| Grid ||| Grid (16/10) ||| GridRatio (4/3) False ||| HintedTile 1 (1/2) (3/100) ||| MosaicAlt M.empty ||| mosaic 2 [3,2] ||| mouseResizableTile ||| multiCol [1] 4 0.01 0.5 ||| OneBig (3/4) (3/4) ||| ResizableTall 1 (3/100) (1/2) [] ||| Roledex ||| simpleFloat ||| simplestFloat ||| Simplest ||| spiral (6/7) ||| StackTile 1 (3/100) (1/2) ||| simpleTabbed
 
 -- Keybindings
 myKeys conf@(XConfig { XMonad.modMask = modMask }) =
@@ -71,12 +90,25 @@ myKeys conf@(XConfig { XMonad.modMask = modMask }) =
     , ((myModMask, xK_t), withFocused $ windows . W.sink) -- Push window back into tiling
     , ((myModMask .|. shiftMask, xK_m), windows W.swapMaster) -- Swap focused window with master window
 
+    -- subTabbed
+    , ((myModMask .|. controlMask, xK_h), sendMessage $ pullGroup L)
+    , ((myModMask .|. controlMask, xK_l), sendMessage $ pullGroup R)
+    , ((myModMask .|. controlMask, xK_k), sendMessage $ pullGroup U)
+    , ((myModMask .|. controlMask, xK_j), sendMessage $ pullGroup D)
+
+    , ((myModMask .|. controlMask, xK_m), withFocused (sendMessage . MergeAll))
+    , ((myModMask .|. controlMask, xK_u), withFocused (sendMessage . UnMerge))
+
+    , ((myModMask, xK_period), onGroup W.focusUp')
+    , ((myModMask, xK_comma), onGroup W.focusDown')
+
     -- Kill current window
     , ((myModMask .|. shiftMask, xK_q), kill)
 
     -- Quit and Restart XMonad
     , ((myModMask, xK_Escape), io (exitWith ExitSuccess))
     , ((myModMask .|. shiftMask, xK_Escape), broadcastMessage ReleaseResources >> restart "xmonad" True)
+    , ((myModMask .|. controlMask, xK_x), spawn $ "kill $(pidof xmobar); " ++ myBar)
 
     -- myBar
     , ((myModMask, xK_b), sendMessage ToggleStruts)
@@ -105,9 +137,41 @@ myKeys conf@(XConfig { XMonad.modMask = modMask }) =
     , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
     ]
 
+manageHook' :: ManageHook
+manageHook' = (composeAll . concat $
+    [ [resource  =? c --> doIgnore | c <- ignores ]
+    , [className =? c --> doShift wsWeb | c <- browser ]
+    , [className =? c --> doShift wsDev | c <- dev ]
+    , [className =? c --> doShift wsMedia | c <- media ]
+    , [className =? c --> doCenterFloat | c <- floats ]
+    , [isFullscreen   --> setFullFloat ]
+    ]) 
+    where
+        role      = stringProperty "WM_WINDOW_ROLE"
+        name      = stringProperty "WM_NAME"
+        -- classnames
+        floats  = ["Smplayer","MPlayer","VirtualBox","Xmessage","XFontSel","Downloads","Nm-connection-editor"]
+        browser = ["Google-chrome", "Chromium", "Chromium-browser", "Firefox"]
+        media   = ["Rhythmbox", "Spotify", "Clementine"]
+        dev     = ["gnome-terminal"]
+        -- resources
+        ignores = ["desktop", "desktop_window", "notify-osd", "stalonetray", "trayer", "dunst", "Xonotic"]
+        -- Workspaces
+        wsWeb   = "1"
+        wsDev   = "2"
+        wsMedia = "10"
+        -- set full float
+        setFullFloat :: ManageHook
+        setFullFloat = doF W.focusDown <+> doFullFloat
+
 myPP = xmobarPP
-    { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
-    , ppOrder = \(ws:_:t:_) -> [ws, t]
+    { ppCurrent = xmobarColor "#8FDFD7" "" . wrap "[" "]"
+    , ppHidden  = xmobarColor "#BCBCBC" "" . wrap " " " "
+    , ppSep     = " :: "
+    , ppWsSep   = " "
+    -- , ppTitle   = " "
+    -- , ppLayout  = const "Title Here"
+    -- , ppOrder = \(ws:_:t:_) -> [ws, t]
     }
 
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
@@ -121,7 +185,10 @@ myConfig = defaultConfig
     , workspaces         = myWorkspaces
     , startupHook        = myStartupHook
     , layoutHook         = avoidStruts $ smartBorders $ myLayouts
+    , manageHook         = manageHook'
     , keys               = myKeys
     }
 
-main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
+main :: IO ()
+main = do
+    xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig

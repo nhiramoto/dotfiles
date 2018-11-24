@@ -1,7 +1,10 @@
+-- vi:syntax=haskell
+
 Config { 
 
    -- appearance
-     font =         "xft:Exo 2:size=10:medium:antialias=true"
+     font =         "xft:FontAwesome:size=10:medium,xft:Exo 2:size=10:medium:antialias=true"
+   , additionalFonts = ["xft:FontAwesome:size=10"]
    , bgColor =      "#262626"
    , fgColor =      "#BCBCBC"
    , position =     Top
@@ -11,7 +14,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = " %StdinReader% }{ %RJTT% | %multicpu% | %coretemp% | %memory% | %dynnetwork% | %battery% | %date% "
+   , template = " %StdinReader% }{ %RJTT% | %dynnetwork% | %volume% | %battery% | %date% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -78,7 +81,7 @@ Config {
                              ] 10
 
         -- battery monitor
-        , Run Battery        [ "--template" , "Batt (<acstatus>)"
+        , Run Battery        [ "--template" , "\xf240 <acstatus>"
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "80"        -- units: %
                              , "--low"      , "darkred"
@@ -87,11 +90,11 @@ Config {
 
                              , "--" -- battery specific options
                                        -- discharging status
-                                       , "-o"	, "<left>% (<timeleft>)"
+                                       , "-o", "<left>% (<timeleft>)"
                                        -- AC "on" status
-                                       , "-O"	, "<fc=#dAA520>Charging</fc>"
-                                       -- charged status
-                                       , "-i"	, "<fc=#006000>Charged</fc>"
+                                       , "-O", "<fc=#dAA520>Charging</fc>"
+                                       -- Charged (100%)
+                                       , "-i", "<fc=#006000>Charged</fc>"
                              ] 50
 
         -- time and date indicator 
@@ -102,5 +105,7 @@ Config {
         , Run Kbd            [ ("us(dvorak)" , "<fc=#00008B>DV</fc>")
                              , ("us"         , "<fc=#8B0000>US</fc>")
                              ]
+        , Run Com "volume.sh" []  "volume" 10
+        , Run StdinReader
         ]
    }

@@ -115,7 +115,7 @@ font-4 = ${bar/top.font-4}
 wm-restack = bspwm
 override-redirect = false
 
-modules-left = bspwm i3
+modules-left = bspwm i3 xmonad
 modules-center = mpd
 modules-right = cpu memory temperature netspeed
 
@@ -151,7 +151,7 @@ font-4 = ${bar/top.font-4}
 wm-restack = bspwm
 override-redirect = false
 
-modules-left = bspwm i3
+modules-left = bspwm i3 xmonad
 modules-center = date
 
 [bar/bottom2]
@@ -186,7 +186,7 @@ font-4 = ${bar/top.font-4}
 wm-restack = bspwm
 override-redirect = false
 
-modules-left = bspwm i3
+modules-left = bspwm i3 xmonad
 ;modules-center =
 ;modules-right =
 
@@ -701,6 +701,11 @@ tail = true
 ;format-prefix = "  "
 ;format-prefix-foreground = ${colors.foreground-alt}
 ;exec = ~/.config/polybar/mail
+
+[module/xmonad]
+type = custom/script
+exec = xmonad-log
+tail = true
 
 [settings]
 screenchange-reload = true
