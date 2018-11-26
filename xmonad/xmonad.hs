@@ -8,27 +8,8 @@ import XMonad.Layout.Accordion
 import XMonad.Layout.BinarySpacePartition
 import XMonad.Layout.Circle
 import XMonad.Layout.Column
-import XMonad.Layout.Cross
-import XMonad.Layout.Dishes
-import XMonad.Layout.DragPane
-import XMonad.Layout.Dwindle
-import XMonad.Layout.FixedColumn
 import XMonad.Layout.Grid
-import XMonad.Layout.GridVariants
-import XMonad.Layout.HintedGrid
-import XMonad.Layout.HintedTile
-import XMonad.Layout.Mosaic
-import XMonad.Layout.MosaicAlt
-import XMonad.Layout.MultiColumns
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.MouseResizableTile
-import XMonad.Layout.OneBig
-import XMonad.Layout.Roledex
-import XMonad.Layout.SimpleFloat
-import XMonad.Layout.SimplestFloat
-import XMonad.Layout.Simplest
 import XMonad.Layout.Spiral
-import XMonad.Layout.StackTile
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ZoomRow
 import XMonad.Layout.SubLayouts
@@ -37,6 +18,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.EwmhDesktops
 import Graphics.X11.ExtraTypes.XF86
 
 import Data.Char
@@ -67,8 +49,7 @@ myWorkspaces = ["1: \xf0ac", "2: \xf121"] ++ map show ([3..9]) ++ ["10: \xf001"]
 myWorkspaceKeys = [xK_1..xK_9] ++ [xK_0]
 
 -- Layouts
---myLayouts = windowNavigation $ subTabbed $ Tall 1 (3/100) (1/2) ||| Accordion ||| Circle ||| zoomRow
-myLayouts = Accordion ||| emptyBSP ||| Circle ||| Column (16/10) ||| simpleCross ||| Dishes 2 (1/6) ||| dragPane Horizontal (1/10) (1/2) ||| Dwindle R CW (3/2) (11/10) ||| FixedColumn 1 20 80 10 ||| Grid ||| Grid (16/10) ||| GridRatio (4/3) False ||| HintedTile 1 (1/2) (3/100) ||| MosaicAlt M.empty ||| mosaic 2 [3,2] ||| mouseResizableTile ||| multiCol [1] 4 0.01 0.5 ||| OneBig (3/4) (3/4) ||| ResizableTall 1 (3/100) (1/2) [] ||| Roledex ||| simpleFloat ||| simplestFloat ||| Simplest ||| spiral (6/7) ||| StackTile 1 (3/100) (1/2) ||| simpleTabbed
+myLayouts = windowNavigation $ subTabbed $ Tall 1 (3/100) (1/2) ||| Accordion ||| Grid ||| emptyBSP ||| Circle ||| zoomRow
 
 -- Keybindings
 myKeys conf@(XConfig { XMonad.modMask = modMask }) =
@@ -186,6 +167,7 @@ myConfig = defaultConfig
     , startupHook        = myStartupHook
     , layoutHook         = avoidStruts $ smartBorders $ myLayouts
     , manageHook         = manageHook'
+    , handleEventHook    = fullscreenEventHook
     , keys               = myKeys
     }
 
