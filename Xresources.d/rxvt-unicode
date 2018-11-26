@@ -6,10 +6,10 @@ URxvt.termName: rxvt-unicode-256color
 URxvt.cursorBlink: true
 
 ! Transparency
-URxvt.transparent: true
-URxvt.tintColor: #AFAFAF
-URxvt.shading: 95
-URxvt.blurRadius: 5x5
+URxvt.transparent: false
+!URxvt.tintColor: #AFAFAF
+!URxvt.shading: 95
+!URxvt.blurRadius: 5x5
 ! Dim when focus lost
 URxvt.fading: 30
 
