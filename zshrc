@@ -144,14 +144,13 @@ alias tasks="ps -ef | grep -i"
 alias install="pacman -S"
 alias search="pacman -Ss"
 alias cdd='cd ~/Desktop'
+alias news='newsboat'
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
 
 # disable ctrl+s
 stty -ixon -ixoff
-
-DISABLE_AUTO_TITLE=true
 
 PATH="/home/segfault/perl5/bin${PATH+:}${PATH}"; export PATH;
 PERL5LIB="/home/segfault/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
@@ -203,4 +202,14 @@ source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
+
+function sd () {
+    wget -r -nc -p --html-extension -k -D $2 -np $1
+}
+
+function chpwd_lsla () {
+    emulate -L zsh
+    ls -la
+}
+chpwd_functions=(${chpwd_functions[@]} "chpwd_lsla")
 
