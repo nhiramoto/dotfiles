@@ -1,43 +1,24 @@
+zmodload zsh/zprof
+
 # Path to your oh-my-zsh installation.
 export ZSH=/home/segfault/.oh-my-zsh
+
+POWERLEVEL9K_MODE='awesome-fontconfig'
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="tjkirch_mod2"
-ZSH_THEME="spaceship"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
-# SPACESHIP theme configurations
-SPACESHIP_PROMPT_ADD_NEWLINE=false
-SPACESHIP_PROMPT_FIRST_PREFIX_SHOW=true
-SPACESHIP_PROMPT_DEFAULT_PREFIX=""
-SPACESHIP_PROMPT_DEFAULT_SUFFIX=" "
-SPACESHIP_PROMPT_ORDER=(user host time dir line_sep vi_mode char)
-SPACESHIP_RPROMPT_ORDER=(git hg node package ruby venv conda exit_code)
-SPACESHIP_CHAR_PREFIX="╰"
-SPACESHIP_CHAR_SYMBOL="─❖"
-SPACESHIP_CHAR_SUFFIX=" "
-SPACESHIP_TIME_SHOW=true
-SPACESHIP_TIME_PREFIX="─❬"
-SPACESHIP_TIME_SUFFIX="❭"
-SPACESHIP_USER_SHOW=always
-SPACESHIP_USER_PREFIX="╭─❬"
-SPACESHIP_USER_SUFFIX=""
-SPACESHIP_USER_COLOR=green
-SPACESHIP_HOST_SHOW=always
-SPACESHIP_HOST_PREFIX="@"
-SPACESHIP_HOST_SUFFIX="❭"
-SPACESHIP_DIR_PREFIX="─❬"
-SPACESHIP_DIR_SUFFIX="❭"
-SPACESHIP_EXIT_CODE_SHOW=true
-SPACESHIP_GIT_SHOW=true
-SPACESHIP_GIT_PREFIX="❬"
-SPACESHIP_GIT_SUFFIX="❭"
-SPACESHIP_PACKAGE_PREFIX="─❬"
-SPACESHIP_PACKAGE_SUFFIX="❭"
-SPACESHIP_VENV_PREFIX="❬"
-SPACESHIP_VENV_SUFFIX="❭"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv anaconda pyenv rbenv root_indicator)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vcs)
+POWERLEVEL9K_DIR_SHOW_WRITABLE=true
+DEFAULT_USER="$USER"
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+POWERLEVEL9K_SHORTEN_DELIMITER=""
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_with_package_name"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -89,9 +70,25 @@ function bgnotify_formatted {
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-# plugins=(git zsh-syntax-highlighting themes zsh-256color zsh-output-highlighting zsh-autopair zsh-autosuggestions command-not-found)
-plugins=(git bgnotify zsh-syntax-highlighting themes zsh-256color zsh-output-highlighting zsh-autopair zsh-autosuggestions)
-autoload -U compinit && compinit
+plugins=(
+    git
+    bgnotify
+    zsh-syntax-highlighting
+    themes
+    zsh-256color
+    zsh-autopair
+    #zsh-autosuggestions
+)
+
+# Check cached .zcompdump once a day
+# https://gist.github.com/ctechols/ca1035271ad134841284
+autoload -Uz compinit
+if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
+    compinit;
+else
+    compinit -C;
+fi;
+# autoload -U compinit && compinit
 
 # User configuration
 
@@ -127,12 +124,25 @@ export EDITOR='vim'
 # Example aliases
 # alias zshconfig="$editor ~/.zshrc"
 # alias ohmyzsh="$editor ~/.oh-my-zsh"
-alias cfgvim="$EDITOR ~/.vimrc"
-alias cfgzsh="$EDITOR ~/.zshrc"
-alias cfgterm="$EDITOR ~/.config/termite/config"
-alias cfgi3="$EDITOR ~/.config/i3/config"
-alias cfgpol="$EDITOR ~/.config/polybar/config"
-alias cfgemacs="$EDITOR ~/.emacs.d/custom.org"
+
+# Config Files
+alias __tmux="$EDITOR $HOME/.tmux.conf"
+alias __vim="$EDITOR $HOME/.vimrc"
+alias __emacs="$EDITOR $HOME/.emacs.d/custom.org"
+alias __zsh="$EDITOR $HOME/.zshrc"
+alias __xres="$EDITOR $HOME/.Xresources"
+alias __termite="$EDITOR $HOME/.config/termite/config"
+alias __urxvt="$EDITOR $HOME/.Xresources.d/rxvt-unicode"
+alias __rofi="$EDITOR $HOME/.Xresources.d/rofi"
+alias __i3="$EDITOR $HOME/.config/i3/config"
+alias __polybar="$EDITOR $HOME/.config/polybar/config"
+alias __bsp="$EDITOR $HOME/.config/bspwm/bspwmrc"
+alias __sxhkd="$EDITOR $HOME/.config/sxhkd/sxhkdrc"
+alias __xmonad="$EDITOR $HOME/.xmonad/xmonad.hs"
+alias __xmobar="$EDITOR $HOME/.xmonad/xmobar/xmobarrc"
+alias __awesome="$EDITOR $HOME/.config/awesome/rc.lua"
+alias __tsm="$EDITOR $HOME/.config/transmission-daemon/settings.json"
+
 alias open=xdg-open
 alias pacsize="expac -S -H M '%k/t%n'"
 alias now="date +'%H:%M:%S'"
@@ -143,8 +153,11 @@ alias edit="$EDITOR"
 alias tasks="ps -ef | grep -i"
 alias install="pacman -S"
 alias search="pacman -Ss"
-alias cdd='cd ~/Desktop'
-alias news='newsboat'
+alias cdd="cd ~/Desktop"
+alias news="newsboat"
+alias tsm="transmission-remote"
+alias tsmd="transmission-daemon"
+alias tsmc='tremc'
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
@@ -157,8 +170,6 @@ PERL5LIB="/home/segfault/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5L
 PERL_LOCAL_LIB_ROOT="/home/segfault/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
 PERL_MB_OPT="--install_base \"/home/segfault/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/segfault/perl5"; export PERL_MM_OPT;
-
-autoload -U compinit && compinit
 
 PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
 
@@ -176,12 +187,6 @@ fi
 #   doesn't support escape sequences (like Emacs shell)
 if [[ $TERM = dumb ]]; then
   unset zle_bracketed_paste
-fi
-
-# Enable kde plasma blur effect
-if [[ $(ps --no-header -p $PPID -o comm) =~ '^yakuake|konsole$' ]]; then
-        for wid in $(xdotool search --pid $PPID); do
-            xprop -f _KDE_NET_WM_BLUR_BEHIND_REGION 32c -set _KDE_NET_WM_BLUR_BEHIND_REGION 0 -id $wid; done
 fi
 
 # Use most as pager
@@ -209,7 +214,9 @@ function sd () {
 
 function chpwd_lsla () {
     emulate -L zsh
-    ls -la
+    if [[ "$PWD" != "$HOME" ]]; then
+        ls -la
+    fi
 }
 chpwd_functions=(${chpwd_functions[@]} "chpwd_lsla")
 
