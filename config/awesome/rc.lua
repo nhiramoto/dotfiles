@@ -358,11 +358,24 @@ globalkeys = gears.table.join(
     --           {description = "show the menubar", group = "launcher"})
     -- rofi
     awful.key({ modkey }, "space", function(c) awful.spawn("rofi -show drun") end),
-    awful.key({ modkey "Shift" }, "space", function(c) awful.spawn("rofi -show run") end),
+    awful.key({ modkey, "Shift" }, "space", function(c) awful.spawn("rofi -show run") end),
     -- Programs
     awful.key({ modkey }, "w", function(c) awful.spawn("qutebrowser") end, { description = "Open the browser", group = "launcher" }),
     awful.key({ modkey }, "r", function(c) awful.spawn(terminal .. " -e ranger") end, { description = "Open file manager", group = "launcher" }),
-    awful.key({ modkey }, "n", function(c) awful.spawn(terminal .. " -e ncmpcpp") end, { description = "Open mpd interface (ncmpcpp)", group = "launcher" })
+    awful.key({ modkey }, "n", function(c) awful.spawn(terminal .. " -e ncmpcpp") end, { description = "Open mpd interface (ncmpcpp)", group = "launcher" }),
+
+    -- Media Keys
+    awful.key({ }, "XF86AudioRaiseVolume", function(d) awful.spawn("amixer set Master 5%+") end),
+    awful.key({ }, "XF86AudioLowerVolume", function(d) awful.spawn("amixer set Master 5%-") end),
+    awful.key({ }, "XF86AudioMute", function(d) awful.spawn("amixer set Master toggle") end),
+
+    awful.key({ }, "XF86MonBrightnessUp", function(d) awful.spawn("xbacklight -inc 5") end),
+    awful.key({ }, "XF86MonBrightnessDown", function(d) awful.spawn("xbacklight -dec 5") end),
+
+    awful.key({ }, "XF86AudioPlay", function(d) awful.spawn.with_shell("mpc toggle || playerctl play-pause") end),
+    awful.key({ }, "XF86AudioNext", function(d) awful.spawn.with_shell("mpc next || playerctl next") end),
+    awful.key({ }, "XF86AudioPrev", function(d) awful.spawn.with_shell("mpc prev || playerctl previous") end),
+    awful.key({ }, "XF86AudioStop", function(d) awful.spawn.with_shell("mpc stop || playerctl stop") end)
 )
 
 clientkeys = gears.table.join(
@@ -494,7 +507,10 @@ awful.rules.rules = {
           "Wpa_gui",
           "pinentry",
           "veromix",
-          "xtightvncviewer"},
+          "xtightvncviewer",
+          "Virtualbox Manager",
+          "Virtualbox Machine"
+        },
 
         name = {
           "Event Tester",  -- xev.
@@ -513,6 +529,8 @@ awful.rules.rules = {
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
+    { rule = { class = "qutebrowser" },
+      properties = { screen = 1, tag = "1" } },
 }
 -- }}}
 
@@ -606,7 +624,7 @@ end)
 -- }}}
 
 -- Autostart {{{
-awful.spawn.with_shell("~/.config/awesome/autorun.sh")
+awful.spawn.with_shell(os.getenv("HOME") .. "/.config/awesome/autorun.sh")
 -- }}}
 
 -- Theming {{{
