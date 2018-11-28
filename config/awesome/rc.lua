@@ -356,6 +356,9 @@ globalkeys = gears.table.join(
     -- Menubar
     -- awful.key({ modkey }, "p", function() menubar.show() end,
     --           {description = "show the menubar", group = "launcher"})
+
+    awful.key({ modkey, "Control" }, "e", function(c) awful.spawn("i3lock-fancy -g -p -f 'Exo 2 Medium'") end),
+
     -- rofi
     awful.key({ modkey }, "space", function(c) awful.spawn("rofi -show drun") end),
     awful.key({ modkey, "Shift" }, "space", function(c) awful.spawn("rofi -show run") end),
