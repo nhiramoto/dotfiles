@@ -26,7 +26,7 @@ import Data.Bits ((.|.))
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
-myBar         = "xmobar /home/segfault/.xmonad/xmobar/xmobarrc"
+myBar         = "xmobar /home/hyokan/.xmonad/xmobar/xmobarrc"
 myTerminal    = "termite"
 myLauncher    = "rofi -show drun"
 myModMask     = mod4Mask -- Win key or Super_L
@@ -38,10 +38,15 @@ myFocusedBorderColor = "#8FAFD7"
 
 -- Startup commands
 myStartupHook = do
-    spawn "feh --bg-fill /home/segfault/Pictures/default.png"
-    spawn "/home/segfault/.config/compton/launch.sh"
-    spawn "/home/segfault/.config/conky/launch.sh"
-    spawn "/home/segfault/.dropbox-dist/dropboxd"
+    spawn "xrdb -merge ~/.Xresources"
+    spawn "xfce4-power-manager"
+    spawn "feh --bg-fill /home/hyokan/Pictures/default.png"
+    spawn "/home/hyokan/.config/compton/launch.sh"
+    spawn "/home/hyokan/.config/conky/launch.sh"
+    spawn "/home/hyokan/.dropbox-dist/dropboxd"
+    spawn "setxkbmap -option ctrl:swapcaps"
+    spawn "stalonetray"
+    spawn "nm-applet"
     spawn "udiskie"
 
 -- Workspaces
@@ -49,7 +54,8 @@ myWorkspaces = ["1: \xf0ac", "2: \xf121"] ++ map show ([3..9]) ++ ["10: \xf001"]
 myWorkspaceKeys = [xK_1..xK_9] ++ [xK_0]
 
 -- Layouts
-myLayouts = windowNavigation $ subTabbed $ Tall 1 (3/100) (1/2) ||| Accordion ||| Grid ||| emptyBSP ||| Circle ||| zoomRow
+-- myLayouts = windowNavigation . subTabbed $ Tall 1 (3/100) (1/2) ||| Accordion ||| Grid ||| emptyBSP ||| Circle ||| zoomRow
+myLayouts = avoidStruts . smartBorders $ Tall 1 (3/100) (1/2) ||| Accordion ||| Grid ||| emptyBSP ||| Circle ||| zoomRow
 
 -- Keybindings
 myKeys conf@(XConfig { XMonad.modMask = modMask }) =
@@ -118,25 +124,25 @@ myKeys conf@(XConfig { XMonad.modMask = modMask }) =
     , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
     ]
 
-manageHook' :: ManageHook
-manageHook' = (composeAll . concat $
-    [ [resource  =? c --> doIgnore | c <- ignores ]
+myManageHook :: ManageHook
+myManageHook = (composeAll . concat $
+    [ [manageDocks]
+    , [isFullscreen   --> setFullFloat ]
+    , [resource  =? c --> doIgnore | c <- ignores ]
     , [className =? c --> doShift wsWeb | c <- browser ]
     , [className =? c --> doShift wsDev | c <- dev ]
     , [className =? c --> doShift wsMedia | c <- media ]
     , [className =? c --> doCenterFloat | c <- floats ]
-    , [isFullscreen   --> setFullFloat ]
+    , [manageHook defaultConfig]
     ]) 
     where
-        role      = stringProperty "WM_WINDOW_ROLE"
-        name      = stringProperty "WM_NAME"
         -- classnames
         floats  = ["Smplayer","MPlayer","VirtualBox","Xmessage","XFontSel","Downloads","Nm-connection-editor"]
         browser = ["Google-chrome", "Chromium", "Chromium-browser", "Firefox"]
         media   = ["Rhythmbox", "Spotify", "Clementine"]
         dev     = ["gnome-terminal"]
         -- resources
-        ignores = ["desktop", "desktop_window", "notify-osd", "stalonetray", "trayer", "dunst", "Xonotic"]
+        ignores = ["desktop", "desktop_window", "notify-osd", "stalonetray", "trayer", "dunst", "Xonotic-sdl"]
         -- Workspaces
         wsWeb   = "1"
         wsDev   = "2"
@@ -157,7 +163,7 @@ myPP = xmobarPP
 
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
-myConfig = defaultConfig
+myConfig = def
     { terminal           = myTerminal
     , modMask            = myModMask
     , borderWidth        = myBorderWidth
@@ -165,9 +171,8 @@ myConfig = defaultConfig
     , focusedBorderColor = myFocusedBorderColor
     , workspaces         = myWorkspaces
     , startupHook        = myStartupHook
-    , layoutHook         = avoidStruts $ smartBorders $ myLayouts
-    , manageHook         = manageHook'
-    , handleEventHook    = fullscreenEventHook
+    , layoutHook         = myLayouts
+    , manageHook         = myManageHook
     , keys               = myKeys
     }
 
