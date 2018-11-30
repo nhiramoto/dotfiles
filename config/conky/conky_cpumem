@@ -1,3 +1,5 @@
+-- vi:syntax=lua
+
 conky.config = {
     alignment= 'middle_right',
     maximum_width = 260,
