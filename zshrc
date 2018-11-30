@@ -1,9 +1,9 @@
 zmodload zsh/zprof
 
 # Path to your oh-my-zsh installation.
-export ZSH=/home/segfault/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
-POWERLEVEL9K_MODE='awesome-fontconfig'
+POWERLEVEL9K_MODE='nerdfont-complete'
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -92,7 +92,7 @@ fi;
 
 # User configuration
 
-export PATH="$PATH:/home/segfault/.local/bin:/home/segfault/.script:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/apache-maven-3.3.9/bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/.script:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/apache-maven-3.3.9/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -158,20 +158,22 @@ alias news="newsboat"
 alias tsm="transmission-remote"
 alias tsmd="transmission-daemon"
 alias tsmc='tremc'
+alias yt='youtube-dl'
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
 
 # disable ctrl+s
 stty -ixon -ixoff
 
-PATH="/home/segfault/perl5/bin${PATH+:}${PATH}"; export PATH;
-PERL5LIB="/home/segfault/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/segfault/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/segfault/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/segfault/perl5"; export PERL_MM_OPT;
+PATH="$HOME/perl5/bin${PATH+:}${PATH}"; export PATH;
+PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 
 PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+export GEM_HOME=$HOME/.gem
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
