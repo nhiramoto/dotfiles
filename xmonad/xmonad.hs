@@ -142,7 +142,7 @@ myManageHook = (composeAll . concat $
         media   = ["Rhythmbox", "Spotify", "Clementine"]
         dev     = ["gnome-terminal"]
         -- resources
-        ignores = ["desktop", "desktop_window", "notify-osd", "stalonetray", "trayer", "dunst", "Xonotic-sdl"]
+        ignores = ["desktop", "desktop_window", "notify-osd", "stalonetray", "trayer", "dunst", "Xonotic", "xonotic-sdl"]
         -- Workspaces
         wsWeb   = "1"
         wsDev   = "2"
