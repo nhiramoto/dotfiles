@@ -62,7 +62,7 @@ editor_cmd = terminal .. " -e " .. editor
 modkey = "Mod4"
 altkey = "Mod1"
 theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/"
-theme = "apprentice"
+theme = "nhtoshiaki"
 
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(theme_dir .. theme .. "/theme.lua")
@@ -134,198 +134,201 @@ local function set_wallpaper(s)
     end
 end
 
--- Gap
-widsep = wibox.widget.textbox()
-widsep:set_text("     ")
+-- Widgets {{{
+-- -- Gap
+-- widsep = wibox.widget.textbox()
+-- widsep:set_text(" ")
 
--- Create a wibox for each screen and add it
-local taglist_buttons = gears.table.join(
-                    awful.button({ }, 1, function(t) t:view_only() end),
-                    awful.button({ modkey }, 1, function(t)
-                                            if client.focus then
-                                                client.focus:move_to_tag(t)
-                                            end
-                                        end),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
-                    awful.button({ modkey }, 3, function(t)
-                                            if client.focus then
-                                                client.focus:toggle_tag(t)
-                                            end
-                                        end),
-                    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-                    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
-                )
+-- -- Create a wibox for each screen and add it
+-- local taglist_buttons = gears.table.join(
+--                     awful.button({ }, 1, function(t) t:view_only() end),
+--                     awful.button({ modkey }, 1, function(t)
+--                                             if client.focus then
+--                                                 client.focus:move_to_tag(t)
+--                                             end
+--                                         end),
+--                     awful.button({ }, 3, awful.tag.viewtoggle),
+--                     awful.button({ modkey }, 3, function(t)
+--                                             if client.focus then
+--                                                 client.focus:toggle_tag(t)
+--                                             end
+--                                         end),
+--                     awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
+--                     awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
+--                 )
 
-local tasklist_buttons = gears.table.join(
-                    -- Minimize with left click
-                    -- awful.button({ }, 1, function (c)
-                    --                          if c == client.focus then
-                    --                              c.minimized = true
-                    --                          else
-                    --                              -- Without this, the following
-                    --                              -- :isvisible() makes no sense
-                    --                              c.minimized = false
-                    --                              if not c:isvisible() and c.first_tag then
-                    --                                  c.first_tag:view_only()
-                    --                              end
-                    --                              -- This will also un-minimize
-                    --                              -- the client, if needed
-                    --                              client.focus = c
-                    --                              c:raise()
-                    --                          end
-                    --                      end),
-                    awful.button({ }, 3, client_menu_toggle_fn()),
-                    awful.button({ }, 4, function ()
-                                            awful.client.focus.byidx(1)
-                                        end),
-                    awful.button({ }, 5, function ()
-                                            awful.client.focus.byidx(-1)
-                                        end))
+-- local tasklist_buttons = gears.table.join(
+--                     -- Minimize with left click
+--                     -- awful.button({ }, 1, function (c)
+--                     --                          if c == client.focus then
+--                     --                              c.minimized = true
+--                     --                          else
+--                     --                              -- Without this, the following
+--                     --                              -- :isvisible() makes no sense
+--                     --                              c.minimized = false
+--                     --                              if not c:isvisible() and c.first_tag then
+--                     --                                  c.first_tag:view_only()
+--                     --                              end
+--                     --                              -- This will also un-minimize
+--                     --                              -- the client, if needed
+--                     --                              client.focus = c
+--                     --                              c:raise()
+--                     --                          end
+--                     --                      end),
+--                     awful.button({ }, 3, client_menu_toggle_fn()),
+--                     awful.button({ }, 4, function ()
+--                                             awful.client.focus.byidx(1)
+--                                         end),
+--                     awful.button({ }, 5, function ()
+--                                             awful.client.focus.byidx(-1)
+--                                         end))
 
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+-- -- Keyboard map indicator and switcher
+-- mykeyboardlayout = awful.widget.keyboardlayout()
 
--- Create a textclock widget
-mytextclock = wibox.widget.textclock("<span color=\"#8FAFD7\">%b %d</span>, %H:%M")
-awful.tooltip({ objects = { mytextclock } }):set_text("Date & Time")
+-- -- Create a textclock widget
+-- mytextclock = wibox.widget.textclock("<span color=\"#8FAFD7\">%b %d</span>, %H:%M")
+-- awful.tooltip({ objects = { mytextclock } }):set_text("Date & Time")
 
--- Battery
-battery_progress = wibox.widget.progressbar()
-battery_percent = wibox.widget.textbox()
-battery_ispresent = wibox.widget.textbox()
-battery_widget = wibox.widget {
-    {
-        widget = battery_ispresent,
-    },
-    {
-        {
-            widget = battery_progress,
-            margins = 5,
-            width = 70,
-            ticks = true,
-            ticks_gap = 2,
-            ticks_size = 3,
-        },
-        {
-            widget = battery_percent,
-            align = 'center',
-            valign = 'center',
-            font = 'Exo 2 Medium 8',
-        },
-        layout = wibox.layout.stack
-    },
-    layout = wibox.layout.align.horizontal
-}
-awful.tooltip({ objects = { battery_widget } }):set_text("Battery Level")
-function batteryLevel(widget, args)
-    if args[2] <= 10 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 20 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 30 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 40 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 50 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 60 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 70 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 80 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 90 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    else
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    end
-end
-vicious.register(battery_progress, vicious.widgets.bat, "$2", 1, "BAT1")
-vicious.register(battery_percent, vicious.widgets.bat, "<span bgcolor='black' bgalpha='40%'>$2%</span>", 32, "BAT1")
-vicious.register(battery_ispresent, vicious.widgets.bat, "<span font='Exo 2 Medium 10'></span> $1", 1, "BAT1")
+-- -- Battery
+-- battery_progress = wibox.widget.progressbar()
+-- battery_percent = wibox.widget.textbox()
+-- battery_ispresent = wibox.widget.textbox()
+-- battery_widget = wibox.widget {
+--     {
+--         widget = battery_ispresent,
+--     },
+--     {
+--         {
+--             widget = battery_progress,
+--             margins = 5,
+--             width = 70,
+--             ticks = true,
+--             ticks_gap = 2,
+--             ticks_size = 3,
+--         },
+--         {
+--             widget = battery_percent,
+--             align = 'center',
+--             valign = 'center',
+--             font = 'Exo 2 Medium 8',
+--         },
+--         layout = wibox.layout.stack
+--     },
+--     layout = wibox.layout.align.horizontal
+-- }
+-- awful.tooltip({ objects = { battery_widget } }):set_text("Battery Level")
+-- function batteryLevel(widget, args)
+--     if args[2] <= 10 then
+--         return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
+--     elseif args[2] <= 20 then
+--         return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
+--     elseif args[2] <= 30 then
+--         return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
+--     elseif args[2] <= 40 then
+--         return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
+--     elseif args[2] <= 50 then
+--         return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
+--     elseif args[2] <= 60 then
+--         return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
+--     elseif args[2] <= 70 then
+--         return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
+--     elseif args[2] <= 80 then
+--         return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
+--     elseif args[2] <= 90 then
+--         return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
+--     else
+--         return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
+--     end
+-- end
+-- vicious.register(battery_progress, vicious.widgets.bat, "$2", 1, "BAT1")
+-- vicious.register(battery_percent, vicious.widgets.bat, "<span bgcolor='black' bgalpha='40%'>$2%</span>", 32, "BAT1")
+-- vicious.register(battery_ispresent, vicious.widgets.bat, "<span font='Exo 2 Medium 10'></span> $1", 1, "BAT1")
 
--- Cpu
-cpu_widget = wibox.widget {
-    widget = wibox.widget.graph,
-    width = 50
-}
-awful.tooltip({ objects = { cpu_widget } }):set_text("CPU Usage")
-vicious.register(cpu_widget, vicious.widgets.cpu, "$1", 1)
+-- -- Cpu
+-- cpu_widget = wibox.widget {
+--     widget = wibox.widget.graph,
+--     width = 50
+-- }
+-- awful.tooltip({ objects = { cpu_widget } }):set_text("CPU Usage")
+-- vicious.register(cpu_widget, vicious.widgets.cpu, "$1", 1)
 
--- Volume
-volume_progress = wibox.widget.progressbar()
-volume_percent = wibox.widget.textbox()
-volume_ismuted = wibox.widget.textbox()
-volume_widget = wibox.widget {
-    {
-        widget = volume_ismuted,
-    },
-    {
-        {
-            widget = volume_progress,
-            margins = 5,
-            width = 70,
-            ticks = true,
-            ticks_gap = 2,
-            ticks_size = 3,
-        },
-        {
-            widget = volume_percent,
-            align = 'center',
-            valign = 'center',
-            font = 'Exo 2 Medium 8',
-        },
-        layout = wibox.layout.stack
-    },
-    layout = wibox.layout.align.horizontal
-}
-function volumeLevel(widget, args)
-    if args[2] == "Muted" then
-        return "🔇"
-    elseif args[1] <= 40 then
-        return "🔈 " .. args[1] .. "%"
-    elseif args[1] <= 70 then
-        return "🔉 " .. args[1] .. "%"
-    else
-        return "🔊 " .. args[1] .. "%"
-    end
-end
-awful.tooltip({ objects = { volume_widget } }):set_text("Volume")
-vicious.register(volume_progress, vicious.widgets.volume, "$1", 0.5, "Master")
-vicious.register(volume_percent, vicious.widgets.volume, "<span bgcolor='black' bgalpha='40%'>$1%</span>", 0.5, "Master")
-vicious.register(volume_ismuted, vicious.widgets.volume, function (widget, args)
-    local ismuted = {["♫"] = false, ["♩"] = true}
-    if ismuted[args[2]] then
-        volume_progress.color = '#8A4900'
-        return "<span font='Exo 2 Medium 16' color='#8A4900'></span>"
-    else
-        volume_progress.color = beautiful.progressbar_fg
-        return "<span font='Exo 2 Medium 16'></span>"
-    end
-end, 0.5, "Master")
+-- -- Volume
+-- volume_progress = wibox.widget.progressbar()
+-- volume_percent = wibox.widget.textbox()
+-- volume_ismuted = wibox.widget.textbox()
+-- volume_widget = wibox.widget {
+--     {
+--         widget = volume_ismuted,
+--     },
+--     {
+--         {
+--             widget = volume_progress,
+--             margins = 5,
+--             width = 70,
+--             ticks = true,
+--             ticks_gap = 2,
+--             ticks_size = 3,
+--         },
+--         {
+--             widget = volume_percent,
+--             align = 'center',
+--             valign = 'center',
+--             font = 'Exo 2 Medium 8',
+--         },
+--         layout = wibox.layout.stack
+--     },
+--     layout = wibox.layout.align.horizontal
+-- }
+-- function volumeLevel(widget, args)
+--     if args[2] == "Muted" then
+--         return "🔇"
+--     elseif args[1] <= 40 then
+--         return "🔈 " .. args[1] .. "%"
+--     elseif args[1] <= 70 then
+--         return "🔉 " .. args[1] .. "%"
+--     else
+--         return "🔊 " .. args[1] .. "%"
+--     end
+-- end
+-- awful.tooltip({ objects = { volume_widget } }):set_text("Volume")
+-- vicious.register(volume_progress, vicious.widgets.volume, "$1", 0.5, "Master")
+-- vicious.register(volume_percent, vicious.widgets.volume, "<span bgcolor='black' bgalpha='40%'>$1%</span>", 0.5, "Master")
+-- vicious.register(volume_ismuted, vicious.widgets.volume, function (widget, args)
+--     local ismuted = {["♫"] = false, ["♩"] = true}
+--     if ismuted[args[2]] then
+--         volume_progress.color = '#8A4900'
+--         return "<span font='Exo 2 Medium 16' color='#8A4900'></span>"
+--     else
+--         volume_progress.color = beautiful.progressbar_fg
+--         return "<span font='Exo 2 Medium 16'></span>"
+--     end
+-- end, 0.5, "Master")
 
--- Systray
-systray_widget = wibox.widget.systray()
-systray_widget:set_base_size(18)
+-- -- Systray
+-- systray_widget = wibox.widget.systray()
+-- systray_widget:set_base_size(18)
 
--- Pacman
-pacwidget = wibox.widget.textbox()
-pacwidget_t = awful.tooltip({ objects = { pacwidget }, })
-vicious.register(pacwidget, vicious.widgets.pkg, function (widget, args)
-    local io = { popen = io.popen }
-    local s = io.popen("checkupdates")
+-- -- Pacman
+-- pacwidget = wibox.widget.textbox()
+-- pacwidget_t = awful.tooltip({ objects = { pacwidget }, })
+-- vicious.register(pacwidget, vicious.widgets.pkg, function (widget, args)
+--     local io = { popen = io.popen }
+--     local s = io.popen("checkupdates")
 
-    local str = ''
-    local i = 0
+--     local str = ''
+--     local i = 0
 
-    for line in s:lines() do
-        str = str .. line .. "\n"
-        i = i + 1
-    end
-    pacwidget_t:set_text(str)
-    s:close()
-    return "PACMAN: " .. i .. "   "
-end, 1800, "Arch")
+--     for line in s:lines() do
+--         str = str .. line .. "\n"
+--         i = i + 1
+--     end
+--     pacwidget_t:set_text(str)
+--     s:close()
+--     return "PACMAN: " .. i .. "   "
+-- end, 1800, "Arch")
+
+-- Widgets }}}
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
@@ -334,55 +337,57 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, s, awful.layout.layouts[1])
 
-    -- Create a promptbox for each screen
-    s.mypromptbox = awful.widget.prompt()
+    -- Screen Wibar {{{
+    -- -- Create a promptbox for each screen
+    -- s.mypromptbox = awful.widget.prompt()
 
-    -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
+    -- -- Create a taglist widget
+    -- s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
 
-    -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.focused, tasklist_buttons)
+    -- -- Create a tasklist widget
+    -- s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.focused, tasklist_buttons)
 
-    -- Create an imagebox widget which will contain an icon indicating which layout we're using.
-    -- We need one layoutbox per screen.
-    s.mylayoutbox = awful.widget.layoutbox(s)
-    s.mylayoutbox:buttons(gears.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+    -- -- Create an imagebox widget which will contain an icon indicating which layout we're using.
+    -- -- We need one layoutbox per screen.
+    -- s.mylayoutbox = awful.widget.layoutbox(s)
+    -- s.mylayoutbox:buttons(gears.table.join(
+    --                        awful.button({ }, 1, function () awful.layout.inc( 1) end),
+    --                        awful.button({ }, 3, function () awful.layout.inc(-1) end),
+    --                        awful.button({ }, 4, function () awful.layout.inc( 1) end),
+    --                        awful.button({ }, 5, function () awful.layout.inc(-1) end)))
 
-    -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    -- -- Create the wibox
+    -- s.mywibox = awful.wibar({ position = "top", screen = s })
 
-    -- Add widgets to the wibox
-    s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            mylauncher,
-            widsep,
-            s.mytaglist,
-            widsep,
-            s.mypromptbox,
-        },
-        s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            systray_widget,
-            wibox.widget { widget = wibox.widget.textbox, text = "         " },
-            widsep,
-            cpu_widget,
-            widsep,
-            volume_widget,
-            widsep,
-            battery_widget,
-            widsep,
-            mytextclock,
-            widsep,
-            s.mylayoutbox,
-        },
-    }
+    -- -- Add widgets to the wibox
+    -- s.mywibox:setup {
+    --     layout = wibox.layout.align.horizontal,
+    --     { -- Left widgets
+    --         layout = wibox.layout.fixed.horizontal,
+    --         mylauncher,
+    --         widsep,
+    --         s.mytaglist,
+    --         widsep,
+    --         s.mypromptbox,
+    --     },
+    --     s.mytasklist, -- Middle widget
+    --     { -- Right widgets
+    --         layout = wibox.layout.fixed.horizontal,
+    --         systray_widget,
+    --         widsep,
+    --         cpu_widget,
+    --         widsep,
+    --         volume_widget,
+    --         widsep,
+    --         battery_widget,
+    --         widsep,
+    --         mytextclock,
+    --         widsep,
+    --         s.mylayoutbox,
+    --     },
+    -- }
+
+    -- Screen Wibar }}}
 end)
 -- }}}
 
@@ -578,7 +583,7 @@ clientkeys = gears.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 9 do
+for i = 1, 10 do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
         awful.key({ modkey }, "#" .. i + 9,
@@ -666,12 +671,11 @@ awful.rules.rules = {
           "pinentry",
           "veromix",
           "xtightvncviewer",
-          "Virtualbox Manager",
-          "Virtualbox Machine",
-          "mpv"
-        },
-        type = {
-            "dialog"
+          "VirtualBox",
+          "VirtualBox Manager",
+          "VirtualBox Machine",
+          "mpv",
+          "Polybar"
         },
         name = {
           "Event Tester",  -- xev.
@@ -691,6 +695,17 @@ awful.rules.rules = {
     -- Assign Programs to Tags
     { rule_any = { class = { "qutebrowser", "Google-chrome", "Firefox" } },
       properties = { screen = 1, tag = "1" } },
+
+    -- Docks and panels
+    { rule_any = { class = { "Polybar" } },
+      properties = {
+        focusable = false,
+        floating = true,
+        sticky = true,
+        ontop = false,
+        below = true,
+      }
+    }
 }
 -- }}}
 
@@ -773,11 +788,13 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 client.connect_signal("property::fullscreen", function (c)
     if c.fullscreen and c == client.focus then
         mouse.screen.visible = false
+        c.floating = true
         c.shape = function(cr,w,h)
             gears.shape.rounded_rect(cr,w,h,0)
         end
     else
         mouse.screen.visible = true
+        c.floating = false
         c.shape = function(cr,w,h)
             gears.shape.rounded_rect(cr,w,h,6)
         end
@@ -790,9 +807,3 @@ end)
 awful.spawn.with_shell(os.getenv("HOME") .. "/.config/awesome/autorun.sh")
 -- }}}
 
--- Theming {{{
-beautiful.useless_gap = 3
-
--- Hotkeys Popup
-beautiful.hotkeys_font = "Exo 2 Medium 10"
--- }}}
