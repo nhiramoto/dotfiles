@@ -1,6 +1,6 @@
 ! vi:syntax=xdefaults
 
-#include "colors/apprentice.dark"
+#include "colors/wysard.dark"
 
 URxvt.termName: rxvt-unicode-256color
 URxvt.cursorBlink: true
@@ -14,12 +14,17 @@ URxvt.transparent: false
 URxvt.fading: 30
 
 ! Font
-URxvt.font: xft:Iosevka Nerd Font:semibold:pixelsize=13, xft:FuraCode NF:medium:pixelsize=11, xft:MesloLGMDZ NF:style=Regular, xft:SourceCodePro:medium:pixelsize=11, xft:DejaVu Sans Mono:medium:pixelsize=11, xft:unifont:pixelsize=14, xft:monospace:pixelsize=14
+URxvt.font: xft:TamzenForPowerline:regular:pixelsize=15, xft:Iosevka Nerd Font:semibold:pixelsize=13, xft:FuraCode NF:medium:pixelsize=11, xft:MesloLGMDZ NF:style=Regular, xft:SourceCodePro:medium:pixelsize=11, xft:DejaVu Sans Mono:medium:pixelsize=11, xft:unifont:pixelsize=14, xft:monospace:pixelsize=14
 
 URxvt.scrollBar: false
 
 ! Padding
 !URxvt.internalBorder: 5
+
+! Colored Man Pages
+URxvt.colorIT:      #87af5f
+URxvt.colorBD:      #d7d7d7
+URxvt.colorUL:      #87afd7
 
 ! Extensions
 URxvt.perl-ext-common: fullscreen,url-select,clipboard,resize-font,keyboard-select
