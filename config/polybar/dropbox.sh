@@ -26,14 +26,14 @@ status=`dropbox-cli status`
 #echo %{F$colorRunning} $status%{F-}
 if [ $isrunning -ne 0 ]; then
     if [[ "$status" =~ .*"Up to date".* ]]; then
-        echo "%{F$colorRunning} %{F-}"
+        echo "%{F$colorRunning} %{F-}"
     elif [[ "$status" =~ "Syncing".* ]]; then
-        echo "%{F$colorRunning} %{F-}"
+        echo "%{F$colorRunning} %{F-}"
     else
-        echo "%{F$colorRunning} %{F-}"
+        echo "%{F$colorRunning} %{F-}"
     fi
 else
-    echo "%{F$colorStopped} %{F-}"
+    echo "%{F$colorStopped} %{F-}"
 fi
 
 exit 0

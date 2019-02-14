@@ -6,7 +6,7 @@ colorStopped=$(xgetres URxvt.color8 || echo "#555")
 state=`~/.script/touchpad.sh`
 
 if [[ $state -eq 0 ]]; then
-    echo "%{F$colorStopped}%{F-}"
+    echo "%{F$colorStopped}%{F-}"
 else
-    echo "%{F$colorRunning}%{F-}"
+    echo "%{F$colorRunning}%{F-}"
 fi
