@@ -13,4 +13,4 @@ run udiskie
 run dropbox
 run $HOME/.config/compton/launch.sh
 run $HOME/.config/conky/launch.sh
-run $HOME/.script/mon er
+#run $HOME/.script/mon er
