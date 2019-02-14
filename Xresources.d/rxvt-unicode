@@ -1,6 +1,6 @@
 ! vi:syntax=xdefaults
 
-#include "colors/wysard.dark"
+#include "colors/apprentice.colors"
 
 URxvt.termName: rxvt-unicode-256color
 URxvt.cursorBlink: true

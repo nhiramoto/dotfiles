@@ -4,7 +4,36 @@ BLUE="\033[1;34m"
 NC="\033[0m"
 
 REP="$HOME/dotfiles"
-FILES=(zshrc vimrc Xresources tmux.conf "Xresources.d/rofi" "Xresources.d/rxvt-unicode" "Xresources.d/xterm" "config/awesome/rc.lua" "config/awesome/autorun.sh" "config/compton/compton.conf" "config/compton/launch.sh" "config/conky/conky_cpumem" "config/conky/conky_host" "config/conky/launch.sh" "config/openbox/autostart" "config/openbox/environment" "config/openbox/menu.xml" "config/openbox/rc.xml")
+FILES=(
+    zshrc
+    vimrc
+    Xresources
+    tmux.conf
+    "Xresources.d/rofi"
+    "Xresources.d/rxvt-unicode"
+    "Xresources.d/xterm"
+    "config/awesome/rc.lua"
+    "config/awesome/autorun.sh"
+    "config/compton/compton.conf"
+    "config/compton/launch.sh"
+    "config/conky/conky_cpumem"
+    "config/conky/conky_host"
+    "config/conky/launch.sh"
+    "config/openbox/autostart"
+    "config/openbox/environment"
+    "config/openbox/menu.xml"
+    "config/openbox/rc.xml"
+    "config/bspwm/bspwmrc"
+    "config/sxhkd/sxhkdrc"
+    "config/polybar/config"
+    "config/polybar/dropbox.sh"
+    "config/polybar/launch.sh"
+    "config/polybar/network.sh"
+    "config/polybar/service.sh"
+    "config/polybar/touchpad.sh"
+    "config/polybar/updates-arch.sh"
+    "config/polybar/usb.sh"
+)
 
 for f in ${FILES[@]}; do
     hf=".$f"
