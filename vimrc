@@ -14,7 +14,7 @@ set ignorecase              " Ignore case in regex
 set smartcase
 set incsearch               " Enable incremental search
 set iskeyword-=_            " Assume underscore as word delimiter
-set matchpairs+=<:>         " Show matching angle brackets <>'s
+" set matchpairs+=<:>         " Show matching angle brackets <>'s
 set nobackup                " Disable backup files creation
 set nowritebackup           ""
 set noswapfile              " Disable swap files creation
@@ -26,7 +26,7 @@ set laststatus=2
 set number
 set relativenumber
 set fillchars+=vert:\┃
-set ttyfast " u got a fast terminal
+set ttyfast
 set synmaxcol=200           " Max column width for syntax highlighting
 set mouse=a                 " Enable mouse for all modes
 set autoindent              " Autoindentation
@@ -438,6 +438,12 @@ let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips'
+
+" }}}
+
+" Plugin: delimitMate {{{ 
+
+let delimitMate_matchpairs = "(:),[:],{:}"
 
 " }}}
 
