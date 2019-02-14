@@ -14,13 +14,29 @@ bspc HDMI1 -d VIII IX X
 
 bspc config remove_disabled_monitors    true
 bspc config remove_unplugged_monitors   true
+bspc config merge_overlapping_monitors  true
 
+## Window
 bspc config border_width                2
-bspc config window_gap                  12
+bspc config border_radius               5
+bspc config window_gap                  8
 
 bspc config split_ratio                 0.5
 bspc config borderless_monocle          true
 bspc config gapless_monocle             true
+bspc config single_monocle              true
+
+## Mouse
+bspc config pointer_modifier            mod4 # mod4 = Super_L
+bspc config focus_follows_pointer       false
+bspc config pointer_follows_focus       false
+bspc config pointer_follows_monitor     true
+
+## Colors
+bspc config normal_border_color         #262626
+bspc config active_border_color         #262626
+bspc config focused_border_color        #5F87AF
+bspc config presel_feedback_color       #87875F
 
 ###
 # Rules
