@@ -1,3 +1,5 @@
+export LANG="en_US.UTF-8"
+
 zmodload zsh/zprof
 
 # Path to your oh-my-zsh installation.
@@ -142,6 +144,10 @@ alias __xmonad="$EDITOR $HOME/.xmonad/xmonad.hs"
 alias __xmobar="$EDITOR $HOME/.xmonad/xmobar/xmobarrc"
 alias __awesome="$EDITOR $HOME/.config/awesome/rc.lua"
 alias __tsm="$EDITOR $HOME/.config/transmission-daemon/settings.json"
+alias __openbox="$EDITOR $HOME/.config/openbox/rc.xml"
+alias __openboxmenu="$EDITOR $HOME/.config/openbox/menu.xml"
+alias __openboxenv="$EDITOR $HOME/.config/openbox/environment"
+alias __openboxauto="$EDITOR $HOME/.config/openbox/autostart"
 
 alias open=xdg-open
 alias pacsize="expac -S -H M '%k/t%n'"

@@ -1,0 +1,17 @@
+# vi:syntax=sh
+
+function run {
+    if ! pgrep $1; then
+        (sleep 3s && $@) &
+    fi
+}
+
+run "$HOME/.config/compton/launch.sh"
+run tint2
+run xrdb $HOME/.Xresources
+run nm-applet
+run udiskie
+run dropbox
+run "$HOME/.config/conky/launch.sh"
+run nitrogen --restore
+
