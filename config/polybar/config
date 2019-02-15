@@ -205,7 +205,7 @@ format = <label-indicator>
 
 label-layout = %name%
 
-label-indicator = 
+label-indicator = בּ
 ;label-indicator-padding = 2
 label-indicator-margin = 1
 label-indicator-foreground = ${colors.secondary}

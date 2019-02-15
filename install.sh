@@ -9,6 +9,7 @@ FILES=(
     vimrc
     Xresources
     tmux.conf
+    "scripts"
     "Xresources.d"
     "config/awesome"
     "config/compton"

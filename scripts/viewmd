@@ -1,0 +1,7 @@
+#!/bin/sh
+# vim: syntax=sh :
+
+FILE=$1
+
+pandoc -f markdown -t html5 -o /tmp/md2.html $FILE
+xdg-open /tmp/md2.html

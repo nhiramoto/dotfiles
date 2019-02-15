@@ -1,0 +1,64 @@
+#!/bin/sh
+# Setup Monitors
+
+MODE=${1:-primary}
+MON1=eDP1
+MON2=HDMI1
+HDMICONN=$(xrandr | grep -i "$MON2" | cut -d " " -f 2)
+DESKTOP="$CURRENT_DESKTOP"
+MONMODE_FILE="$HOME/.scripts/vars/mon_mode.dat"
+
+function after_update_screen {
+    env PRIMARY="$1" SECONDARY="$2" "$HOME/.scripts/hooks/after_update_screen.sh"
+}
+
+if [[ -f "$MONMODE_FILE" ]]; then
+    FILE_CONTENT=$(cat "$MONMODE_FILE")
+    if [[ -n "$FILE_CONTENT" ]]; then
+        MODE=$FILE_CONTENT
+    fi
+else
+    mkdir -p "$(dirname $MONMODE_FILE)"
+    touch "$MONMODE_FILE"
+fi
+
+# Check if $MON2 is connected
+if [[ "$HDMICONN" == "disconnected" && "MODE" != "primary" ]]; then
+    MODE="primary"
+    notify-send "Monitor" "Monitor $MON2 is not connected."
+fi
+
+echo "MODE: $MODE"
+
+if [[ -n "$MODE" ]]; then
+    case "$MODE" in
+        "extend-right"|"er")
+            xrandr --output "$MON1" --primary --mode 1920x1080 --pos 0x0 --rotate normal --output "$MON2" --mode 1366x768 --pos 1920x0 --rotate normal
+            after_update_screen "$MON1" "$MON2"
+            echo "extend-right" > "$MONMODE_FILE"
+            ;;
+        "extend-left"|"el")
+            xrandr --output "$MON1" --primary --mode 1920x1080 --pos 1366x0 --rotate normal --output "$MON2" --mode 1366x768 --pos 0x0 --rotate normal
+            after_update_screen "$MON1" "$MON2"
+            echo "extend-left" > "$MONMODE_FILE"
+            ;;
+        "clone"|"c")
+            xrandr --output "$MON1" --primary --mode 1920x1080 --pos 0x0 --rotate normal --output "$MON2" --mode 1366x768 --pos 0x0 --rotate normal
+            after_update_screen "$MON1"
+            echo "clone" > "$MONMODE_FILE"
+            ;;
+        "primary"|"primary-only"|"po"|"p")
+            xrandr --output "$MON1" --primary --mode 1920x1080 --pos 0x0 --rotate normal --output "$MON2" --off
+            after_update_screen "$MON1"
+            echo "primary" > "$MONMODE_FILE"
+            ;;
+        "secondary"|"secondary-only"|"so"|"s")
+            xrandr --output "$MON1" --off --output "$MON2" --primary --mode 1366x768 --pos 0x0 --rotate normal
+            after_update_screen "$MON2"
+            echo "secondary" > "$MONMODE_FILE"
+            ;;
+        *)
+            echo "Error: Unknown parameter."
+    esac
+fi
+
