@@ -514,7 +514,7 @@ bar-used-empty-foreground = #444444
 
 [module/network]
 type = custom/script
-exec = ~/.config/polybar/network.sh
+exec = ~/.config/polybar/network.sh 2>/dev/null
 tail = false
 interval = 3.0
 
@@ -553,7 +553,7 @@ label-disconnected = 
 
 [module/touchpad]
 type = custom/script
-exec = ~/.config/polybar/touchpad.sh
+exec = ~/.config/polybar/touchpad.sh 2>/dev/null
 tail = true
 interval = 1.0
 
@@ -701,7 +701,7 @@ menu-2-1-exec = menu-open-0
 
 [module/dropbox]
 type = custom/script
-exec = ~/.config/polybar/dropbox.sh
+exec = ~/.config/polybar/dropbox.sh 2>/dev/null
 interval = 1
 label = %output%
 format = <label>
@@ -710,7 +710,7 @@ tail = true
 
 [module/ufw]
 type = custom/script
-exec = ~/.config/polybar/service.sh ufw 
+exec = ~/.config/polybar/service.sh ufw  2>/dev/null
 interval = 1
 label = %output%
 format = <label>
@@ -719,7 +719,7 @@ tail = true
 
 [module/updates]
 type = custom/script
-exec = ~/.config/polybar/updates-arch.sh
+exec = ~/.config/polybar/updates-arch.sh 2>/dev/null
 interval = 180
 format = <label>
 label = %output%
@@ -727,7 +727,7 @@ tail = false
 
 [module/httpd]
 type = custom/script
-exec = ~/.config/polybar/service.sh httpd 
+exec = ~/.config/polybar/service.sh httpd x 2>/dev/null
 interval = 1
 label = %output%
 format = <label>

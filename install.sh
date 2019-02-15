@@ -9,45 +9,31 @@ FILES=(
     vimrc
     Xresources
     tmux.conf
-    "Xresources.d/rofi"
-    "Xresources.d/rxvt-unicode"
-    "Xresources.d/xterm"
-    "config/awesome/rc.lua"
-    "config/awesome/autorun.sh"
-    "config/compton/compton.conf"
-    "config/compton/launch.sh"
-    "config/conky/conky_cpumem"
-    "config/conky/conky_host"
-    "config/conky/launch.sh"
-    "config/openbox/autostart"
-    "config/openbox/environment"
-    "config/openbox/menu.xml"
-    "config/openbox/rc.xml"
-    "config/bspwm/bspwmrc"
-    "config/sxhkd/sxhkdrc"
-    "config/polybar/config"
-    "config/polybar/dropbox.sh"
-    "config/polybar/launch.sh"
-    "config/polybar/network.sh"
-    "config/polybar/service.sh"
-    "config/polybar/touchpad.sh"
-    "config/polybar/updates-arch.sh"
-    "config/polybar/usb.sh"
+    "Xresources.d"
+    "config/awesome"
+    "config/compton"
+    "config/conky"
+    "config/dunst"
+    "config/openbox"
+    "config/bspwm"
+    "config/sxhkd"
+    "config/polybar"
 )
 
 for f in ${FILES[@]}; do
     hf=".$f"
     echo -e "Installing ${BLUE}$hf${NC} file ..."
-    if [[ -f "$HOME/$hf" ]]; then
+    if [[ -e "$HOME/$hf" ]]; then
         if [[ -L "$HOME/$hf" && $(readlink -f "$HOME/$hf") = "$REP/$f" ]]; then
-            echo -e "  The file ${BLUE}$HOME/$hf${NC} has already been installed."
+            echo -e "  The file ${BLUE}$HOME/$hf${NC} has already been installed. \u2714"
             continue
         else
-            echo -e "  Existing file, backing up ${BLUE}$hf${NC} ..."
+            echo -e "  Existing file, backing up ${BLUE}$hf${NC} \uf071"
             mv "$HOME/$hf" "$HOME/$hf.bak"
         fi
     fi
     echo -e "  Creating the file ${BLUE}$HOME/$hf${NC} linking to ${BLUE}$REP/$f${NC}"
     mkdir -p $(dirname $HOME/$hf)
     ln -s "$REP/$f" "$HOME/$hf"
+    echo -e "  Done! \u2714"
 done
