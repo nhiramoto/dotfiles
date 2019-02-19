@@ -5,14 +5,16 @@ MODE=${1:-primary}
 MON1=eDP1
 MON2=HDMI1
 HDMICONN=$(xrandr | grep -i "$MON2" | cut -d " " -f 2)
-DESKTOP="$CURRENT_DESKTOP"
+CURRENT_DESKTOP="${CURRENT_DESKTOP:-unknown}"
 MONMODE_FILE="$HOME/.scripts/vars/mon_mode.dat"
 
 function after_update_screen {
-    env PRIMARY="$1" SECONDARY="$2" "$HOME/.scripts/hooks/after_update_screen.sh"
+    PRIMARY="$1"
+    SECONDARY="$2" 
+    . "$HOME/.scripts/hooks/after_update_screen.sh"
 }
 
-if [[ -f "$MONMODE_FILE" ]]; then
+if [[ -f "$MONMODE_FILE" && ( "$MODE" = "restore" || "$MODE" = "r" ) ]]; then
     FILE_CONTENT=$(cat "$MONMODE_FILE")
     if [[ -n "$FILE_CONTENT" ]]; then
         MODE=$FILE_CONTENT

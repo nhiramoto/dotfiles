@@ -11,11 +11,17 @@ function setWallpaper {
     nitrogen --restore
 }
 
-function launchPolybar {
-    env MONITOR1="$1" MONITOR2="$2" "$HOME/.config/polybar/launch.sh"
+function launch_polybar {
+    MONITOR1="$1"
+    MONITOR2="$2" 
+    . "$HOME/.config/polybar/launch.sh"
 }
 
-function setBspwmWorkspaces {
+function launch_conky {
+    . "$HOME/.config/conky/launch.sh"
+}
+
+function set_bspwm_desktops {
     if [[ -n "$1" ]]; then
         if [[ -n "$2" ]]; then
             bspc monitor "$1" -d I II III IV V VI VII
@@ -28,11 +34,13 @@ function setBspwmWorkspaces {
 
 case "$CURRENT_DESKTOP" in
     "i3")
-        launchPolybar "$PRIMARY" "$SECONDARY"
+        launch_polybar "$PRIMARY" "$SECONDARY"
+        launch_conky
         ;;
     "bspwm")
-        setBspwmWorkspaces "$PRIMARY" "$SECONDARY"
-        launchPolybar "$PRIMARY" "$SECONDARY"
+        set_bspwm_desktops "$PRIMARY" "$SECONDARY"
+        launch_polybar "$PRIMARY" "$SECONDARY"
+        launch_conky
         ;;
     *)
         ;;
