@@ -1,6 +1,6 @@
 ! vi:syntax=xdefaults
 
-rofi.combi-modi: run,drun,window,ssh,Select Monitor:~/.script/selmon.sh
+rofi.combi-modi: run,drun,window,ssh
 rofi.font: Exo 2, Medium, 20
 !rofi.theme: Monokai
 rofi.lines: 7

@@ -1,4 +1,4 @@
-! vi:syntax=xdefaults
+! vim: filetype=xdefaults :
 
 #include ".Xresources.d/xterm"
 #include ".Xresources.d/rxvt-unicode"

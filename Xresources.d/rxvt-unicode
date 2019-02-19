@@ -1,20 +1,20 @@
-! vi:syntax=xdefaults
+! vim: filetype=xdefaults :
 
 #include "colors/apprentice.colors"
 
-URxvt.termName: rxvt-unicode-256color
+!URxvt.termName: rxvt-unicode-256color
 URxvt.cursorBlink: true
 
 ! Transparency
-URxvt.transparent: false
-!URxvt.tintColor: #AFAFAF
-!URxvt.shading: 95
-!URxvt.blurRadius: 5x5
+URxvt.transparent: true
+URxvt.tintColor: #AFAFAF
+URxvt.shading: 10
+URxvt.blurRadius: 7x7
 ! Dim when focus lost
 URxvt.fading: 30
 
 ! Font
-URxvt.font: xft:TamzenForPowerline:regular:pixelsize=15, xft:Iosevka Nerd Font:semibold:pixelsize=13, xft:FuraCode NF:medium:pixelsize=11, xft:MesloLGMDZ NF:style=Regular, xft:SourceCodePro:medium:pixelsize=11, xft:DejaVu Sans Mono:medium:pixelsize=11, xft:unifont:pixelsize=14, xft:monospace:pixelsize=14
+URxvt.font: xft:Iosevka Nerd Font Mono:medium:pixelsize=13, xft:FuraCode NF Mono:medium:pixelsize=13, xft:MesloLGMDZ NF:style=Regular, xft:SourceCodePro:medium:pixelsize=11, xft:DejaVu Sans Mono:medium:pixelsize=11, xft:unifont:pixelsize=14, xft:monospace:pixelsize=14
 
 URxvt.scrollBar: false
 

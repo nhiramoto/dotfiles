@@ -64,7 +64,7 @@ let g:vim_json_syntax_conceal = 0
 " nvim vs vim configurations
 if has('nvim')
     " Neovim specific commands
-    set termguicolors
+    " set termguicolors
 else
     " Standard vim specific commands
     set nocompatible " Use Vim's improvements
@@ -244,14 +244,14 @@ filetype plugin indent on
 " Color Scheme {{{
 
 " Gruvbox theme
-let g:gruvbox_contrast_dark = 'medium'
-let g:gruvbox_termcolors=16
+"let g:gruvbox_contrast_dark = 'medium'
+"let g:gruvbox_termcolors=16
 
 " Ayu theme
-let ayucolor="mirage"
+"let ayucolor="mirage"
 
 syntax on
-set background=dark
+"set background=dark
 set cursorline
 set hlsearch
 set ruler

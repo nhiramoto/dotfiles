@@ -100,9 +100,9 @@ export PATH="$PATH:$HOME/.local/bin:$HOME/.script:/usr/local/sbin:/usr/local/bin
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
-export LANG\='en_US.UTF-8'
-export LC_ALL\="en_US.UTF-8"
-export TERM\=xterm-256color
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+export TERM="rxvt-unicode-256color"
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -186,10 +186,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Termite current directory
-if [[ $TERM == xterm-termite ]]; then
-  . /etc/profile.d/vte.sh
-  __vte_osc7
-fi
+# if [[ $TERM == xterm-termite ]]; then
+#   . /etc/profile.d/vte.sh
+#   __vte_osc7
+# fi
 
 # Disable bracketed paste mode for terminals that
 #   doesn't support escape sequences (like Emacs shell)
@@ -201,7 +201,7 @@ fi
 # export PAGER="most"
 
 # Default Terminal
-export TERMINAL="termite"
+export TERMINAL="urxvt"
 
 # Python Virtualenv
 export WORKON_HOME=$HOME/.virtualenvs
