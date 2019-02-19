@@ -2,3 +2,6 @@
 */**/*.bak
 */**/#*#
 */**/custom.el
+
+config/awesome/themes/*
+!config/awesome/themes/nhtoshiaki

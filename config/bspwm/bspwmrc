@@ -2,8 +2,6 @@
 
 sxhkd &
 
-export CURRENT_DESKTOP=bspwm
-
 ###
 # Configurations
 ##
