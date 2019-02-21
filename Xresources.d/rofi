@@ -1,7 +1,7 @@
-! vi:syntax=xdefaults
+! vim: syntax=xdefaults :
 
 rofi.combi-modi: run,drun,window,ssh
-rofi.font: Exo 2, Medium, 20
+rofi.font: Hurmit Nerd Font, Medium, 18
 !rofi.theme: Monokai
 rofi.lines: 7
 rofi.color-enabled: true
