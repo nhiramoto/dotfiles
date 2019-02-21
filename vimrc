@@ -53,7 +53,7 @@ hi clear texBoldStyle
 let g:tex_flavor = 'latex'
 
 " Commentaries in italic mode
-highlight Comment cterm=italic
+hi Comment cterm=italic
 
 " Conceal
 set conceallevel=1
@@ -251,7 +251,7 @@ filetype plugin indent on
 "let ayucolor="mirage"
 
 syntax on
-"set background=dark
+set background=dark
 set cursorline
 set hlsearch
 set ruler

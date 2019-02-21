@@ -63,6 +63,14 @@ awful.layout.layouts = {
 
 -- Hotkeys Popup
 hotkeys_popup.merge_duplicates = true
+
+-- Naughty (Notifications)
+naughty.config.defaults.margin = beautiful.notification_margin
+
+-- }}}
+
+-- Popups {{{
+
 -- }}}
 
 -- Functions {{{
@@ -90,6 +98,10 @@ local function set_wallpaper(s)
         gears.wallpaper.maximized(wallpaper, s, true)
     end
 end
+
+-- Placement
+local placeon_bottomright_scaled = awful.placement.bottom_right + awful.placement.scale
+
 -- }}}
 
 -- {{{ Menu
@@ -124,9 +136,10 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- Widgets {{{
 
--- Gap
-local widsep = wibox.widget.textbox()
-widsep:set_text("   ")
+-- Separators and Borders
+local spr = wibox.widget.imagebox(beautiful.spr)
+local spr4px = wibox.widget.imagebox(beautiful.spr4px)
+local spr5px = wibox.widget.imagebox(beautiful.spr5px)
 
 -- Tags Buttons
 local taglist_buttons = gears.table.join(
@@ -164,8 +177,39 @@ local tasklist_buttons = gears.table.join(
 local mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a textclock widget
-local mytextclock = wibox.widget.textclock("<span color=\"#8FAFD7\">%b %d</span>, %H:%M")
-awful.tooltip({ objects = { mytextclock } }):set_text("Date & Time")
+local date_text = wibox.widget.textclock("%b %d")
+local clock_text = wibox.widget.textclock("%H:%M")
+local clock_widget = wibox.container {
+    widget = wibox.container.margin,
+    margins = 2,
+    {
+        widget = wibox.container.background,
+        shape = function (cr, w, h)
+            gears.shape.rounded_rect(cr, w, h, 3)
+        end,
+        bg = beautiful.bg_widget,
+        {
+            widget = wibox.container.margin,
+            margins = 4,
+            {
+                layout = wibox.layout.fixed.horizontal,
+                spacing = 10,
+                spacing_widget = {
+                    widget = wibox.widget.separator,
+                    color = "#787878"
+                },
+                {
+                    widget = date_text,
+                    color = beautiful.bg_focus
+                },
+                {
+                    widget = clock_text
+                }
+            }
+        }
+    }
+}
+awful.tooltip({ objects = { clock_widget } }):set_text("Date & Time")
 
 -- Battery
 local battery_progress = wibox.widget.progressbar()
@@ -178,12 +222,12 @@ local battery_widget = wibox.widget {
     {
         {
             widget = battery_progress,
-            margins = 5,
+            margins = 2,
             width = 70,
             ticks = false,
-            -- ticks_gap = 2,
-            -- ticks_size = 3,
-            shape = gears.shape.rounded_bar,
+            shape = function (cr, w, h)
+                gears.shape.rounded_rect(cr, w, h, 3)
+            end,
             color = beautiful.progressbar_fg_normal,
             background_color = beautiful.progressbar_bg_normal,
         },
@@ -222,8 +266,8 @@ local function batteryLevel(widget, args)
     end
 end
 vicious.register(battery_progress, vicious.widgets.bat, "$2", 1, "BAT0")
-vicious.register(battery_percent, vicious.widgets.bat, "<span bgcolor='black' bgalpha='40%'>$2%</span>", 32, "BAT0")
-vicious.register(battery_ispresent, vicious.widgets.bat, "<span font='Exo 2 Medium 10'></span> $1", 1, "BAT0")
+vicious.register(battery_percent, vicious.widgets.bat, "$2%", 32, "BAT0")
+vicious.register(battery_ispresent, vicious.widgets.bat, " $1", 1, "BAT0")
 
 -- Cpu
 local cpu_widget = wibox.widget {
@@ -244,6 +288,27 @@ local mem_widget = wibox.widget {
 awful.tooltip({ objects = { mem_widget } }):set_text("Memory Usage")
 vicious.register(mem_widget, vicious.widgets.mem, "$1", 1)
 
+local system_usage_widget = wibox.container {
+    widget = wibox.container.margin,
+    margins = 2,
+    {
+        widget = wibox.container.background,
+        shape = function (cr, w, h)
+            gears.shape.rounded_rect(cr, w, h, 2)
+        end,
+        shape_clip = true,
+        {
+            layout = wibox.layout.fixed.horizontal,
+            {
+                widget = cpu_widget
+            },
+            {
+                widget = mem_widget
+            }
+        }
+    }
+}
+
 -- Volume
 local volume_progress = wibox.widget.progressbar()
 local volume_percent = wibox.widget.textbox()
@@ -255,12 +320,12 @@ local volume_widget = wibox.widget {
     {
         {
             widget = volume_progress,
-            margins = 5,
+            margins = 2,
             width = 70,
             ticks = false,
-            -- ticks_gap = 2,
-            -- ticks_size = 3,
-            shape = gears.shape.rounded_bar,
+            shape = function (cr, w, h)
+                gears.shape.rounded_rect(cr, w, h, 3)
+            end,
             color = beautiful.progressbar_fg_normal,
             background_color = beautiful.progressbar_bg_normal,
         },
@@ -287,7 +352,7 @@ local function volumeLevel(widget, args)
 end
 awful.tooltip({ objects = { volume_widget } }):set_text("Volume")
 vicious.register(volume_progress, vicious.widgets.volume, "$1", 0.2, "Master")
-vicious.register(volume_percent, vicious.widgets.volume, "<span bgcolor='black' bgalpha='40%'>$1%</span>", 0.2, "Master")
+vicious.register(volume_percent, vicious.widgets.volume, "$1%", 0.2, "Master")
 vicious.register(volume_ismuted, vicious.widgets.volume, function (widget, args)
     local ismuted = {["♫"] = false, ["♩"] = true}
     if ismuted[args[2]] then
@@ -339,19 +404,22 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytaglist = awful.widget.taglist{
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
-        style   = {
-            -- shape = gears.shape.powerline
-        },
-        layout   = {
-            spacing = 5,
+        buttons = taglist_buttons,
+        layout  = {
+            spacing = 10,
             spacing_widget = {
-                color  = beautiful.bg_normal,
-                -- shape  = gears.shape.powerline,
-                widget = wibox.widget.separator,
+                {
+                    widget = wibox.widget.imagebox,
+                    image = beautiful.spr4px
+                },
+                {
+                    widget = wibox.widget.imagebox,
+                    image = beautiful.spr
+                },
+                layout = wibox.layout.fixed.horizontal
             },
             layout  = wibox.layout.fixed.horizontal
         },
-        buttons = taglist_buttons,
     }
 
     -- Create a tasklist widget
@@ -366,7 +434,12 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({
+        position = "top",
+        screen = s,
+        height = 22,
+        bg = beautiful.panel
+    })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -374,27 +447,34 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
-            widsep,
+            spr,
+            spr4px,
             s.mytaglist,
-            widsep,
+            spr4px,
+            spr,
             s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             systray_widget,
-            widsep,
-            widsep,
-            cpu_widget,
-            widsep,
-            mem_widget,
-            widsep,
+            spr5px,
+            spr,
+            spr5px,
+            system_usage_widget,
+            spr5px,
+            spr,
+            spr5px,
             volume_widget,
-            widsep,
+            spr5px,
+            spr,
+            spr5px,
             battery_widget,
-            widsep,
-            mytextclock,
-            widsep,
+            spr5px,
+            -- Clock
+            spr,
+            clock_widget,
+            spr,
             s.mylayoutbox,
         },
     }
@@ -414,6 +494,8 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
+    awful.key({ super_key }, "g", function(c) volume_popup.visible = not volume_popup.visible end),
+
     awful.key({ super_key }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ super_key }, "Left",   awful.tag.viewprev,
@@ -707,6 +789,22 @@ awful.rules.rules = {
         properties = { floating = true }
     },
 
+    -- Picture N Picture
+    {
+        rule_any = {
+            class = { "mpv", "feh" }
+        },
+        properties = {
+            floating = true,
+            ontop = true,
+            sticky = true,
+            role = "pnp",
+            placement = function (c)
+                placeon_bottomright_scaled(c, { to_percent = 0.3, margins = 20 })
+            end
+        }
+    },
+
     -- Popup clients.
     {
         rule_any = {
@@ -762,6 +860,16 @@ client.connect_signal("manage", function (c)
                 gears.shape.rounded_rect(cr,w,h,6)
             end
         end
+    end
+
+    -- Restore Picture N Picture
+    if c.class == "mpv" or c.class == "feh" then
+        c:connect_signal("property::size", function ()
+            if not c.fullscreen then
+                awful.placement.bottom_right(c, { margins = 20 })
+                c.ontop = true
+            end
+        end)
     end
 end)
 
@@ -844,4 +952,5 @@ end)
 -- Autostart {{{
 awful.spawn.with_shell(os.getenv("HOME") .. "/.config/awesome/autorun.sh")
 -- }}}
+
 
