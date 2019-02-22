@@ -26,7 +26,7 @@ theme.font_big = "Hurmit Nerd Font Mono Semibold 9"
 theme.fg_normal  = "#BCBCBC"
 theme.bg_normal  = "#262626"
 theme.fg_focus   = theme.bg_normal
-theme.bg_focus   = "#0af4f5"
+theme.bg_focus   = "#5F87AF"
 theme.fg_urgent  = theme.bg_normal
 theme.bg_urgent  = "#AF5F5F"
 theme.bg_systray = theme.panel
@@ -36,7 +36,7 @@ theme.bg_systray = theme.panel
 theme.useless_gap   = dpi(0)
 theme.border_width  = dpi(2)
 theme.border_normal = theme.bg_normal
-theme.border_focus  = "#0af4f5"
+theme.border_focus  = theme.bg_focus
 theme.border_marked = "#87875F"
 -- }}}
 
@@ -46,11 +46,14 @@ theme.titlebar_bg_normal = theme.bg_normal
 -- }}}
 
 -- {{{ Taglist
+theme.taglist_shape = function (cr, w, h)
+    gears.shape.rounded_rect(cr, w, h, 3)
+end
 theme.taglist_fg_normal = theme.fg_normal
-theme.taglist_fg_focus = theme.bg_focus
-theme.taglist_fg_occupied = "#058888"
+theme.taglist_fg_focus = theme.bg_normal
+theme.taglist_fg_occupied = theme.bg_focus
 theme.taglist_bg_normal = theme.panel
-theme.taglist_bg_focus = theme.panel
+theme.taglist_bg_focus = theme.bg_focus
 theme.taglist_bg_urgent = theme.panel
 -- }}}
 
@@ -114,10 +117,16 @@ end
 
 theme.fg_widget = theme.fg_normal
 theme.bg_widget = "#1C1C1C"
+theme.widget_border_color = "#6C6C6C"
 
-theme.progressbar_bg_normal = theme.bg_widget
-theme.progressbar_fg_normal = theme.bg_focus
+theme.progressbar_bg = theme.bg_widget
+theme.progressbar_fg = theme.bg_focus
 theme.progressbar_fg_disabled = theme.bg_focus
+theme.progressbar_border_width = 1
+theme.progressbar_border_color = theme.widget_border_color
+theme.progressbar_paddings = 1
+theme.progressbar_shape = gears.shape.rounded_bar
+theme.progressbar_bar_shape = gears.shape.rounded_bar
 
 theme.graph_bg_normal = theme.bg_widget
 theme.graph_fg1 = "#5F87AF"

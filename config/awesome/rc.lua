@@ -187,6 +187,8 @@ local clock_widget = wibox.container {
             gears.shape.rounded_rect(cr, w, h, 3)
         end,
         bg = beautiful.bg_widget,
+        shape_border_width = 1,
+        shape_border_color = beautiful.widget_border_color,
         {
             widget = wibox.container.margin,
             margins = 2,
@@ -230,11 +232,6 @@ local battery_widget = wibox.widget {
             margins = 4,
             width = 70,
             ticks = false,
-            shape = function (cr, w, h)
-                gears.shape.rounded_rect(cr, w, h, 3)
-            end,
-            color = beautiful.progressbar_fg_normal,
-            background_color = beautiful.progressbar_bg_normal,
         },
         {
             widget = wibox.widget.textbox,
@@ -256,11 +253,15 @@ vicious.register(battery_widget, vicious.widgets.bat, function(widget, args)
     widget:get_children_by_id("progress")[1]:set_value(args[2] / 100)
     widget:get_children_by_id("percent")[1].text = args[2] .. "%"
     local status = args[1]
+    local status_widget = widget:get_children_by_id("status")[1]
     if status == "⌁" then
-        widget:get_children_by_id("status")[1].text = ""
+        status_widget.text = ""
+    elseif status == "+" then
+        status_widget.text = ""
+    else
+        status_widget.text = ""
     end
     battery_tooltip:set_text("Battery Level: " .. args[2] .. "%")
-    -- awful.spawn.with_shell("echo " .. args[1] .. " >> " .. os.getenv("HOME") .. "/Desktop/out.txt")
 end, 1, "BAT0")
 
 -- Cpu
@@ -301,6 +302,8 @@ local system_usage_widget = wibox.container {
             gears.shape.rounded_rect(cr, w, h, 2)
         end,
         shape_clip = true,
+        shape_border_width = 1,
+        shape_border_color = beautiful.widget_border_color,
         {
             layout = wibox.layout.fixed.horizontal,
             {
@@ -328,11 +331,7 @@ local volume_widget = wibox.widget {
             margins = 4,
             width = 70,
             ticks = false,
-            shape = function (cr, w, h)
-                gears.shape.rounded_rect(cr, w, h, 3)
-            end,
-            color = beautiful.progressbar_fg_normal,
-            background_color = beautiful.progressbar_bg_normal,
+            shape = gears.shape.rounded_bar,
         },
         {
             widget = wibox.widget.textbox,
@@ -354,7 +353,7 @@ vicious.register(volume_widget, vicious.widgets.volume, function (widget, args)
     -- $1: Volume level, $2: Mute state
     local ismuted = {["♫"] = false, ["♩"] = true}
     local status_icon = {["♫"] = "", ["♩"] = "ﱝ"}
-    local color = {["♫"] = beautiful.progressbar_fg_normal, ["♩"] = beautiful.progressbar_fg_disabled}
+    local color = {["♫"] = beautiful.progressbar_fg, ["♩"] = beautiful.progressbar_fg_disabled}
     widget:get_children_by_id("status")[1].text = status_icon[args[2]]
     widget:get_children_by_id("progress")[1]:set_value(args[1] / 100)
     -- widget:get_children_by_id("progress")[1].color = color[args[2]]

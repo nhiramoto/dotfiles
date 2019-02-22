@@ -232,6 +232,9 @@ Plugin 'ayu-theme/ayu-vim'
 Plugin 'junegunn/fzf.vim'
 Plugin 'khzaw/vim-conceal'
 Plugin 'mtth/scratch.vim'
+Plugin 'jacoborus/tender.vim'
+Plugin 'sjl/badwolf'
+Plugin 'Lokaltog/vim-distinguished'
 
 set runtimepath^=~/.vim/bundle/vim-snippets
 set runtimepath^=~/.vim/after/my-snippets
@@ -268,7 +271,7 @@ let g:airline_powerline_fonts = 1
 let g:airline_symbols_ascii = 1
 let g:airline_skip_empty_sections = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='wombat'
+let g:airline_theme='apprentice'
 let g:airline_mode_map = {
   \ '__' : '-',
   \ 'n'  : 'N',
