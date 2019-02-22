@@ -11,6 +11,7 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 local vicious = require("vicious")
+local lain = require("lain")
 
 -- Error handling {{{
 -- Startup errors
@@ -177,8 +178,6 @@ local tasklist_buttons = gears.table.join(
 local mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a textclock widget
-local date_text = wibox.widget.textclock("%b %d")
-local clock_text = wibox.widget.textclock("%H:%M")
 local clock_widget = wibox.container {
     widget = wibox.container.margin,
     margins = 2,
@@ -190,39 +189,45 @@ local clock_widget = wibox.container {
         bg = beautiful.bg_widget,
         {
             widget = wibox.container.margin,
-            margins = 4,
+            margins = 2,
             {
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 10,
                 spacing_widget = {
                     widget = wibox.widget.separator,
-                    color = "#787878"
                 },
                 {
-                    widget = date_text,
-                    color = beautiful.bg_focus
+                    widget = wibox.widget.textclock,
+                    format = "<span color='" .. beautiful.bg_focus .. "'>%b %d</span>"
                 },
                 {
-                    widget = clock_text
+                    widget = wibox.widget.textclock,
+                    format = "%H:%M"
                 }
             }
         }
     }
 }
-awful.tooltip({ objects = { clock_widget } }):set_text("Date & Time")
+local clock_tooltip = awful.tooltip {
+    objects = { clock_widget },
+    text = "Date & Time",
+    mode = "outside",
+    preferred_alignments = { "middle", "front", "back" }
+}
 
 -- Battery
-local battery_progress = wibox.widget.progressbar()
-local battery_percent = wibox.widget.textbox()
-local battery_ispresent = wibox.widget.textbox()
 local battery_widget = wibox.widget {
+    layout = wibox.layout.fixed.horizontal,
+    spacing = 5,
     {
-        widget = battery_ispresent,
+        widget = wibox.widget.textbox,
+        id = "status",
     },
     {
         {
-            widget = battery_progress,
-            margins = 2,
+            widget = wibox.widget.progressbar,
+            id = "progress",
+            margins = 4,
             width = 70,
             ticks = false,
             shape = function (cr, w, h)
@@ -232,42 +237,31 @@ local battery_widget = wibox.widget {
             background_color = beautiful.progressbar_bg_normal,
         },
         {
-            widget = battery_percent,
-            align = 'center',
-            valign = 'center',
+            widget = wibox.widget.textbox,
+            id = "percent",
+            align = "center",
+            valign = "center",
             font = beautiful.font_small,
         },
         layout = wibox.layout.stack
-    },
-    layout = wibox.layout.align.horizontal
+    }
 }
-awful.tooltip({ objects = { battery_widget } }):set_text("Battery Level")
-local function batteryLevel(widget, args)
-    if args[2] <= 10 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 20 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 30 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 40 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 50 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 60 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 70 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 80 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    elseif args[2] <= 90 then
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
-    else
-        return "<span font=\"DejaVu Sans 12\" color=\"#5FAF5F\"></span> (" .. args[2] .. "%)"
+local battery_tooltip = awful.tooltip {
+    objects = { battery_widget },
+    text = "Battery Level",
+    mode = "outside",
+    preferred_alignments = { "middle", "front", "back" }
+}
+vicious.register(battery_widget, vicious.widgets.bat, function(widget, args)
+    widget:get_children_by_id("progress")[1]:set_value(args[2] / 100)
+    widget:get_children_by_id("percent")[1].text = args[2] .. "%"
+    local status = args[1]
+    if status == "⌁" then
+        widget:get_children_by_id("status")[1].text = ""
     end
-end
-vicious.register(battery_progress, vicious.widgets.bat, "$2", 1, "BAT0")
-vicious.register(battery_percent, vicious.widgets.bat, "$2%", 32, "BAT0")
-vicious.register(battery_ispresent, vicious.widgets.bat, " $1", 1, "BAT0")
+    battery_tooltip:set_text("Battery Level: " .. args[2] .. "%")
+    -- awful.spawn.with_shell("echo " .. args[1] .. " >> " .. os.getenv("HOME") .. "/Desktop/out.txt")
+end, 1, "BAT0")
 
 -- Cpu
 local cpu_widget = wibox.widget {
@@ -276,7 +270,12 @@ local cpu_widget = wibox.widget {
     color = beautiful.graph_fg1,
     background_color = beautiful.graph_bg_normal,
 }
-awful.tooltip({ objects = { cpu_widget } }):set_text("CPU Usage")
+local cpu_tooltip = awful.tooltip {
+    objects = { cpu_widget },
+    text = "CPU Usage",
+    mode = "outside",
+    preferred_alignments = { "middle", "front", "back" }
+}
 vicious.register(cpu_widget, vicious.widgets.cpu, "$1", 1)
 
 local mem_widget = wibox.widget {
@@ -285,7 +284,12 @@ local mem_widget = wibox.widget {
     color = beautiful.graph_fg2,
     background_color = beautiful.graph_bg_normal,
 }
-awful.tooltip({ objects = { mem_widget } }):set_text("Memory Usage")
+local mem_tooltip = awful.tooltip {
+    objects = { mem_widget },
+    text = "Memory Usage",
+    mode = "outside",
+    preferred_alignments = { "middle", "front", "back" }
+}
 vicious.register(mem_widget, vicious.widgets.mem, "$1", 1)
 
 local system_usage_widget = wibox.container {
@@ -310,17 +314,18 @@ local system_usage_widget = wibox.container {
 }
 
 -- Volume
-local volume_progress = wibox.widget.progressbar()
-local volume_percent = wibox.widget.textbox()
-local volume_ismuted = wibox.widget.textbox()
 local volume_widget = wibox.widget {
+    layout = wibox.layout.fixed.horizontal,
+    spacing = 5,
     {
-        widget = volume_ismuted,
+        widget = wibox.widget.textbox,
+        id = "status"
     },
     {
         {
-            widget = volume_progress,
-            margins = 2,
+            widget = wibox.widget.progressbar,
+            id = "progress",
+            margins = 4,
             width = 70,
             ticks = false,
             shape = function (cr, w, h)
@@ -330,38 +335,31 @@ local volume_widget = wibox.widget {
             background_color = beautiful.progressbar_bg_normal,
         },
         {
-            widget = volume_percent,
-            align = 'center',
-            valign = 'center',
-            font = beautiful.font,
+            widget = wibox.widget.textbox,
+            id = "percent",
+            align = "center",
+            valign = "center",
+            font = beautiful.font_small,
         },
         layout = wibox.layout.stack
-    },
-    layout = wibox.layout.align.horizontal
+    }
 }
-local function volumeLevel(widget, args)
-    if args[2] == "Muted" then
-        return "🔇"
-    elseif args[1] <= 40 then
-        return "🔈 " .. args[1] .. "%"
-    elseif args[1] <= 70 then
-        return "🔉 " .. args[1] .. "%"
-    else
-        return "🔊 " .. args[1] .. "%"
-    end
-end
-awful.tooltip({ objects = { volume_widget } }):set_text("Volume")
-vicious.register(volume_progress, vicious.widgets.volume, "$1", 0.2, "Master")
-vicious.register(volume_percent, vicious.widgets.volume, "$1%", 0.2, "Master")
-vicious.register(volume_ismuted, vicious.widgets.volume, function (widget, args)
+local volume_tooltip = awful.tooltip {
+    objects = { volume_widget },
+    text = "Volume Level",
+    mode = "outside",
+    preferred_alignments = { "middle", "front", "back" }
+}
+vicious.register(volume_widget, vicious.widgets.volume, function (widget, args)
+    -- $1: Volume level, $2: Mute state
     local ismuted = {["♫"] = false, ["♩"] = true}
-    if ismuted[args[2]] then
-        volume_progress.color = beautiful.progressbar_fg_disabled
-        return "<span font='Exo 2 Medium 16' color='#8A4900'></span>"
-    else
-        volume_progress.color = beautiful.progressbar_fg_normal
-        return "<span font='Exo 2 Medium 16'></span>"
-    end
+    local status_icon = {["♫"] = "", ["♩"] = "ﱝ"}
+    local color = {["♫"] = beautiful.progressbar_fg_normal, ["♩"] = beautiful.progressbar_fg_disabled}
+    widget:get_children_by_id("status")[1].text = status_icon[args[2]]
+    widget:get_children_by_id("progress")[1]:set_value(args[1] / 100)
+    -- widget:get_children_by_id("progress")[1].color = color[args[2]]
+    widget:get_children_by_id("percent")[1].text = args[1] .. "%"
+    volume_tooltip:set_text("Volume Level: " .. args[1] .. "%")
 end, 0.2, "Master")
 
 -- Systray
@@ -494,7 +492,7 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
-    awful.key({ super_key }, "g", function(c) volume_popup.visible = not volume_popup.visible end),
+    awful.key({ super_key }, "g", function(c) volume_tooltip.visible = not volume_tooltip.visible end),
 
     awful.key({ super_key }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
