@@ -58,7 +58,7 @@ beautiful.init(theme_dir .. theme .. "/theme.lua")
 awful.layout.layouts = {
     awful.layout.suit.spiral,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.bottom,
+    awful.layout.suit.magnifier,
     awful.layout.suit.floating,
 }
 
@@ -845,7 +845,7 @@ client.connect_signal("manage", function (c)
     end
     if c.floating == true then
         c.shape = function(cr,w,h)
-            gears.shape.rounded_rect(cr,w,h,6)
+            gears.shape.rounded_rect(cr, w, h, 3)
         end
     elseif #c.screen.tiled_clients == 1 then
         c.border_width = 0
@@ -895,30 +895,34 @@ client.connect_signal("request::titlebars", function(c)
         end)
     )
 
-    awful.titlebar(c) : setup {
-        { -- Left
-            awful.titlebar.widget.closebutton    (c),
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            -- awful.titlebar.widget.stickybutton   (c),
-            -- awful.titlebar.widget.ontopbutton    (c),
-            buttons = buttons,
-            layout  = wibox.layout.fixed.horizontal
-        },
-        { -- Middle
-            { -- Title
-                align  = "center",
-                widget = awful.titlebar.widget.titlewidget(c)
-            },
-            buttons = buttons,
-            layout  = wibox.layout.flex.horizontal
-        },
-        { -- Right
-            awful.titlebar.widget.iconwidget(c),
-            layout = wibox.layout.fixed.horizontal()
-        },
-        layout = wibox.layout.align.horizontal
-    }
+    local titlebar = awful.titlebar(c, {
+        size = 22
+    })
+
+    -- titlebar : setup {
+    --     { -- Left
+    --         awful.titlebar.widget.closebutton    (c),
+    --         awful.titlebar.widget.floatingbutton (c),
+    --         awful.titlebar.widget.maximizedbutton(c),
+    --         -- awful.titlebar.widget.stickybutton   (c),
+    --         -- awful.titlebar.widget.ontopbutton    (c),
+    --         buttons = buttons,
+    --         layout  = wibox.layout.fixed.horizontal
+    --     },
+    --     { -- Middle
+    --         { -- Title
+    --             align  = "center",
+    --             widget = awful.titlebar.widget.titlewidget(c)
+    --         },
+    --         buttons = buttons,
+    --         layout  = wibox.layout.flex.horizontal
+    --     },
+    --     { -- Right
+    --         awful.titlebar.widget.iconwidget(c),
+    --         layout = wibox.layout.fixed.horizontal()
+    --     },
+    --     layout = wibox.layout.align.horizontal
+    -- }
 end)
 
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)

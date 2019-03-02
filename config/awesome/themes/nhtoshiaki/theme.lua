@@ -33,7 +33,8 @@ theme.bg_systray = theme.panel
 -- }}}
 
 -- {{{ Borders
-theme.useless_gap   = dpi(0)
+theme.useless_gap   = dpi(2)
+theme.gap_single_client = false
 theme.border_width  = dpi(2)
 theme.border_normal = theme.bg_normal
 theme.border_focus  = theme.bg_focus
@@ -67,6 +68,9 @@ theme.tasklist_bg_focus = theme.panel
 -- {{{ Tooltip
 theme.tooltip_fg = theme.fg_normal
 theme.tooltip_bg = theme.bg_normal
+theme.tooltip_shape = function (cr, w, h)
+    gears.shape.partially_rounded_rect(cr, w, h, false, false, true, true, 5)
+end
 -- }}}
 
 -- {{{ Notification
@@ -93,6 +97,16 @@ theme.hotkeys_border_width = 0
 theme.hotkeys_shape = function (cr, w, h)
     gears.shape.rounded_rect(cr, w, h, 6)
 end
+-- }}}
+
+-- Titlebar {{{
+theme.titlebar_fg = theme.fg_normal
+theme.titlebar_bg = theme.bg_normal
+theme.titlebar_fg_normal = theme.fg_normal
+theme.titlebar_bg_normal = theme.bg_normal
+theme.titlebar_fg_focus = theme.fg_normal
+theme.titlebar_bg_focus = theme.bg_focus
+
 -- }}}
 
 -- There are other variable sets
@@ -147,7 +161,7 @@ theme.mouse_finder_color = "#CC9393"
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
 theme.menu_height = dpi(20)
-theme.menu_width  = dpi(100)
+theme.menu_width  = dpi(150)
 -- }}}
 
 -- {{{ Icons
