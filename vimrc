@@ -235,6 +235,14 @@ Plugin 'mtth/scratch.vim'
 Plugin 'jacoborus/tender.vim'
 Plugin 'sjl/badwolf'
 Plugin 'Lokaltog/vim-distinguished'
+Plugin 'tkhren/vim-fake'
+" Plugin 'Shougo/deoplete.nvim'
+" if !has('nvim')
+"   Plugin 'roxma/nvim-yarp'
+"   Plugin 'roxma/vim-hug-neovim-rpc'
+" endif
+
+" Plugin 'Shougo/neosnippet.vim'
 
 set runtimepath^=~/.vim/bundle/vim-snippets
 set runtimepath^=~/.vim/after/my-snippets
@@ -290,6 +298,7 @@ let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_section_b = '%{airline#util#wrap(airline#extensions#hunks#get_hunks(),0)}'
+let g:airline_section_c = '%<%{bufferline#refresh_status()}%#airline_c#%#bufferline_selected# %{g:bufferline_status_info.current} %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
 let g:airline_section_z = '%2l%#__restore__#%#__accent_bold#/%L%{g:airline_symbols.maxlinenr}%#__restore__# :%2v'
 
 " }}}
@@ -448,6 +457,25 @@ let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips'
 
 let delimitMate_matchpairs = "(:),[:],{:}"
 
+" }}}
+
+" {{{ vim-fake
+let g:fake_src_paths = ['/home/hyokan/.vim/fake/lorem']
+
+"" Get a nonsense text like Lorem ipsum
+call fake#define('sentense', 'fake#capitalize('
+                        \ . 'join(map(range(fake#int(3,15)),"fake#gen(\"nonsense\")"))'
+                        \ . ' . fake#chars(1,"..............!?"))')
+
+call fake#define('paragraph', 'join(map(range(fake#int(3,10)),"fake#gen(\"sentense\")"))')
+
+"" Alias
+call fake#define('lipsum', 'fake#gen("paragraph")')
+
+" }}}
+
+" {{{ Neosnippets
+" let g:neosnippet#disable_runtime_snippets = 0
 " }}}
 
 " Custom Functions {{{
