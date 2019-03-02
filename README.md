@@ -8,5 +8,5 @@
 - **Terminal Emulator**: rxvt-unicode
 - **Shell**: zsh
 - **Color Scheme**: [Apprentice](https://github.com/romainl/Apprentice)
-- **Terminal Font**: Iosevka (Nerd Font)
-- **UI Font**: Hermit (Nerd Font)
+- **Terminal Font**: Iosevka ([Nerd Font](https://nerdfonts.com))
+- **UI Font**: Hermit ([Nerd Font](https://nerdfonts.com))
