@@ -5,6 +5,7 @@
 ## Setup
 
 - **Distribution**: ArchLinux
+- **Desktop Environment**: Awesome WM
 - **Terminal Emulator**: rxvt-unicode
 - **Shell**: zsh
 - **Color Scheme**: [Apprentice](https://github.com/romainl/Apprentice)
