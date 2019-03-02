@@ -14,10 +14,10 @@ URxvt.blurRadius: 7x7
 URxvt.fading: 30
 
 ! Font
-URxvt.font: xft:Misc Tamsyn:medium:antialias=true:pixelsize=14, xft:Iosevka Nerd Font Mono:semibold:pixelsize=13, xft:FuraCode NF Mono:medium:pixelsize=13, xft:MesloLGMDZ NF:style=Regular, xft:SourceCodePro:medium:pixelsize=11, xft:DejaVu Sans Mono:medium:pixelsize=11, xft:unifont:pixelsize=14, xft:monospace:pixelsize=14
-URxvt.italicFont: xft:Misc Tamsyn:Italic:antialias=true:pixelsize=14
-URxvt.boldFont: xft:Misc Tamsyn:Bold:antialias=true:pixelsize=14
-URxvt.boldItalicFont: xft:Misc Tamsyn:Bold:Italic:antialias=true:pixelsize=14
+URxvt.font: xft:Iosevka Nerd Font Mono:medium:antialias=true:pixelsize=12, xft:Iosevka Nerd Font Mono:semibold:pixelsize=13, xft:FuraCode NF Mono:medium:pixelsize=13, xft:MesloLGMDZ NF:style=Regular, xft:SourceCodePro:medium:pixelsize=11, xft:DejaVu Sans Mono:medium:pixelsize=11, xft:unifont:pixelsize=14, xft:monospace:pixelsize=14
+URxvt.italicFont: xft:Iosevka Nerd Font Mono:Italic:antialias=true:pixelsize=12
+URxvt.boldFont: xft:Iosevka Nerd Font Mono:Bold:antialias=true:pixelsize=12
+URxvt.boldItalicFont: xft:Iosevka Nerd Font Mono:Bold:Italic:antialias=true:pixelsize=12
 
 URxvt.scrollBar: false
 
