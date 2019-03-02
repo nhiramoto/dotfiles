@@ -11,7 +11,7 @@ URxvt.tintColor: #AFAFAF
 URxvt.shading: 10
 URxvt.blurRadius: 7x7
 ! Dim when focus lost
-URxvt.fading: 30
+!URxvt.fading: 30
 
 ! Font
 URxvt.font: xft:Iosevka Nerd Font Mono:medium:antialias=true:pixelsize=12, xft:Iosevka Nerd Font Mono:semibold:pixelsize=13, xft:FuraCode NF Mono:medium:pixelsize=13, xft:MesloLGMDZ NF:style=Regular, xft:SourceCodePro:medium:pixelsize=11, xft:DejaVu Sans Mono:medium:pixelsize=11, xft:unifont:pixelsize=14, xft:monospace:pixelsize=14
