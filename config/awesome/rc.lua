@@ -220,10 +220,15 @@ local clock_tooltip = awful.tooltip {
 -- Battery
 local battery_widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
-    spacing = 5,
+    spacing = 2,
     {
-        widget = wibox.widget.textbox,
-        id = "status",
+        widget = wibox.container.margin,
+        margins = 4,
+        {
+            widget = wibox.widget.imagebox,
+            id = "status",
+            image = beautiful.status_battery
+        }
     },
     {
         {
@@ -253,14 +258,14 @@ vicious.register(battery_widget, vicious.widgets.bat, function(widget, args)
     widget:get_children_by_id("progress")[1]:set_value(args[2] / 100)
     widget:get_children_by_id("percent")[1].text = args[2] .. "%"
     local status = args[1]
-    local status_widget = widget:get_children_by_id("status")[1]
-    if status == "⌁" then
-        status_widget.text = ""
-    elseif status == "+" then
-        status_widget.text = ""
-    else
-        status_widget.text = ""
-    end
+    -- local status_widget = widget:get_children_by_id("status")[1]
+    -- if status == "⌁" then
+    --     status_widget.text = ""
+    -- elseif status == "+" then
+    --     status_widget.text = ""
+    -- else
+    --     status_widget.text = ""
+    -- end
     battery_tooltip:set_text("Battery Level: " .. args[2] .. "%")
 end, 1, "BAT0")
 
@@ -319,10 +324,15 @@ local system_usage_widget = wibox.container {
 -- Volume
 local volume_widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
-    spacing = 5,
+    spacing = 2,
     {
-        widget = wibox.widget.textbox,
-        id = "status"
+        widget = wibox.container.margin,
+        margins = 4,
+        {
+            widget = wibox.widget.imagebox,
+            id = "status",
+            image = beautiful.status_audio_on
+        }
     },
     {
         {
@@ -352,9 +362,10 @@ local volume_tooltip = awful.tooltip {
 vicious.register(volume_widget, vicious.widgets.volume, function (widget, args)
     -- $1: Volume level, $2: Mute state
     local ismuted = {["♫"] = false, ["♩"] = true}
-    local status_icon = {["♫"] = "", ["♩"] = "ﱝ"}
+    -- local status_icon = {["♫"] = "", ["♩"] = "ﱝ"}
+    local status_icon = {["♫"] = beautiful.status_audio_on, ["♩"] = beautiful.status_audio_off}
     local color = {["♫"] = beautiful.progressbar_fg, ["♩"] = beautiful.progressbar_fg_disabled}
-    widget:get_children_by_id("status")[1].text = status_icon[args[2]]
+    widget:get_children_by_id("status")[1].image = status_icon[args[2]]
     widget:get_children_by_id("progress")[1]:set_value(args[1] / 100)
     -- widget:get_children_by_id("progress")[1].color = color[args[2]]
     widget:get_children_by_id("percent")[1].text = args[1] .. "%"

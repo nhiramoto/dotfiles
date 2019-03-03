@@ -166,10 +166,10 @@ theme.menu_width  = dpi(150)
 
 -- {{{ Icons
 
-theme.spr    = thistheme_path .. "/widgets/separators/spr.png"
-theme.sprtr  = thistheme_path .. "/widgets/separators/sprtr.png"
-theme.spr4px = thistheme_path .. "/widgets/separators/spr4px.png"
-theme.spr5px = thistheme_path .. "/widgets/separators/spr5px.png"
+theme.spr    = thistheme_path .. "/panel/separators/spr.png"
+theme.sprtr  = thistheme_path .. "/panel/separators/sprtr.png"
+theme.spr4px = thistheme_path .. "/panel/separators/spr4px.png"
+theme.spr5px = thistheme_path .. "/panel/separators/spr5px.png"
 
 -- {{{ Misc
 -- theme.awesome_icon           = thistheme_path .. "/archlinux-black-icon.png"
@@ -225,6 +225,13 @@ theme.titlebar_maximized_button_normal_active = thistheme_path .. "/titlebar/max
 theme.titlebar_maximized_button_focus_inactive  = thistheme_path .. "/titlebar/maximized_focus_inactive.png"
 theme.titlebar_maximized_button_normal_inactive = thistheme_path .. "/titlebar/maximized_normal_inactive.png"
 -- }}}
+
+-- {{{ Status Icons
+theme.status_audio_on = thistheme_path .. "/panel/audio-on.png"
+theme.status_audio_off = thistheme_path .. "/panel/audio-off.png"
+theme.status_battery = thistheme_path .. "/panel/battery.png"
+-- }}}
+
 -- }}}
 
 return theme
