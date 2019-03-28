@@ -1,0 +1,6 @@
+
+--no-playlist
+
+-f 'bestvideo[ext=mp4][width<=1080]+bestaudio[ext=m4a]/bestvideo[width<=1080]+bestaudio/best'
+
+-o '~/Videos/Youtube/%(channel)s/%(title)s (%(resolution)s-%(fps)s %(release_date)s).%(ext)s'
