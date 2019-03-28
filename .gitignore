@@ -5,3 +5,6 @@
 
 config/awesome/themes/*
 !config/awesome/themes/nhtoshiaki
+
+Xresources.d/colors/*
+
