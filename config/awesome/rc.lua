@@ -369,7 +369,7 @@ vicious.register(volume_widget, vicious.widgets.volume, function (widget, args)
     widget:get_children_by_id("progress")[1]:set_value(ismuted[args[2]] and 0 or args[1] / 100)
     -- widget:get_children_by_id("progress")[1].color = color[args[2]]
     widget:get_children_by_id("percent")[1].text = ismuted[args[2]] and "0%" or args[1] .. "%"
-    volume_tooltip:set_text("Volume Level: " .. ismuted[args[2]] and "0%" or args[1] .. "%")
+    volume_tooltip:set_text("Volume Level: " .. (ismuted[args[2]] and "0%" or args[1] .. "%"))
 end, 0.2, "Master")
 
 -- Systray

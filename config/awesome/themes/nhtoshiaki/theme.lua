@@ -53,9 +53,10 @@ end
 theme.taglist_fg_normal = theme.fg_normal
 theme.taglist_fg_focus = theme.bg_normal
 theme.taglist_fg_occupied = theme.bg_focus
+theme.taglist_fg_urgent = theme.fg_urgent
 theme.taglist_bg_normal = theme.panel
 theme.taglist_bg_focus = theme.bg_focus
-theme.taglist_bg_urgent = theme.panel
+theme.taglist_bg_urgent = theme.bg_urgent
 -- }}}
 
 -- {{{ Tasklist

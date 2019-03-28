@@ -39,6 +39,13 @@ set shiftround              " Only indent to multiple of shiftwidth
 set list listchars=tab:❘-,trail:·,extends:»,precedes:«,nbsp:×
 set nojoinspaces            " Avoid double spaces when joining lines
 
+" Highlight characters beyond the maximum width
+if exists('+colorcolumn')
+  set colorcolumn=80
+else
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
+
 " convert tabs to spaces when reading file
 "autocmd! bufreadpost * set expandtab | retab! 4
 
@@ -51,9 +58,6 @@ hi clear texBoldStyle
 
 " Set default TeX flavour
 let g:tex_flavor = 'latex'
-
-" Commentaries in italic mode
-hi Comment cterm=italic
 
 " Conceal
 set conceallevel=1
@@ -163,6 +167,7 @@ map <F6> :setlocal spell! spelllang=en_us<CR>
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
@@ -178,8 +183,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'mattn/emmet-vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
-" Plugin 'garbas/vim-snipmate'
-Plugin 'SirVer/ultisnips'
+Plugin 'garbas/vim-snipmate'
+" Plugin 'SirVer/ultisnips'
 " Plugin 'honza/vim-snippets'
 Plugin 'raimondi/delimitmate'
 " Plugin 'scrooloose/syntastic'
@@ -236,6 +241,10 @@ Plugin 'jacoborus/tender.vim'
 Plugin 'sjl/badwolf'
 Plugin 'Lokaltog/vim-distinguished'
 Plugin 'tkhren/vim-fake'
+Plugin 'fenetikm/falcon'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax' 
 " Plugin 'Shougo/deoplete.nvim'
 " if !has('nvim')
 "   Plugin 'roxma/nvim-yarp'
@@ -246,13 +255,14 @@ Plugin 'tkhren/vim-fake'
 
 set runtimepath^=~/.vim/bundle/vim-snippets
 set runtimepath^=~/.vim/after/my-snippets
+set runtimepath^=~/.vim/snippets
 
 call vundle#end()
 filetype plugin indent on
 
 " }}}
 
-" Color Scheme {{{
+" Appearance {{{
 
 " Gruvbox theme
 "let g:gruvbox_contrast_dark = 'medium'
@@ -261,13 +271,24 @@ filetype plugin indent on
 " Ayu theme
 "let ayucolor="mirage"
 
+" One Dark
+"let g:onedark_termcolors=256
+
 syntax on
 set background=dark
 set cursorline
 set hlsearch
 set ruler
 set t_Co=256
-colorscheme apprentice
+colorscheme onedark
+
+" Fixed colors
+hi Comment cterm=italic
+hi Normal ctermfg=249 ctermbg=233
+hi NonText ctermfg=236 ctermbg=233
+hi CursorLine ctermbg=234
+hi ColorColumn ctermbg=234
+hi Folded cterm=italic ctermfg=238
 
 " }}}
 
@@ -279,7 +300,7 @@ let g:airline_powerline_fonts = 1
 let g:airline_symbols_ascii = 1
 let g:airline_skip_empty_sections = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='apprentice'
+let g:airline_theme='onedark'
 let g:airline_mode_map = {
   \ '__' : '-',
   \ 'n'  : 'N',
@@ -443,19 +464,28 @@ nnoremap <C-t> :FzfFiles<CR>
 
 " Plugin: UltiSnips {{{
 
-let g:UltiSnipsUsePythonVersion = 3
-let g:UltiSnipsExpandTrigger="<Tab>"
-let g:UltiSnipsJumpForwardTrigger="<Tab>"
-let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
-let g:UltiSnipsEditSplit="vertical"
-let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
-let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips'
+" let g:UltiSnipsUsePythonVersion = 3
+" let g:UltiSnipsExpandTrigger="<Tab>"
+" let g:UltiSnipsJumpForwardTrigger="<Tab>"
+" let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
+" let g:UltiSnipsEditSplit="vertical"
+" let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
+" let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips'
 
 " }}}
 
 " Plugin: delimitMate {{{ 
 
 let delimitMate_matchpairs = "(:),[:],{:}"
+
+" }}}
+
+" {{{ Plugin: Ale
+
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python': ['pylint', 'flake8']
+\}
 
 " }}}
 
@@ -491,5 +521,24 @@ function! ToggleRelativeNumbers()
 endfunc
 nnoremap <Leader>r :call ToggleRelativeNumbers()<CR>
 
+" }}}
+
+" {{{ Folding
+" function! MyFoldText() " {{{
+"     let line = getline(v:foldstart)
+
+"     let nucolwidth = &fdc + &number * &numberwidth
+"     let windowwidth = winwidth(0) - nucolwidth - 3
+"     let foldedlinecount = v:foldend - v:foldstart
+
+"     " expand tabs into spaces
+"     let onetab = strpart('          ', 0, &tabstop)
+"     let line = substitute(line, '\t', onetab, 'g')
+
+"     let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+"     let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+"     return line . ' ( ' . foldedlinecount . ' lines )' . repeat("·",fillcharcount)
+" endfunction " }}}
+" set foldtext=MyFoldText()
 " }}}
 
