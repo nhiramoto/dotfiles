@@ -1,7 +1,8 @@
 " Global Settings {{{
 
 filetype plugin indent on   " Enable filetype detection, filetype scripts & indent scripts
-let g:python_host_prog='/usr/bin/python'
+let g:python_host_prog='/home/hyokan/.pyenv/versions/2.7.15/bin/python'
+let g:python3_host_prog='/home/hyokan/.pyenv/versions/3.7.2/bin/python'
 
 set autoread                " Auto-reload changed files
 set encoding=utf-8          " Encode characters as utf-8
@@ -91,6 +92,9 @@ augroup END
 
 " Keymaps {{{
 
+" Disable Ex Mode
+map Q <Nop>
+
 " Save and Quit Keybindings
 map <C-s> :w<CR>
 map <C-q> :qa<CR>
@@ -166,98 +170,93 @@ map <F6> :setlocal spell! spelllang=en_us<CR>
 
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
-set rtp+=~/.vim/
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Plugin 'VundleVim/Vundle.vim'
-"Plugin 'tpope/vim-fugitive'
-Plugin 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-commentary'
-" Plugin 'ervandew/supertab'
-Plugin 'scrooloose/nerdtree'
-" Plugin 'scrooloose/nerdcommenter'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'mattn/emmet-vim'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-" Plugin 'SirVer/ultisnips'
-" Plugin 'honza/vim-snippets'
-Plugin 'raimondi/delimitmate'
-" Plugin 'scrooloose/syntastic'
-Plugin 'jshint/jshint'
-" Plugin 'ap/vim-css-color'
-" Plugin 'gko/vim-coloresque'
-" Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'nanotech/jellybeans.vim'
-Plugin 'ciaranm/inkpot'
-Plugin 'jonathanfilip/vim-lucius'
-Plugin 'chriskempson/vim-tomorrow-theme'
-Plugin 'sheerun/vim-wombat-scheme'
-Plugin 'tomasr/molokai'
-Plugin 'w0ng/vim-hybrid'
-" Plugin 'Yggdroot/indentLine'
-" Plugin 'bronson/vim-trailing-whitespace'
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plugin 'bling/vim-bufferline'
-" Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
-" Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'nlknguyen/papercolor-theme'
-Plugin 'PotatoesMaster/i3-vim-syntax'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'romainl/Apprentice'
-Plugin 'joshdick/onedark.vim'
-" Plugin 'ying17zi/vim-live-latex-preview'
-" Plugin 'ternjs/tern_for_vim'
-Plugin 'severin-lemaignan/vim-minimap'
-Plugin 'morhetz/gruvbox'
-Plugin 'w0rp/ale'
-Plugin 'chriskempson/base16-vim'
-Plugin 'Reewr/vim-monokai-phoenix'
-Plugin 'micha/vim-colors-solarized'
-Plugin 'dag/vim-fish'
-Plugin 'nhooyr/elysian.vim'
-Plugin 'arcticicestudio/nord-vim'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'maksimr/vim-jsbeautify'
-Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'christoomey/vim-titlecase'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'christoomey/vim-tmux-runner'
-Plugin 'editorconfig/editorconfig-vim'
-" Plugin 'suan/vim-instant-markdown'
-" Plugin 'JamshedVesuna/vim-markdown-preview'
-Plugin 'drewtempelmeyer/palenight.vim'
-Plugin 'ayu-theme/ayu-vim'
-Plugin 'junegunn/fzf.vim'
-Plugin 'khzaw/vim-conceal'
-Plugin 'mtth/scratch.vim'
-Plugin 'jacoborus/tender.vim'
-Plugin 'sjl/badwolf'
-Plugin 'Lokaltog/vim-distinguished'
-Plugin 'tkhren/vim-fake'
-Plugin 'fenetikm/falcon'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax' 
-" Plugin 'Shougo/deoplete.nvim'
+Plug 'VundleVim/Vundle.vim'
+"Plug 'tpope/vim-fugitive'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+" Plug 'ervandew/supertab'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+" Plug 'scrooloose/nerdcommenter'
+Plug 'airblade/vim-gitgutter'
+Plug 'mattn/emmet-vim'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+" Plug 'garbas/vim-snipmate'
+Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
+Plug 'raimondi/delimitmate'
+" Plug 'scrooloose/syntastic'
+Plug 'jshint/jshint'
+" Plug 'ap/vim-css-color'
+" Plug 'gko/vim-coloresque'
+" Plug 'kien/rainbow_parentheses.vim'
+Plug 'nanotech/jellybeans.vim'
+Plug 'ciaranm/inkpot'
+Plug 'jonathanfilip/vim-lucius'
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'sheerun/vim-wombat-scheme'
+Plug 'tomasr/molokai'
+Plug 'w0ng/vim-hybrid'
+" Plug 'Yggdroot/indentLine'
+" Plug 'bronson/vim-trailing-whitespace'
+" Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plug 'bling/vim-bufferline'
+" Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+" Plug 'ctrlpvim/ctrlp.vim'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'nlknguyen/papercolor-theme'
+Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'romainl/Apprentice'
+Plug 'joshdick/onedark.vim'
+" Plug 'ying17zi/vim-live-latex-preview'
+" Plug 'ternjs/tern_for_vim'
+Plug 'severin-lemaignan/vim-minimap'
+Plug 'morhetz/gruvbox'
+Plug 'w0rp/ale'
+Plug 'chriskempson/base16-vim'
+Plug 'Reewr/vim-monokai-phoenix'
+Plug 'micha/vim-colors-solarized'
+Plug 'dag/vim-fish'
+Plug 'nhooyr/elysian.vim'
+Plug 'arcticicestudio/nord-vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'maksimr/vim-jsbeautify'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'christoomey/vim-titlecase'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-runner'
+Plug 'editorconfig/editorconfig-vim'
+" Plug 'suan/vim-instant-markdown'
+" Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'ayu-theme/ayu-vim'
+Plug 'junegunn/fzf.vim'
+Plug 'khzaw/vim-conceal'
+Plug 'mtth/scratch.vim'
+Plug 'jacoborus/tender.vim'
+Plug 'sjl/badwolf'
+Plug 'Lokaltog/vim-distinguished'
+Plug 'tkhren/vim-fake'
+Plug 'fenetikm/falcon'
+Plug 'sheerun/vim-polyglot'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax' 
+" Plug 'Shougo/deoplete.nvim'
 " if !has('nvim')
-"   Plugin 'roxma/nvim-yarp'
-"   Plugin 'roxma/vim-hug-neovim-rpc'
+"   Plug 'roxma/nvim-yarp'
+"   Plug 'roxma/vim-hug-neovim-rpc'
 " endif
 
-" Plugin 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet.vim'
 
-set runtimepath^=~/.vim/bundle/vim-snippets
-set runtimepath^=~/.vim/after/my-snippets
-set runtimepath^=~/.vim/snippets
+call plug#end()
 
-call vundle#end()
 filetype plugin indent on
 
 " }}}
@@ -464,13 +463,13 @@ nnoremap <C-t> :FzfFiles<CR>
 
 " Plugin: UltiSnips {{{
 
-" let g:UltiSnipsUsePythonVersion = 3
-" let g:UltiSnipsExpandTrigger="<Tab>"
-" let g:UltiSnipsJumpForwardTrigger="<Tab>"
-" let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
-" let g:UltiSnipsEditSplit="vertical"
-" let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
-" let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips'
+let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsExpandTrigger="<Tab>"
+let g:UltiSnipsJumpForwardTrigger="<Tab>"
+let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
+let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
+let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips'
 
 " }}}
 
@@ -524,21 +523,22 @@ nnoremap <Leader>r :call ToggleRelativeNumbers()<CR>
 " }}}
 
 " {{{ Folding
-" function! MyFoldText() " {{{
-"     let line = getline(v:foldstart)
+function! MyFoldText() " {{{
+    let line = getline(v:foldstart)
 
-"     let nucolwidth = &fdc + &number * &numberwidth
-"     let windowwidth = winwidth(0) - nucolwidth - 3
-"     let foldedlinecount = v:foldend - v:foldstart
+    let line = substitute(line, '{', '', 'g')
 
-"     " expand tabs into spaces
-"     let onetab = strpart('          ', 0, &tabstop)
-"     let line = substitute(line, '\t', onetab, 'g')
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
 
-"     let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-"     let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-"     return line . ' ( ' . foldedlinecount . ' lines )' . repeat("·",fillcharcount)
-" endfunction " }}}
-" set foldtext=MyFoldText()
+    " expand tabs into spaces
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
+
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+    return line . ' { ' . foldedlinecount . ' lines ... }' . repeat(' ', fillcharcount)
+endfunction " }}}
+set foldtext=MyFoldText()
 " }}}
-
