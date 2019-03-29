@@ -21,6 +21,9 @@ DEFAULT_USER="$USER"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 POWERLEVEL9K_SHORTEN_DELIMITER=""
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_with_package_name"
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$''
+POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=$''
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -248,3 +251,6 @@ man() {
     LESS_TERMCAP_us=$'\e[01;32m' \
     command man "$@"
 }
+
+# Load pyenv
+eval "$(pyenv init -)"
