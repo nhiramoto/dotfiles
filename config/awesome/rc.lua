@@ -11,7 +11,6 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 local vicious = require("vicious")
-local lain = require("lain")
 
 -- Error handling {{{
 -- Startup errors
@@ -138,9 +137,18 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Widgets {{{
 
 -- Separators and Borders
-local spr = wibox.widget.imagebox(beautiful.spr)
-local spr4px = wibox.widget.imagebox(beautiful.spr4px)
-local spr5px = wibox.widget.imagebox(beautiful.spr5px)
+local spr = wibox.container {
+    widget = wibox.container.margin,
+    margins = 2
+}
+local spr4px = wibox.container {
+    widget = wibox.container.margin,
+    margins = 4
+}
+local spr5px = wibox.container {
+    widget = wibox.container.margin,
+    margins = 5
+}
 
 -- Tags Buttons
 local taglist_buttons = gears.table.join(
@@ -182,31 +190,18 @@ local clock_widget = wibox.container {
     widget = wibox.container.margin,
     margins = 2,
     {
-        widget = wibox.container.background,
-        shape = function (cr, w, h)
-            gears.shape.rounded_rect(cr, w, h, 3)
-        end,
-        bg = beautiful.bg_widget,
-        shape_border_width = 1,
-        shape_border_color = beautiful.widget_border_color,
+        layout = wibox.layout.fixed.horizontal,
+        spacing = 10,
+        spacing_widget = {
+            widget = wibox.widget.separator,
+        },
         {
-            widget = wibox.container.margin,
-            margins = 2,
-            {
-                layout = wibox.layout.fixed.horizontal,
-                spacing = 10,
-                spacing_widget = {
-                    widget = wibox.widget.separator,
-                },
-                {
-                    widget = wibox.widget.textclock,
-                    format = "<span color='" .. beautiful.bg_focus .. "'>%b %d</span>"
-                },
-                {
-                    widget = wibox.widget.textclock,
-                    format = "%H:%M"
-                }
-            }
+            widget = wibox.widget.textclock,
+            format = "<span color='" .. beautiful.bg_focus .. "'>%b %d</span>"
+        },
+        {
+            widget = wibox.widget.textclock,
+            format = "%H:%M"
         }
     }
 }
@@ -415,17 +410,6 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = taglist_buttons,
         layout  = {
             spacing = 10,
-            spacing_widget = {
-                {
-                    widget = wibox.widget.imagebox,
-                    image = beautiful.spr4px
-                },
-                {
-                    widget = wibox.widget.imagebox,
-                    image = beautiful.spr
-                },
-                layout = wibox.layout.fixed.horizontal
-            },
             layout  = wibox.layout.fixed.horizontal
         },
     }

@@ -12,24 +12,36 @@ local dpi = require("beautiful.xresources").apply_dpi
 
 local theme = {}
 
+theme.color = {
+    white = "#ABB2BF",
+    black = "#121212",
+    black2 = "#282C34",
+    blue = "#61AFEF",
+    green = "#98C379",
+    yellow = "#5C07B",
+    red = "#E06C75"
+}
+
 -- {{{ Styles
 
-theme.panel           = "png:" .. thistheme_path .. "/panel.png"
+theme.panel           = theme.color.black
 
 -- {{{ Fonts
-theme.font      = "Hurmit Nerd Font Mono Semibold 8"
-theme.font_small = "Hurmit Nerd Font Mono Semibold 7"
-theme.font_big = "Hurmit Nerd Font Mono Semibold 9"
+theme.font      = "Exo 2 Semibold 9"
+theme.font_small = "Exo 2 Semibold 8"
+theme.font_big = "Exo 2 Semibold 10"
 -- }}}
 
--- {{{ Colors
-theme.fg_normal  = "#BCBCBC"
-theme.bg_normal  = "#262626"
+-- fg/bg colors {{{
+
+theme.fg_normal  = theme.color.white
+theme.bg_normal  = theme.color.black
 theme.fg_focus   = theme.bg_normal
-theme.bg_focus   = "#5F87AF"
+theme.bg_focus   = theme.color.blue
 theme.fg_urgent  = theme.bg_normal
-theme.bg_urgent  = "#AF5F5F"
+theme.bg_urgent  = theme.color.red
 theme.bg_systray = theme.panel
+
 -- }}}
 
 -- {{{ Borders
@@ -38,7 +50,7 @@ theme.gap_single_client = false
 theme.border_width  = dpi(2)
 theme.border_normal = theme.bg_normal
 theme.border_focus  = theme.bg_focus
-theme.border_marked = "#87875F"
+theme.border_marked = theme.color.yellow
 -- }}}
 
 -- {{{ Titlebars
@@ -77,7 +89,7 @@ end
 -- {{{ Notification
 theme.notification_bg = theme.bg_normal
 theme.notification_fg = theme.fg_normal
-theme.notification_font = theme.font
+-- theme.notification_font = theme.font
 theme.notification_border_width = 0
 theme.notification_border_color = theme.notification_bg
 theme.notification_max_width = dpi(400)
@@ -131,8 +143,8 @@ theme.titlebar_bg_focus = theme.bg_focus
 --theme.border_widget    = "#3F3F3F"
 
 theme.fg_widget = theme.fg_normal
-theme.bg_widget = "#1C1C1C"
-theme.widget_border_color = "#6C6C6C"
+theme.bg_widget = theme.color.black2
+theme.widget_border_color = theme.color.white
 
 theme.progressbar_bg = theme.bg_widget
 theme.progressbar_fg = theme.bg_focus
@@ -144,9 +156,9 @@ theme.progressbar_shape = gears.shape.rounded_bar
 theme.progressbar_bar_shape = gears.shape.rounded_bar
 
 theme.graph_bg_normal = theme.bg_widget
-theme.graph_fg1 = "#5F87AF"
-theme.graph_fg2 = "#5F875F"
-theme.graph_fg3 = "#87875f"
+theme.graph_fg1 = theme.color.blue
+theme.graph_fg2 = theme.color.green
+theme.graph_fg3 = theme.color.yellow
 
 theme.systray_icon_spacing = dpi(8)
 
@@ -166,11 +178,6 @@ theme.menu_width  = dpi(150)
 -- }}}
 
 -- {{{ Icons
-
-theme.spr    = thistheme_path .. "/panel/separators/spr.png"
-theme.sprtr  = thistheme_path .. "/panel/separators/sprtr.png"
-theme.spr4px = thistheme_path .. "/panel/separators/spr4px.png"
-theme.spr5px = thistheme_path .. "/panel/separators/spr5px.png"
 
 -- {{{ Misc
 -- theme.awesome_icon           = thistheme_path .. "/archlinux-black-icon.png"
