@@ -4,7 +4,7 @@ conky.config = {
     alignment= 'middle_left',
     maximum_width = 260,
     border_width = 0,
-    font = 'Hurmit Nerd Font:size=9',
+    font = 'Exo 2:size=9',
     gap_x = 60,
     gap_y = 0,
 
@@ -32,18 +32,18 @@ conky.config = {
 }
 
 conky.text = [[
-${font Hurmit Nerd Font:size=10}${color #756969}$nodename ${hr 2} ${alignr}${font}$color
+${font Exo 2:size=10}${color #756969}$nodename ${hr 2} ${alignr}${font}$color
 
 ${offset 20}Kernel:$alignr${kernel}
 ${offset 20}Uptime:$alignr$uptime
 ${offset 20}Load:$alignr$loadavg
 
-${font Hurmit Nerd Font:size=10}${color #756969}Storage ${hr 2} ${alignr}${font}$color
+${font Exo 2:size=10}${color #756969}Storage ${hr 2} ${alignr}${font}$color
 
 ${offset 20}/ $alignc ${fs_used /} / ${fs_size /} $alignr ${fs_used_perc /}%
 ${offset 20}${fs_bar /}
 
-${font Hurmit Nerd Font:size=10}${color #756969}Connections ${hr 2} ${alignr}${font}$color
+${font Exo 2:size=10}${color #756969}Connections ${hr 2} ${alignr}${font}$color
 
 ${color #756969}${if_up wlo1}wlo1 (${addr wlo1}) ${hr 2}$color
 
