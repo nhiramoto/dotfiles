@@ -95,10 +95,6 @@ augroup END
 " Disable Ex Mode
 map Q <Nop>
 
-" Save and Quit Keybindings
-map <C-s> :w<CR>
-map <C-q> :qa<CR>
-
 " Clear Search Highlights
 nnoremap <Esc> :nohl<cr>
 
@@ -106,10 +102,10 @@ nnoremap <Esc> :nohl<cr>
 nnoremap <Tab> za
 
 " Navigate without a prefix
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap <M-h> <C-w>h
+nnoremap <M-j> <C-w>j
+nnoremap <M-k> <C-w>k
+nnoremap <M-l> <C-w>l
 
 " Go up and down visual lines (not logical lines, wrap text)
 nnoremap j gj
@@ -120,6 +116,9 @@ noremap Y y$
 
 nnoremap ! :!
 
+" Save and Quit
+map <M-w> :w<CR>
+map <M-q> :qa<CR>
 nnoremap <Leader>q :quit<CR>
 nnoremap <Leader>w :write<CR>
 nnoremap <Leader>x :xit<CR>
@@ -127,14 +126,19 @@ nnoremap <Leader>x :xit<CR>
 " Move lines around
 nnoremap <Leader>k :m-2<CR>==
 nnoremap <Leader>j :m+<CR>==
+nnoremap <M-k>     :m-2<CR>==
+nnoremap <M-j>     :m+<CR>==
 xnoremap <Leader>k :m-2<CR>gv=gv
 xnoremap <Leader>j :m'>+<CR>gv=gv
+xnoremap <M-k>     :m-2<CR>gv=gv
+xnoremap <M-j>     :m'>+<CR>gv=gv
 
 " Keep search matches in the middle of screen
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Cursor line to the center of screen
+nnoremap <C-h> zt
 nnoremap <C-m> zz
 
 " Command mode mapping
@@ -144,9 +148,6 @@ cnoremap <C-e> <End>
 " Use <Tab> and <S-Tab> to move between matches
 " cnoremap <expr> <Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<CR>/<C-r>/' : '<C-z>'
 " cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<CR>?<C-r>/': '<S-Tab>'
-
-" Open typora for markdown preview
-autocmd FileType markdown noremap <silent> <C-m> :exec 'silent !typora "%" &'<cr>
 
 " }}}
 
