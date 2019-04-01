@@ -192,9 +192,6 @@ local clock_widget = wibox.container {
     {
         layout = wibox.layout.fixed.horizontal,
         spacing = 10,
-        spacing_widget = {
-            widget = wibox.widget.separator,
-        },
         {
             widget = wibox.widget.textclock,
             format = "<span color='" .. beautiful.bg_focus .. "'>%b %d</span>"
@@ -232,6 +229,7 @@ local battery_widget = wibox.widget {
             margins = 4,
             width = 70,
             ticks = false,
+            border_width = 0
         },
         {
             widget = wibox.widget.textbox,
@@ -302,7 +300,7 @@ local system_usage_widget = wibox.container {
             gears.shape.rounded_rect(cr, w, h, 2)
         end,
         shape_clip = true,
-        shape_border_width = 1,
+        shape_border_width = 0,
         shape_border_color = beautiful.widget_border_color,
         {
             layout = wibox.layout.fixed.horizontal,
@@ -336,6 +334,7 @@ local volume_widget = wibox.widget {
             margins = 4,
             width = 70,
             ticks = false,
+            border_width = 0,
             shape = gears.shape.rounded_bar,
         },
         {
