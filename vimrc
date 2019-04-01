@@ -1,3 +1,4 @@
+
 " Global Settings {{{
 
 filetype plugin indent on   " Enable filetype detection, filetype scripts & indent scripts
@@ -96,7 +97,7 @@ augroup END
 map Q <Nop>
 
 " Clear Search Highlights
-nnoremap <Esc> :nohl<cr>
+nnoremap <silent> <Esc> :nohl<cr>
 
 " Toggle fold at current line
 nnoremap <Tab> za
@@ -138,16 +139,14 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Cursor line to the center of screen
-nnoremap <C-h> zt
 nnoremap <C-m> zz
 
 " Command mode mapping
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
-" Use <Tab> and <S-Tab> to move between matches
-" cnoremap <expr> <Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<CR>/<C-r>/' : '<C-z>'
-" cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<CR>?<C-r>/': '<S-Tab>'
+" Show Syntax Highlight Groups
+nnoremap <Leader>sl :so $VIMRUNTIME/syntax/hitest.vim<CR>
 
 " }}}
 
@@ -173,7 +172,6 @@ filetype off
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'VundleVim/Vundle.vim'
 "Plug 'tpope/vim-fugitive'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -194,7 +192,7 @@ Plug 'raimondi/delimitmate'
 Plug 'jshint/jshint'
 " Plug 'ap/vim-css-color'
 " Plug 'gko/vim-coloresque'
-" Plug 'kien/rainbow_parentheses.vim'
+Plug 'kien/rainbow_parentheses.vim'
 Plug 'nanotech/jellybeans.vim'
 Plug 'ciaranm/inkpot'
 Plug 'jonathanfilip/vim-lucius'
@@ -248,12 +246,6 @@ Plug 'fenetikm/falcon'
 Plug 'sheerun/vim-polyglot'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax' 
-" Plug 'Shougo/deoplete.nvim'
-" if !has('nvim')
-"   Plug 'roxma/nvim-yarp'
-"   Plug 'roxma/vim-hug-neovim-rpc'
-" endif
-
 " Plug 'Shougo/neosnippet.vim'
 
 call plug#end()
@@ -282,13 +274,16 @@ set ruler
 set t_Co=256
 colorscheme onedark
 
-" Fixed colors
+" Fixed styles
 hi Comment cterm=italic
 hi Normal ctermfg=249 ctermbg=233
 hi NonText ctermfg=236 ctermbg=233
 hi CursorLine ctermbg=234
 hi ColorColumn ctermbg=234
 hi Folded cterm=italic ctermfg=238
+hi String cterm=italic
+hi Search ctermfg=0 ctermbg=120
+hi IncSearch ctermfg=120
 
 " }}}
 
@@ -338,7 +333,7 @@ let g:airline_section_z = '%2l%#__restore__#%#__accent_bold#/%L%{g:airline_symbo
 
 " Plugin: NERDTree {{{
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
@@ -356,36 +351,36 @@ let NERDTreeShowHidden=1
 " }}}
 
 " Plugin: Rainbow Parentheses {{{
-"let g:rbpt_colorpairs = [
-"        \ ['blue',       '#FF6000'],
-"        \ ['cyan', '#00FFFF'],
-"        \ ['darkmagenta',    '#CC00FF'],
-"        \ ['yellow',   '#FFFF00'],
-"        \ ['red',     '#FF0000'],
-"        \ ['darkgreen',    '#00FF00'],
-"        \ ['White',         '#c0c0c0'],
-"        \ ['blue',       '#FF6000'],
-"        \ ['cyan', '#00FFFF'],
-"        \ ['darkmagenta',    '#CC00FF'],
-"        \ ['yellow',   '#FFFF00'],
-"        \ ['red',     '#FF0000'],
-"        \ ['darkgreen',    '#00FF00'],
-"        \ ['White',         '#c0c0c0'],
-"        \ ['blue',       '#FF6000'],
-"        \ ['cyan', '#00FFFF'],
-"        \ ['darkmagenta',    '#CC00FF'],
-"        \ ['yellow',   '#FFFF00'],
-"        \ ['red',     '#FF0000'],
-"        \ ['darkgreen',    '#00FF00'],
-"        \ ['White',         '#c0c0c0'],
-"        \ ]
-"
-"let g:rbpt_max = 16
-"let g:rbpt_loadcmd_toggle = 0
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
+let g:rbpt_colorpairs = [
+        \ ['blue',       '#FF6000'],
+        \ ['cyan', '#00FFFF'],
+        \ ['darkmagenta',    '#CC00FF'],
+        \ ['yellow',   '#FFFF00'],
+        \ ['red',     '#FF0000'],
+        \ ['darkgreen',    '#00FF00'],
+        \ ['White',         '#c0c0c0'],
+        \ ['blue',       '#FF6000'],
+        \ ['cyan', '#00FFFF'],
+        \ ['darkmagenta',    '#CC00FF'],
+        \ ['yellow',   '#FFFF00'],
+        \ ['red',     '#FF0000'],
+        \ ['darkgreen',    '#00FF00'],
+        \ ['White',         '#c0c0c0'],
+        \ ['blue',       '#FF6000'],
+        \ ['cyan', '#00FFFF'],
+        \ ['darkmagenta',    '#CC00FF'],
+        \ ['yellow',   '#FFFF00'],
+        \ ['red',     '#FF0000'],
+        \ ['darkgreen',    '#00FF00'],
+        \ ['White',         '#c0c0c0'],
+        \ ]
+
+let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle = 0
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 " }}}
 
 " Plugin: Indent Lines {{{
@@ -436,6 +431,15 @@ autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
 let g:VtrAppendNewline = 1
+nnoremap <silent> <C-r> :VtrOpenRunner<CR>:VtrSendCommandToRunner<CR>
+" }}}
+
+" Plugin: VTN - Vim Tmux Navigator {{{
+nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <M-/> :TmuxNavigatePrevious<cr>
 " }}}
 
 " Plugin: fzf {{{
@@ -543,3 +547,14 @@ function! MyFoldText() " {{{
 endfunction " }}}
 set foldtext=MyFoldText()
 " }}}
+
+" List Syntax Group {{{
+nmap <leader>sp :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+" }}}
+
