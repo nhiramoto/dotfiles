@@ -8,3 +8,4 @@ config/awesome/themes/*
 
 Xresources.d/colors/*
 
+scripts/vars/
