@@ -16,7 +16,6 @@ set ignorecase              " Ignore case in regex
 set smartcase
 set incsearch               " Enable incremental search
 set iskeyword-=_            " Assume underscore as word delimiter
-" set matchpairs+=<:>         " Show matching angle brackets <>'s
 set nobackup                " Disable backup files creation
 set nowritebackup           ""
 set noswapfile              " Disable swap files creation
@@ -158,11 +157,11 @@ nnoremap <Leader>sl :so $VIMRUNTIME/syntax/hitest.vim<CR>
 
 " Language Settings {{{
 
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+map <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-map <F6> :setlocal spell! spelllang=en_us<CR>
+map <silent> <F6> :setlocal spell! spelllang=en_us<CR>
 
 " }}}
 
@@ -332,8 +331,8 @@ let g:airline_section_z = '%2l%#__restore__#%#__accent_bold#/%L%{g:airline_symbo
 " }}}
 
 " Plugin: NERDTree {{{
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
@@ -351,36 +350,36 @@ let NERDTreeShowHidden=1
 " }}}
 
 " Plugin: Rainbow Parentheses {{{
-let g:rbpt_colorpairs = [
-        \ ['blue',       '#FF6000'],
-        \ ['cyan', '#00FFFF'],
-        \ ['darkmagenta',    '#CC00FF'],
-        \ ['yellow',   '#FFFF00'],
-        \ ['red',     '#FF0000'],
-        \ ['darkgreen',    '#00FF00'],
-        \ ['White',         '#c0c0c0'],
-        \ ['blue',       '#FF6000'],
-        \ ['cyan', '#00FFFF'],
-        \ ['darkmagenta',    '#CC00FF'],
-        \ ['yellow',   '#FFFF00'],
-        \ ['red',     '#FF0000'],
-        \ ['darkgreen',    '#00FF00'],
-        \ ['White',         '#c0c0c0'],
-        \ ['blue',       '#FF6000'],
-        \ ['cyan', '#00FFFF'],
-        \ ['darkmagenta',    '#CC00FF'],
-        \ ['yellow',   '#FFFF00'],
-        \ ['red',     '#FF0000'],
-        \ ['darkgreen',    '#00FF00'],
-        \ ['White',         '#c0c0c0'],
-        \ ]
+" let g:rbpt_colorpairs = [
+"         \ ['blue',       '#FF6000'],
+"         \ ['cyan', '#00FFFF'],
+"         \ ['darkmagenta',    '#CC00FF'],
+"         \ ['yellow',   '#FFFF00'],
+"         \ ['red',     '#FF0000'],
+"         \ ['darkgreen',    '#00FF00'],
+"         \ ['White',         '#c0c0c0'],
+"         \ ['blue',       '#FF6000'],
+"         \ ['cyan', '#00FFFF'],
+"         \ ['darkmagenta',    '#CC00FF'],
+"         \ ['yellow',   '#FFFF00'],
+"         \ ['red',     '#FF0000'],
+"         \ ['darkgreen',    '#00FF00'],
+"         \ ['White',         '#c0c0c0'],
+"         \ ['blue',       '#FF6000'],
+"         \ ['cyan', '#00FFFF'],
+"         \ ['darkmagenta',    '#CC00FF'],
+"         \ ['yellow',   '#FFFF00'],
+"         \ ['red',     '#FF0000'],
+"         \ ['darkgreen',    '#00FF00'],
+"         \ ['White',         '#c0c0c0'],
+"         \ ]
 
-let g:rbpt_max = 16
-let g:rbpt_loadcmd_toggle = 0
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+" let g:rbpt_max = 16
+" let g:rbpt_loadcmd_toggle = 0
+" au VimEnter * RainbowParenthesesToggle
+" au Syntax * RainbowParenthesesLoadRound
+" au Syntax * RainbowParenthesesLoadSquare
+" au Syntax * RainbowParenthesesLoadBraces
 " }}}
 
 " Plugin: Indent Lines {{{
@@ -527,7 +526,7 @@ nnoremap <Leader>r :call ToggleRelativeNumbers()<CR>
 
 " }}}
 
-" {{{ Folding
+" Folding {{{
 function! MyFoldText() " {{{
     let line = getline(v:foldstart)
 
@@ -549,7 +548,7 @@ set foldtext=MyFoldText()
 " }}}
 
 " List Syntax Group {{{
-nmap <leader>sp :call <SID>SynStack()<CR>
+nmap <silent> <leader>sp :call <SID>SynStack()<CR>
 function! <SID>SynStack()
   if !exists("*synstack")
     return
