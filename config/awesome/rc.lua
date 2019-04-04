@@ -71,6 +71,58 @@ naughty.config.defaults.margin = beautiful.notification_margin
 
 -- Popups {{{
 
+local volume_popup = awful.popup {
+    widget = {
+        widget = wibox.container.margin,
+        margins = 10,
+        {
+            layout = wibox.layout.fixed.vertical,
+            spacing = 10,
+            {
+                layout = wibox.layout.fixed.horizontal,
+                spacing = 2,
+                {
+                    widget = wibox.widget.textbox,
+                    text = 'Volume:'
+                },
+                {
+                    widget = wibox.widget.textbox,
+                    id = 'percent'
+                }
+            },
+            {
+                widget = wibox.widget.progressbar,
+                id = 'progress',
+                forced_height = 20,
+                forced_width = 100
+            }
+        }
+    },
+    shape = gears.shape.rounded_rect,
+    placement = awful.placement.centered,
+    ontop = true,
+    width = 100,
+    visible = false
+}
+local volume_popup_timer = gears.timer {
+    timeout = 1,
+    single_shot = true,
+    callback = function()
+        volume_popup.visible = false
+    end
+}
+local show_volume_popup = function()
+    volume_popup.visible = true
+    volume_popup_timer:again()
+end
+vicious.register(volume_popup.widget, vicious.widgets.volume, function (widget, args)
+    -- $1: Volume level, $2: Mute state
+    local ismuted = {["♫"] = false, ["♩"] = true}
+    -- local status_icon = {["♫"] = "", ["♩"] = "ﱝ"}
+    widget:get_children_by_id('progress')[1]:set_value(ismuted[args[2]] and 0 or args[1] / 100)
+    widget:get_children_by_id("percent")[1].text = ismuted[args[2]] and "0%" or args[1] .. "%"
+end, 0.2, "Master")
+
 -- }}}
 
 -- Functions {{{
@@ -608,9 +660,18 @@ globalkeys = gears.table.join(
         { description = "Open mpd interface (ncmpcpp)", group = "launcher" }),
 
     -- Media Keys
-    awful.key({ }, "XF86AudioRaiseVolume", function(d) awful.spawn.with_shell("amixer set Master 5%+") end),
-    awful.key({ }, "XF86AudioLowerVolume", function(d) awful.spawn.with_shell("amixer set Master 5%-") end),
-    awful.key({ }, "XF86AudioMute", function(d) awful.spawn.with_shell("amixer set Master toggle") end),
+    awful.key({ }, "XF86AudioRaiseVolume", function(d)
+        awful.spawn.with_shell("amixer set Master 5%+")
+        show_volume_popup()
+    end),
+    awful.key({ }, "XF86AudioLowerVolume", function(d)
+        awful.spawn.with_shell("amixer set Master 5%-")
+        show_volume_popup()
+    end),
+    awful.key({ }, "XF86AudioMute", function(d)
+        awful.spawn.with_shell("amixer set Master toggle")
+        show_volume_popup()
+    end),
 
     awful.key({ }, "XF86MonBrightnessUp", function(d) awful.spawn.with_shell("xbacklight -inc 5") end),
     awful.key({ }, "XF86MonBrightnessDown", function(d) awful.spawn.with_shell("xbacklight -dec 5") end),
