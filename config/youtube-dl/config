@@ -1,7 +1,7 @@
 
 --no-playlist
 
--f 'bestvideo[ext=mp4][width<=1920]+bestaudio[ext=m4a]/bestvideo[width<=1080]+bestaudio/best'
+-f 'bestvideo[ext=mp4][width<=1920][fps=60]+bestaudio[ext=m4a]/bestvideo[width<=1920]+bestaudio/best'
 
 -o '~/Videos/Youtube/%(uploader)s/%(title)s (%(resolution)s-%(fps)s %(upload_date)s).%(ext)s'
 
