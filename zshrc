@@ -252,5 +252,3 @@ man() {
     command man "$@"
 }
 
-# Load pyenv
-eval "$(pyenv init -)"
