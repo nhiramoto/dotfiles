@@ -80,14 +80,17 @@ local volume_popup = awful.popup {
             spacing = 10,
             {
                 layout = wibox.layout.fixed.horizontal,
-                spacing = 2,
+                spacing = 4,
                 {
                     widget = wibox.widget.textbox,
-                    text = 'Volume:'
+                    text = 'Volume'
                 },
                 {
                     widget = wibox.widget.textbox,
-                    id = 'percent'
+                    id = 'percent',
+                    align = 'center',
+                    valign = 'center',
+                    font = beautiful.font_small
                 }
             },
             {
@@ -117,8 +120,7 @@ local show_volume_popup = function()
 end
 vicious.register(volume_popup.widget, vicious.widgets.volume, function (widget, args)
     -- $1: Volume level, $2: Mute state
-    local ismuted = {["♫"] = false, ["♩"] = true}
-    -- local status_icon = {["♫"] = "", ["♩"] = "ﱝ"}
+    local ismuted = {['♫'] = false, ['♩'] = true}
     widget:get_children_by_id('progress')[1]:set_value(ismuted[args[2]] and 0 or args[1] / 100)
     widget:get_children_by_id("percent")[1].text = ismuted[args[2]] and "0%" or args[1] .. "%"
 end, 0.2, "Master")
@@ -387,7 +389,6 @@ local volume_widget = wibox.widget {
             width = 70,
             ticks = false,
             border_width = 0,
-            shape = gears.shape.rounded_bar,
         },
         {
             widget = wibox.widget.textbox,
@@ -410,7 +411,6 @@ vicious.register(volume_widget, vicious.widgets.volume, function (widget, args)
     local ismuted = {["♫"] = false, ["♩"] = true}
     -- local status_icon = {["♫"] = "", ["♩"] = "ﱝ"}
     local status_icon = {["♫"] = beautiful.status_audio_on, ["♩"] = beautiful.status_audio_off}
-    local color = {["♫"] = beautiful.progressbar_fg, ["♩"] = beautiful.progressbar_fg_disabled}
     widget:get_children_by_id("status")[1].image = status_icon[args[2]]
     widget:get_children_by_id("progress")[1]:set_value(ismuted[args[2]] and 0 or args[1] / 100)
     -- widget:get_children_by_id("progress")[1].color = color[args[2]]
