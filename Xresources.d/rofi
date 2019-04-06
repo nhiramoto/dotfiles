@@ -1,11 +1,14 @@
 ! vim: syntax=xdefaults :
 
 rofi.combi-modi: run,drun,window,ssh
-rofi.font: Hurmit Nerd Font, Medium, 18
-!rofi.theme: Monokai
+rofi.font: Exo 2, Medium, 18
+rofi.padding: 5
+rofi.case-sensitive: false
+rofi.line-margin: 5
+rofi.separator-style: solid
 rofi.lines: 7
 rofi.color-enabled: true
-rofi.color-window: #262626, #262626, #262626
-rofi.color-normal: #262626, #bcbcbc, #262626, #8fafd7, #262626
-rofi.color-active: #262626, #bcbcbc, #262626, #87af87, #262626
-rofi.color-urgent: #262626, #bcbcbc, #262626, #ffffaf, #262626
+rofi.color-window: #121212, #121212, #121212
+rofi.color-normal: #121212, #ABB2BF, #121212, #61AFEF, #121212
+rofi.color-active: #121212, #ABB2BF, #121212, #98C379, #121212
+rofi.color-urgent: #121212, #ABB2BF, #121212, #D19A66, #121212
