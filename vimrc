@@ -2,8 +2,8 @@
 " Global Settings {{{
 
 filetype plugin indent on   " Enable filetype detection, filetype scripts & indent scripts
-let g:python_host_prog='/home/hyokan/.pyenv/versions/2.7.15/bin/python'
-let g:python3_host_prog='/home/hyokan/.pyenv/versions/3.7.2/bin/python'
+let g:python_host_prog='/usr/bin/python2'
+let g:python3_host_prog='/usr/bin/python'
 
 set autoread                " Auto-reload changed files
 set encoding=utf-8          " Encode characters as utf-8
@@ -474,6 +474,8 @@ let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips'
+
+nnoremap <silent> <Leader>es :UltiSnipsEdit<CR>
 
 " }}}
 
