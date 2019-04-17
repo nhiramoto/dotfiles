@@ -1,3 +1,5 @@
+export LANG="en_US.UTF-8"
+
 zmodload zsh/zprof
 
 # Path to your oh-my-zsh installation.
@@ -19,6 +21,9 @@ DEFAULT_USER="$USER"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 POWERLEVEL9K_SHORTEN_DELIMITER=""
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_with_package_name"
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$''
+POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=$''
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -92,15 +97,15 @@ fi;
 
 # User configuration
 
-export PATH="$PATH:$HOME/.local/bin:$HOME/.script:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/apache-maven-3.3.9/bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/.scripts:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/apache-maven-3.3.9/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
-export LANG\='en_US.UTF-8'
-export LC_ALL\="en_US.UTF-8"
-export TERM\=xterm-256color
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+export TERM="rxvt-unicode-256color"
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -142,6 +147,10 @@ alias __xmonad="$EDITOR $HOME/.xmonad/xmonad.hs"
 alias __xmobar="$EDITOR $HOME/.xmonad/xmobar/xmobarrc"
 alias __awesome="$EDITOR $HOME/.config/awesome/rc.lua"
 alias __tsm="$EDITOR $HOME/.config/transmission-daemon/settings.json"
+alias __openbox="$EDITOR $HOME/.config/openbox/rc.xml"
+alias __openboxmenu="$EDITOR $HOME/.config/openbox/menu.xml"
+alias __openboxenv="$EDITOR $HOME/.config/openbox/environment"
+alias __openboxauto="$EDITOR $HOME/.config/openbox/autostart"
 
 alias open=xdg-open
 alias pacsize="expac -S -H M '%k/t%n'"
@@ -180,10 +189,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Termite current directory
-if [[ $TERM == xterm-termite ]]; then
-  . /etc/profile.d/vte.sh
-  __vte_osc7
-fi
+# if [[ $TERM == xterm-termite ]]; then
+#   . /etc/profile.d/vte.sh
+#   __vte_osc7
+# fi
 
 # Disable bracketed paste mode for terminals that
 #   doesn't support escape sequences (like Emacs shell)
@@ -195,7 +204,7 @@ fi
 # export PAGER="most"
 
 # Default Terminal
-export TERMINAL="termite"
+export TERMINAL="urxvt"
 
 # Python Virtualenv
 export WORKON_HOME=$HOME/.virtualenvs
@@ -242,3 +251,4 @@ man() {
     LESS_TERMCAP_us=$'\e[01;32m' \
     command man "$@"
 }
+

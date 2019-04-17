@@ -4,7 +4,7 @@ conky.config = {
     alignment= 'middle_right',
     maximum_width = 260,
     border_width = 0,
-    font = 'Exo 2 Medium:size=10',
+    font = 'Exo 2:Medium:size=9',
     gap_x = 60,
     gap_y = 0,
 
@@ -32,7 +32,7 @@ conky.config = {
 }
 
 conky.text = [[
-${font Exo 2 Medium:size=12}${color #756969}CPU ${hr 2} ${alignr}${font}$color
+${font Exo 2:Medium:size=10}${color #756969}CPU ${hr 2} ${alignr}${font}$color
 
 ${offset 20}Average (${cpu cpu0}%)
 ${offset 20}${cpugraph cpu0}
@@ -48,7 +48,7 @@ ${offset 20}${top name 3}$alignr${top cpu 3}%
 ${offset 20}${top name 4}$alignr${top cpu 4}%
 ${offset 20}${top name 5}$alignr${top cpu 5}%
 
-${font Exo 2 Medium:size=12}${color #756969}Memory ${hr 2} ${alignr}${font}$color
+${font Exo 2:Medium:size=10}${color #756969}Memory ${hr 2} ${alignr}${font}$color
 
 ${offset 20}$mem / $memmax $alignr $memperc%
 ${offset 20}$membar

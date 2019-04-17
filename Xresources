@@ -1,4 +1,4 @@
-! vi:syntax=xdefaults
+! vim: filetype=xdefaults :
 
 #include ".Xresources.d/xterm"
 #include ".Xresources.d/rxvt-unicode"
@@ -8,5 +8,4 @@ Xft.lcdfilter: lcddefault
 Xft.antialias: true
 Xft.rgba: rgb
 Xft.hinting: true
-Xft.hintstyle: hintslight
-
+Xft.hintstyle: hintsfull

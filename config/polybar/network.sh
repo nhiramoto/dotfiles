@@ -5,18 +5,18 @@ colorRunning=$(xgetres URxvt.foreground || echo "#fff")
 colorStopped=$(xgetres URxvt.color8 || echo "#555")
 
 # Interfaces name pattern (regex)
-wlan=^wlo1$
+wlan=^wlp2s0$
 wired=^enp8s0$
 usb=^enp0s20u[1-3]$
 
 # Icons
-wlan_icon=""
-wired_icon=""
-usb_icon=""
-unknown_icon=""
+wlan_icon="直"
+wired_icon=""
+usb_icon=" "
+unknown_icon="ﯳ"
 
 # get current default interface name
-default=`route | awk '{ if ($1 == "default") { print $8 } }'`
+default=`route | awk '{ if ($1 == "default") { print $8 } }' | head -n1`
 
 if [[ "$default" =~ $wlan ]]; then
     echo "%{F$colorRunning}$wlan_icon%{F-}"

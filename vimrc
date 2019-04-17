@@ -1,7 +1,9 @@
+
 " Global Settings {{{
 
 filetype plugin indent on   " Enable filetype detection, filetype scripts & indent scripts
-let g:python_host_prog='/usr/bin/python'
+let g:python_host_prog='/usr/bin/python2'
+let g:python3_host_prog='/usr/bin/python'
 
 set autoread                " Auto-reload changed files
 set encoding=utf-8          " Encode characters as utf-8
@@ -14,7 +16,6 @@ set ignorecase              " Ignore case in regex
 set smartcase
 set incsearch               " Enable incremental search
 set iskeyword-=_            " Assume underscore as word delimiter
-set matchpairs+=<:>         " Show matching angle brackets <>'s
 set nobackup                " Disable backup files creation
 set nowritebackup           ""
 set noswapfile              " Disable swap files creation
@@ -26,7 +27,7 @@ set laststatus=2
 set number
 set relativenumber
 set fillchars+=vert:\┃
-set ttyfast " u got a fast terminal
+set ttyfast
 set synmaxcol=200           " Max column width for syntax highlighting
 set mouse=a                 " Enable mouse for all modes
 set autoindent              " Autoindentation
@@ -38,6 +39,13 @@ set shiftround              " Only indent to multiple of shiftwidth
 " display indentation guides
 set list listchars=tab:❘-,trail:·,extends:»,precedes:«,nbsp:×
 set nojoinspaces            " Avoid double spaces when joining lines
+
+" Highlight characters beyond the maximum width
+if exists('+colorcolumn')
+  set colorcolumn=80
+else
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
 
 " convert tabs to spaces when reading file
 "autocmd! bufreadpost * set expandtab | retab! 4
@@ -52,9 +60,6 @@ hi clear texBoldStyle
 " Set default TeX flavour
 let g:tex_flavor = 'latex'
 
-" Commentaries in italic mode
-highlight Comment cterm=italic
-
 " Conceal
 set conceallevel=1
 set concealcursor="nc"
@@ -64,7 +69,7 @@ let g:vim_json_syntax_conceal = 0
 " nvim vs vim configurations
 if has('nvim')
     " Neovim specific commands
-    set termguicolors
+    " set termguicolors
 else
     " Standard vim specific commands
     set nocompatible " Use Vim's improvements
@@ -87,21 +92,20 @@ augroup END
 
 " Keymaps {{{
 
-" Save and Quit Keybindings
-map <C-s> :w<CR>
-map <C-q> :qa<CR>
+" Disable Ex Mode
+map Q <Nop>
 
 " Clear Search Highlights
-nnoremap <Esc> :nohl<cr>
+nnoremap <silent> <Esc> :nohl<cr>
 
 " Toggle fold at current line
 nnoremap <Tab> za
 
 " Navigate without a prefix
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap <M-h> <C-w>h
+nnoremap <M-j> <C-w>j
+nnoremap <M-k> <C-w>k
+nnoremap <M-l> <C-w>l
 
 " Go up and down visual lines (not logical lines, wrap text)
 nnoremap j gj
@@ -112,6 +116,9 @@ noremap Y y$
 
 nnoremap ! :!
 
+" Save and Quit
+map <M-w> :w<CR>
+map <M-q> :qa<CR>
 nnoremap <Leader>q :quit<CR>
 nnoremap <Leader>w :write<CR>
 nnoremap <Leader>x :xit<CR>
@@ -119,8 +126,12 @@ nnoremap <Leader>x :xit<CR>
 " Move lines around
 nnoremap <Leader>k :m-2<CR>==
 nnoremap <Leader>j :m+<CR>==
+nnoremap <M-k>     :m-2<CR>==
+nnoremap <M-j>     :m+<CR>==
 xnoremap <Leader>k :m-2<CR>gv=gv
 xnoremap <Leader>j :m'>+<CR>gv=gv
+xnoremap <M-k>     :m-2<CR>gv=gv
+xnoremap <M-j>     :m'>+<CR>gv=gv
 
 " Keep search matches in the middle of screen
 nnoremap n nzzzv
@@ -133,12 +144,8 @@ nnoremap <C-m> zz
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
-" Use <Tab> and <S-Tab> to move between matches
-" cnoremap <expr> <Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<CR>/<C-r>/' : '<C-z>'
-" cnoremap <expr> <S-Tab> getcmdtype() == '/' \|\| getcmdtype() == '?' ? '<CR>?<C-r>/': '<S-Tab>'
-
-" Open typora for markdown preview
-autocmd FileType markdown noremap <silent> <C-m> :exec 'silent !typora "%" &'<cr>
+" Show Syntax Highlight Groups
+nnoremap <Leader>sl :so $VIMRUNTIME/syntax/hitest.vim<CR>
 
 " }}}
 
@@ -150,11 +157,11 @@ autocmd FileType markdown noremap <silent> <C-m> :exec 'silent !typora "%" &'<cr
 
 " Language Settings {{{
 
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+map <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-map <F6> :setlocal spell! spelllang=en_us<CR>
+map <silent> <F6> :setlocal spell! spelllang=en_us<CR>
 
 " }}}
 
@@ -162,93 +169,101 @@ map <F6> :setlocal spell! spelllang=en_us<CR>
 
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Plugin 'VundleVim/Vundle.vim'
-"Plugin 'tpope/vim-fugitive'
-Plugin 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-commentary'
-" Plugin 'ervandew/supertab'
-Plugin 'scrooloose/nerdtree'
-" Plugin 'scrooloose/nerdcommenter'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'mattn/emmet-vim'
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-" Plugin 'garbas/vim-snipmate'
-Plugin 'SirVer/ultisnips'
-" Plugin 'honza/vim-snippets'
-Plugin 'raimondi/delimitmate'
-" Plugin 'scrooloose/syntastic'
-Plugin 'jshint/jshint'
-" Plugin 'ap/vim-css-color'
-" Plugin 'gko/vim-coloresque'
-" Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'nanotech/jellybeans.vim'
-Plugin 'ciaranm/inkpot'
-Plugin 'jonathanfilip/vim-lucius'
-Plugin 'chriskempson/vim-tomorrow-theme'
-Plugin 'sheerun/vim-wombat-scheme'
-Plugin 'tomasr/molokai'
-Plugin 'w0ng/vim-hybrid'
-" Plugin 'Yggdroot/indentLine'
-" Plugin 'bronson/vim-trailing-whitespace'
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plugin 'bling/vim-bufferline'
-" Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
-" Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'nlknguyen/papercolor-theme'
-Plugin 'PotatoesMaster/i3-vim-syntax'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'romainl/Apprentice'
-Plugin 'joshdick/onedark.vim'
-" Plugin 'ying17zi/vim-live-latex-preview'
-" Plugin 'ternjs/tern_for_vim'
-Plugin 'severin-lemaignan/vim-minimap'
-Plugin 'morhetz/gruvbox'
-Plugin 'w0rp/ale'
-Plugin 'chriskempson/base16-vim'
-Plugin 'Reewr/vim-monokai-phoenix'
-Plugin 'micha/vim-colors-solarized'
-Plugin 'dag/vim-fish'
-Plugin 'nhooyr/elysian.vim'
-Plugin 'arcticicestudio/nord-vim'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'maksimr/vim-jsbeautify'
-Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'christoomey/vim-titlecase'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'christoomey/vim-tmux-runner'
-Plugin 'editorconfig/editorconfig-vim'
-" Plugin 'suan/vim-instant-markdown'
-" Plugin 'JamshedVesuna/vim-markdown-preview'
-Plugin 'drewtempelmeyer/palenight.vim'
-Plugin 'ayu-theme/ayu-vim'
-Plugin 'junegunn/fzf.vim'
-Plugin 'khzaw/vim-conceal'
-Plugin 'mtth/scratch.vim'
+"Plug 'tpope/vim-fugitive'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+" Plug 'ervandew/supertab'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+" Plug 'scrooloose/nerdcommenter'
+Plug 'airblade/vim-gitgutter'
+Plug 'mattn/emmet-vim'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+" Plug 'garbas/vim-snipmate'
+Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
+Plug 'raimondi/delimitmate'
+" Plug 'scrooloose/syntastic'
+Plug 'jshint/jshint'
+" Plug 'ap/vim-css-color'
+" Plug 'gko/vim-coloresque'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'nanotech/jellybeans.vim'
+Plug 'ciaranm/inkpot'
+Plug 'jonathanfilip/vim-lucius'
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'sheerun/vim-wombat-scheme'
+Plug 'tomasr/molokai'
+Plug 'w0ng/vim-hybrid'
+" Plug 'Yggdroot/indentLine'
+" Plug 'bronson/vim-trailing-whitespace'
+" Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plug 'bling/vim-bufferline'
+" Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+" Plug 'ctrlpvim/ctrlp.vim'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'nlknguyen/papercolor-theme'
+Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'romainl/Apprentice'
+Plug 'joshdick/onedark.vim'
+" Plug 'ying17zi/vim-live-latex-preview'
+" Plug 'ternjs/tern_for_vim'
+Plug 'severin-lemaignan/vim-minimap'
+Plug 'morhetz/gruvbox'
+Plug 'w0rp/ale'
+Plug 'chriskempson/base16-vim'
+Plug 'Reewr/vim-monokai-phoenix'
+Plug 'micha/vim-colors-solarized'
+Plug 'dag/vim-fish'
+Plug 'nhooyr/elysian.vim'
+Plug 'arcticicestudio/nord-vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'maksimr/vim-jsbeautify'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'christoomey/vim-titlecase'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-runner'
+Plug 'editorconfig/editorconfig-vim'
+" Plug 'suan/vim-instant-markdown'
+" Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'ayu-theme/ayu-vim'
+Plug 'junegunn/fzf.vim'
+Plug 'khzaw/vim-conceal'
+Plug 'mtth/scratch.vim'
+Plug 'jacoborus/tender.vim'
+Plug 'sjl/badwolf'
+Plug 'Lokaltog/vim-distinguished'
+Plug 'tkhren/vim-fake'
+Plug 'fenetikm/falcon'
+Plug 'sheerun/vim-polyglot'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax' 
+" Plug 'Shougo/neosnippet.vim'
 
-set runtimepath^=~/.vim/bundle/vim-snippets
-set runtimepath^=~/.vim/after/my-snippets
+call plug#end()
 
-call vundle#end()
 filetype plugin indent on
 
 " }}}
 
-" Color Scheme {{{
+" Appearance {{{
 
 " Gruvbox theme
-let g:gruvbox_contrast_dark = 'medium'
-let g:gruvbox_termcolors=16
+"let g:gruvbox_contrast_dark = 'medium'
+"let g:gruvbox_termcolors=16
 
 " Ayu theme
-let ayucolor="mirage"
+"let ayucolor="mirage"
+
+" One Dark
+"let g:onedark_termcolors=256
 
 syntax on
 set background=dark
@@ -256,7 +271,18 @@ set cursorline
 set hlsearch
 set ruler
 set t_Co=256
-colorscheme apprentice
+colorscheme onedark
+
+" Fixed styles
+hi Comment cterm=italic
+hi Normal ctermfg=249 ctermbg=233
+hi NonText ctermfg=236 ctermbg=233
+hi CursorLine ctermbg=234
+hi ColorColumn ctermbg=234
+hi Folded cterm=italic ctermfg=238
+hi String cterm=italic
+hi Search ctermfg=0 ctermbg=120
+hi IncSearch ctermfg=120
 
 " }}}
 
@@ -268,7 +294,7 @@ let g:airline_powerline_fonts = 1
 let g:airline_symbols_ascii = 1
 let g:airline_skip_empty_sections = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='wombat'
+let g:airline_theme='onedark'
 let g:airline_mode_map = {
   \ '__' : '-',
   \ 'n'  : 'N',
@@ -287,6 +313,7 @@ let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_section_b = '%{airline#util#wrap(airline#extensions#hunks#get_hunks(),0)}'
+let g:airline_section_c = '%<%{bufferline#refresh_status()}%#airline_c#%#bufferline_selected# %{g:bufferline_status_info.current} %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
 let g:airline_section_z = '%2l%#__restore__#%#__accent_bold#/%L%{g:airline_symbols.maxlinenr}%#__restore__# :%2v'
 
 " }}}
@@ -304,8 +331,8 @@ let g:airline_section_z = '%2l%#__restore__#%#__accent_bold#/%L%{g:airline_symbo
 " }}}
 
 " Plugin: NERDTree {{{
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 map <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
@@ -323,36 +350,36 @@ let NERDTreeShowHidden=1
 " }}}
 
 " Plugin: Rainbow Parentheses {{{
-"let g:rbpt_colorpairs = [
-"        \ ['blue',       '#FF6000'],
-"        \ ['cyan', '#00FFFF'],
-"        \ ['darkmagenta',    '#CC00FF'],
-"        \ ['yellow',   '#FFFF00'],
-"        \ ['red',     '#FF0000'],
-"        \ ['darkgreen',    '#00FF00'],
-"        \ ['White',         '#c0c0c0'],
-"        \ ['blue',       '#FF6000'],
-"        \ ['cyan', '#00FFFF'],
-"        \ ['darkmagenta',    '#CC00FF'],
-"        \ ['yellow',   '#FFFF00'],
-"        \ ['red',     '#FF0000'],
-"        \ ['darkgreen',    '#00FF00'],
-"        \ ['White',         '#c0c0c0'],
-"        \ ['blue',       '#FF6000'],
-"        \ ['cyan', '#00FFFF'],
-"        \ ['darkmagenta',    '#CC00FF'],
-"        \ ['yellow',   '#FFFF00'],
-"        \ ['red',     '#FF0000'],
-"        \ ['darkgreen',    '#00FF00'],
-"        \ ['White',         '#c0c0c0'],
-"        \ ]
-"
-"let g:rbpt_max = 16
-"let g:rbpt_loadcmd_toggle = 0
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
+" let g:rbpt_colorpairs = [
+"         \ ['blue',       '#FF6000'],
+"         \ ['cyan', '#00FFFF'],
+"         \ ['darkmagenta',    '#CC00FF'],
+"         \ ['yellow',   '#FFFF00'],
+"         \ ['red',     '#FF0000'],
+"         \ ['darkgreen',    '#00FF00'],
+"         \ ['White',         '#c0c0c0'],
+"         \ ['blue',       '#FF6000'],
+"         \ ['cyan', '#00FFFF'],
+"         \ ['darkmagenta',    '#CC00FF'],
+"         \ ['yellow',   '#FFFF00'],
+"         \ ['red',     '#FF0000'],
+"         \ ['darkgreen',    '#00FF00'],
+"         \ ['White',         '#c0c0c0'],
+"         \ ['blue',       '#FF6000'],
+"         \ ['cyan', '#00FFFF'],
+"         \ ['darkmagenta',    '#CC00FF'],
+"         \ ['yellow',   '#FFFF00'],
+"         \ ['red',     '#FF0000'],
+"         \ ['darkgreen',    '#00FF00'],
+"         \ ['White',         '#c0c0c0'],
+"         \ ]
+
+" let g:rbpt_max = 16
+" let g:rbpt_loadcmd_toggle = 0
+" au VimEnter * RainbowParenthesesToggle
+" au Syntax * RainbowParenthesesLoadRound
+" au Syntax * RainbowParenthesesLoadSquare
+" au Syntax * RainbowParenthesesLoadBraces
 " }}}
 
 " Plugin: Indent Lines {{{
@@ -403,6 +430,15 @@ autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
 let g:VtrAppendNewline = 1
+nnoremap <silent> <C-r> :VtrOpenRunner<CR>:VtrSendCommandToRunner<CR>
+" }}}
+
+" Plugin: VTN - Vim Tmux Navigator {{{
+nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <M-/> :TmuxNavigatePrevious<cr>
 " }}}
 
 " Plugin: fzf {{{
@@ -439,6 +475,42 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/UltiSnips']
 let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips'
 
+nnoremap <silent> <Leader>es :UltiSnipsEdit<CR>
+
+" }}}
+
+" Plugin: delimitMate {{{ 
+
+let delimitMate_matchpairs = "(:),[:],{:}"
+
+" }}}
+
+" {{{ Plugin: Ale
+
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python': ['pylint', 'flake8']
+\}
+
+" }}}
+
+" {{{ vim-fake
+let g:fake_src_paths = ['/home/hyokan/.vim/fake/lorem']
+
+"" Get a nonsense text like Lorem ipsum
+call fake#define('sentense', 'fake#capitalize('
+                        \ . 'join(map(range(fake#int(3,15)),"fake#gen(\"nonsense\")"))'
+                        \ . ' . fake#chars(1,"..............!?"))')
+
+call fake#define('paragraph', 'join(map(range(fake#int(3,10)),"fake#gen(\"sentense\")"))')
+
+"" Alias
+call fake#define('lipsum', 'fake#gen("paragraph")')
+
+" }}}
+
+" {{{ Neosnippets
+" let g:neosnippet#disable_runtime_snippets = 0
 " }}}
 
 " Custom Functions {{{
@@ -454,5 +526,36 @@ function! ToggleRelativeNumbers()
 endfunc
 nnoremap <Leader>r :call ToggleRelativeNumbers()<CR>
 
+" }}}
+
+" Folding {{{
+function! MyFoldText() " {{{
+    let line = getline(v:foldstart)
+
+    let line = substitute(line, '{', '', 'g')
+
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
+
+    " expand tabs into spaces
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
+
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+    return line . ' { ' . foldedlinecount . ' lines ... }' . repeat(' ', fillcharcount)
+endfunction " }}}
+set foldtext=MyFoldText()
+" }}}
+
+" List Syntax Group {{{
+nmap <silent> <leader>sp :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 " }}}
 

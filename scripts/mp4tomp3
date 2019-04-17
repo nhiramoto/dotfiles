@@ -1,0 +1,46 @@
+#!/bin/bash
+# Convert videos mp4 to mp3
+
+MUSICFOLDER="."
+
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+        -dm)
+            MUSICFOLDER="$HOME/Music"
+            shift
+            shift
+            ;;
+        *)
+            POSITIONAL+=("$1")
+            shift
+            ;;
+    esac
+done
+
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+FILES=0
+
+if [[ $# -gt 0 ]]; then
+    echo "Converting mp4 files from arguments."
+    FILES=$@
+else
+    echo "Converting mp4 files from current folder."
+    FILES=(`ls *.mp4 2>/dev/null`)
+fi
+
+for filepath in "${FILES[@]}"; do
+    echo "filepath: $filepath"
+    filename="${filepath##*/}"
+    echo "filename: $filename"
+    outfile="$MUSICFOLDER/${filename%.*}.mp3"
+    echo "outfile: $outfile"
+    echo "Convert mp4 file '$filename' and moving to '$outfile'."
+    ffmpeg -i "$filepath" -b:a 192K -vn "$outfile"
+done
+
+if [[ "${#FILES[@]}" -le 0 ]]; then
+    echo "No mp4 file found in the current directory."
+fi
+

@@ -1,11 +1,14 @@
-! vi:syntax=xdefaults
+! vim: syntax=xdefaults :
 
-rofi.combi-modi: run,drun,window,ssh,Select Monitor:~/.script/selmon.sh
-rofi.font: Tamzen, Medium, 20
-!rofi.theme: Monokai
+rofi.combi-modi: run,drun,window,ssh
+rofi.font: Exo 2, Medium, 18
+rofi.padding: 5
+rofi.case-sensitive: false
+rofi.line-margin: 5
+rofi.separator-style: solid
 rofi.lines: 7
 rofi.color-enabled: true
-rofi.color-window: #111111, #111111, #111111
-rofi.color-normal: #111111, #ABC0C5, #111111, #4F8396, #111111
-rofi.color-active: #111111, #ABC0C5, #111111, #5C8676, #111111
-rofi.color-urgent: #111111, #ABC0C5, #111111, #A29076, #111111
+rofi.color-window: #121212, #121212, #121212
+rofi.color-normal: #121212, #ABB2BF, #121212, #61AFEF, #121212
+rofi.color-active: #121212, #ABB2BF, #121212, #98C379, #121212
+rofi.color-urgent: #121212, #ABB2BF, #121212, #D19A66, #121212

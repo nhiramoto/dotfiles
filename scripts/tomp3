@@ -1,0 +1,34 @@
+#!/bin/bash
+# vi:syntax=sh
+
+DIR="."
+
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+        -o)
+            DIR="$2"
+            shift
+            shift
+            ;;
+        *)
+            POSITIONAL+=("$1")
+            shift
+            ;;
+    esac
+done
+
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+# FILE=$@
+echo "Output dir: '"$DIR"'"
+
+find . -type f -name "*.mp4" | while read path; do
+    file="${path//\'/}" # Remove '
+    file="${file#./}" # Remove prefix ./
+    base="${file##*/}"
+    name="${base%.*}"
+    mp3file="$DIR/$name.mp3"
+    ffmpeg -i "$path" -b:a 320K -vn "$mp3file" -nostdin
+done
+
