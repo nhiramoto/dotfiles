@@ -1,3 +1,4 @@
+-- Imports {{{
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -11,6 +12,7 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 local vicious = require("vicious")
+-- }}}
 
 -- Error handling {{{
 -- Startup errors
@@ -417,6 +419,13 @@ vicious.register(volume_widget, vicious.widgets.volume, function (widget, args)
     widget:get_children_by_id("percent")[1].text = ismuted[args[2]] and "0%" or args[1] .. "%"
     volume_tooltip:set_text("Volume Level: " .. (ismuted[args[2]] and "0%" or args[1] .. "%"))
 end, 0.2, "Master")
+
+local volume_menu = awful.menu({
+    items = {
+        { 'Mute', function() awful.spawn.with_shell('amixer set Master toggle') end },
+    }
+})
+volume_widget:connect_signal('button::press', function() volume_menu:toggle() end)
 
 -- Systray
 local systray_widget = wibox.widget.systray()
@@ -898,21 +907,6 @@ client.connect_signal("manage", function (c)
         -- Prevent clients from being unreachable after screen count changes.
         awful.placement.no_offscreen(c)
     end
-    if c.floating == true then
-        c.shape = function(cr,w,h)
-            gears.shape.rounded_rect(cr, w, h, 3)
-        end
-    elseif #c.screen.tiled_clients == 1 then
-        c.border_width = 0
-        c.shape = gears.shape.rectangle
-    else
-        for _, client in pairs(c.screen.tiled_clients) do
-            client.border_width = 2
-            client.shape = function(cr,w,h)
-                gears.shape.rounded_rect(cr,w,h,6)
-            end
-        end
-    end
 
     -- Restore Picture N Picture
     if c.class == "mpv" or c.class == "feh" then
@@ -925,11 +919,21 @@ client.connect_signal("manage", function (c)
     end
 end)
 
-client.connect_signal("unmanage", function (c)
-    if #c.screen.tiled_clients == 1 then
+client.connect_signal("property::geometry", function (c)
+    if c.floating == true then
+        c.border_width = 2
+        c.shape = function(cr,w,h)
+            gears.shape.rounded_rect(cr, w, h, 6)
+        end
+    elseif #c.screen.tiled_clients == 1 then
+        c.border_width = 0
+        c.shape = gears.shape.rectangle
+    else
         for _, client in pairs(c.screen.tiled_clients) do
-            client.border_width = 0
-            client.shape = gears.shape.rectangle
+            client.border_width = 2
+            client.shape = function(cr,w,h)
+                gears.shape.rounded_rect(cr, w, h, 6)
+            end
         end
     end
 end)
@@ -980,8 +984,10 @@ client.connect_signal("request::titlebars", function(c)
     -- }
 end)
 
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
+screen.connect_signal("property::geometry", function(s)
+    set_wallpaper()
+    awful.spawn.with_shell(os.getenv('HOME') .. '/.config/conky/launch.sh')
+end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
