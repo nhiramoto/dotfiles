@@ -246,6 +246,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax' 
 " Plug 'Shougo/neosnippet.vim'
+Plug 'tweekmonster/django-plus.vim'
 
 call plug#end()
 
