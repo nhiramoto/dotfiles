@@ -19,6 +19,8 @@ FILES=(
     "config/bspwm"
     "config/sxhkd"
     "config/polybar"
+    "config/youtube-dl"
+    "config/ranger"
 )
 
 for f in ${FILES[@]}; do
