@@ -316,7 +316,7 @@ vicious.register(battery_widget, vicious.widgets.bat, function(widget, args)
     --     status_widget.text = ""
     -- end
     battery_tooltip:set_text("Battery Level: " .. args[2] .. "%")
-end, 1, "BAT0")
+end, 1, "BAT1")
 
 -- Cpu
 local cpu_widget = wibox.widget {

@@ -21,6 +21,8 @@ FILES=(
     "config/polybar"
     "config/mpd"
     "config/ncmpcpp"
+    "config/youtube-dl"
+    "config/ranger"
 )
 
 for f in ${FILES[@]}; do
