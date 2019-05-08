@@ -19,6 +19,8 @@ FILES=(
     "config/bspwm"
     "config/sxhkd"
     "config/polybar"
+    "config/mpd"
+    "config/ncmpcpp"
 )
 
 for f in ${FILES[@]}; do
