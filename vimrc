@@ -431,7 +431,7 @@ autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 let g:VtrStripLeadingWhitespace = 0
 let g:VtrClearEmptyLines = 0
 let g:VtrAppendNewline = 1
-nnoremap <silent> <C-r> :VtrOpenRunner<CR>:VtrSendCommandToRunner<CR>
+nnoremap <silent> <Leader>r :VtrOpenRunner<CR>:VtrSendCommandToRunner<CR>
 " }}}
 
 " Plugin: VTN - Vim Tmux Navigator {{{
@@ -525,7 +525,7 @@ function! ToggleRelativeNumbers()
         set relativenumber
     endif
 endfunc
-nnoremap <Leader>r :call ToggleRelativeNumbers()<CR>
+nnoremap <Leader>nr :call ToggleRelativeNumbers()<CR>
 
 " }}}
 
