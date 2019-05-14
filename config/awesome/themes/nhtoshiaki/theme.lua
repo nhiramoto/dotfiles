@@ -237,6 +237,8 @@ theme.titlebar_maximized_button_normal_inactive = thistheme_path .. "/titlebar/m
 -- {{{ Status Icons
 theme.status_audio_on = thistheme_path .. "/panel/audio-on.png"
 theme.status_audio_off = thistheme_path .. "/panel/audio-off.png"
+theme.status_audio_on_huge = thistheme_path .. "/panel/audio-on-huge.png"
+theme.status_audio_off_huge = thistheme_path .. "/panel/audio-off-huge.png"
 theme.status_battery = thistheme_path .. "/panel/battery.png"
 -- }}}
 

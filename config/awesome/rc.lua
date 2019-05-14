@@ -78,8 +78,14 @@ local volume_popup = awful.popup {
         widget = wibox.container.margin,
         margins = 10,
         {
-            layout = wibox.layout.fixed.vertical,
+            layout = wibox.layout.align.vertical,
             spacing = 10,
+            {
+                widget = wibox.widget.imagebox,
+                image = beautiful.status_audio_on_huge,
+                forced_height = 64,
+                forced_width = 64
+            },
             {
                 layout = wibox.layout.fixed.horizontal,
                 spacing = 4,
@@ -98,8 +104,12 @@ local volume_popup = awful.popup {
             {
                 widget = wibox.widget.progressbar,
                 id = 'progress',
-                forced_height = 20,
-                forced_width = 100
+                ticks = true,
+                forced_height = 10,
+                forced_width = 100,
+                shape = function(cr, w, h)
+                    gears.shape.rounded_rect(cr, w, h, 2)
+                end
             }
         }
     },
