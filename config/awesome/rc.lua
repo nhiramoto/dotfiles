@@ -78,21 +78,21 @@ local volume_popup = awful.popup {
         widget = wibox.container.margin,
         margins = 10,
         {
-            layout = wibox.layout.align.vertical,
+            layout = wibox.layout.fixed.vertical,
             spacing = 10,
             {
-                widget = wibox.widget.imagebox,
-                image = beautiful.status_audio_on_huge,
-                forced_height = 64,
-                forced_width = 64
+                widget = wibox.container.place,
+                halign = 'center',
+                {
+                    widget = wibox.widget.imagebox,
+                    image = beautiful.status_audio_on_huge,
+                    forced_height = 64,
+                    forced_width = 64
+                },
             },
             {
-                layout = wibox.layout.fixed.horizontal,
-                spacing = 4,
-                {
-                    widget = wibox.widget.textbox,
-                    text = 'Volume'
-                },
+                widget = wibox.container.place,
+                halign = 'center',
                 {
                     widget = wibox.widget.textbox,
                     id = 'percent',
@@ -102,14 +102,21 @@ local volume_popup = awful.popup {
                 }
             },
             {
-                widget = wibox.widget.progressbar,
-                id = 'progress',
-                ticks = true,
-                forced_height = 10,
-                forced_width = 100,
-                shape = function(cr, w, h)
-                    gears.shape.rounded_rect(cr, w, h, 2)
-                end
+                widget = wibox.container.place,
+                halign = 'center',
+                {
+                    widget = wibox.widget.progressbar,
+                    id = 'progress',
+                    ticks = true,
+                    forced_height = 10,
+                    forced_width = 150,
+                    shape = function(cr, w, h)
+                        gears.shape.rounded_rect(cr, w, h, 2)
+                    end,
+                    bar_shape = function(cr, w, h)
+                        gears.shape.rounded_rect(cr, w, h, 2)
+                    end
+                }
             }
         }
     },
@@ -134,7 +141,7 @@ vicious.register(volume_popup.widget, vicious.widgets.volume, function (widget, 
     -- $1: Volume level, $2: Mute state
     local ismuted = {['♫'] = false, ['♩'] = true}
     widget:get_children_by_id('progress')[1]:set_value(ismuted[args[2]] and 0 or args[1] / 100)
-    widget:get_children_by_id("percent")[1].text = ismuted[args[2]] and "0%" or args[1] .. "%"
+    widget:get_children_by_id("percent")[1].text = 'Volume: ' .. (ismuted[args[2]] and "0%" or args[1] .. "%")
 end, 0.2, "Master")
 
 -- }}}
