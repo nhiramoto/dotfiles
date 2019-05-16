@@ -8,7 +8,7 @@ local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
-local naughty = require("naughty")
+-- local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 local vicious = require("vicious")
@@ -17,9 +17,9 @@ local vicious = require("vicious")
 -- Error handling {{{
 -- Startup errors
 if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
+    -- naughty.notify({ preset = naughty.config.presets.critical,
+    --                  title = "Oops, there were errors during startup!",
+    --                  text = awesome.startup_errors })
 end
 
 -- Runtime errors
@@ -30,9 +30,9 @@ do
         if in_error then return end
         in_error = true
 
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = tostring(err) })
+        -- naughty.notify({ preset = naughty.config.presets.critical,
+        --                  title = "Oops, an error happened!",
+        --                  text = tostring(err) })
         in_error = false
     end)
 end
@@ -67,7 +67,7 @@ awful.layout.layouts = {
 hotkeys_popup.merge_duplicates = true
 
 -- Naughty (Notifications)
-naughty.config.defaults.margin = beautiful.notification_margin
+-- naughty.config.defaults.margin = beautiful.notification_margin
 
 -- }}}
 
@@ -120,9 +120,12 @@ local volume_popup = awful.popup {
             }
         }
     },
-    shape = gears.shape.rounded_rect,
+    shape = function (c, w, h)
+        gears.shape.rounded_rect(c, w, h, 6)
+    end,
     placement = awful.placement.centered,
     ontop = true,
+    opacity = 0.9,
     width = 100,
     visible = false
 }
