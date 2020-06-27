@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 export LANG="en_US.UTF-8"
 
 zmodload zsh/zprof
@@ -5,25 +12,25 @@ zmodload zsh/zprof
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-POWERLEVEL9K_MODE='nerdfont-complete'
+#POWERLEVEL9K_MODE='nerdfont-complete'
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="tjkirch_mod2"
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv anaconda pyenv rbenv root_indicator)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vcs)
-POWERLEVEL9K_DIR_SHOW_WRITABLE=true
+#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv anaconda pyenv rbenv root_indicator)
+#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vcs)
+#POWERLEVEL9K_DIR_SHOW_WRITABLE=true
 DEFAULT_USER="$USER"
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-POWERLEVEL9K_SHORTEN_DELIMITER=""
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_with_package_name"
-POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$''
-POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=$''
+#POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+#POWERLEVEL9K_SHORTEN_DELIMITER=""
+#POWERLEVEL9K_SHORTEN_STRATEGY="truncate_with_package_name"
+#POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+#POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$''
+#POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=$''
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -132,7 +139,7 @@ export EDITOR='vim'
 
 # Config Files
 alias __tmux="$EDITOR $HOME/.tmux.conf"
-alias __vim="$EDITOR $HOME/.vimrc"
+alias __vim="$EDITOR $HOME/.config/nvim/init.vim"
 alias __emacs="$EDITOR $HOME/.emacs.d/custom.org"
 alias __zsh="$EDITOR $HOME/.zshrc"
 alias __xres="$EDITOR $HOME/.Xresources"
@@ -172,9 +179,6 @@ alias yt='youtube-dl'
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
 
-# disable ctrl+s
-stty -ixon -ixoff
-
 PATH="$HOME/perl5/bin${PATH+:}${PATH}"; export PATH;
 PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
@@ -209,14 +213,14 @@ export TERMINAL="urxvt"
 
 # Python Virtualenv
 export WORKON_HOME=$HOME/.virtualenvs
-source /usr/bin/virtualenvwrapper_lazy.sh
+#source /usr/bin/virtualenvwrapper_lazy.sh
 
 # Zsh Line Editor: Enable vi mode
 #bindkey -v
 
 # fzf
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
+#source /usr/share/fzf/key-bindings.zsh
+#source /usr/share/fzf/completion.zsh
 
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
 
@@ -257,3 +261,5 @@ _SILENT_JAVA_OPTIONS="$_JAVA_OPTIONS -Dawt.useSystemAAFontSettings=on -Dswing.aa
 unset _JAVA_OPTIONS
 alias java='java "$_SILENT_JAVA_OPTIONS"'
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

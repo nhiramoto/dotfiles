@@ -45,7 +45,7 @@ local ctrl_key = "Control"
 local alt_key = "Mod1"
 local shift_key = "Shift"
 
-local terminal = "urxvt"
+local terminal = "alacritty"
 local editor = os.getenv("EDITOR") or "vim"
 local editor_cmd = terminal .. " -e " .. editor
 local awesome_config_file = os.getenv("HOME") .. "/.config/awesome/rc.lua"
@@ -270,7 +270,7 @@ local clock_widget = wibox.container {
         spacing = 10,
         {
             widget = wibox.widget.textclock,
-            format = "<span color='" .. beautiful.bg_focus .. "'>%b %d</span>"
+            format = "<!-- <span color='" .. beautiful.bg_focus .. "'>%b %d</span> -->"
         },
         {
             widget = wibox.widget.textclock,
@@ -913,7 +913,13 @@ awful.rules.rules = {
     -- Assign Programs to Tags
     {
         rule_any = { class = { "qutebrowser", "Google-chrome", "Firefox" } },
-        properties = { screen = 1, tag = "1" }
+        properties = {
+            screen = 1,
+            tag = "1",
+            ontop = false,
+            floating = false,
+            maximized = false
+        }
     }
 }
 -- }}}
