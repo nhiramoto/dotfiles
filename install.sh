@@ -6,13 +6,13 @@ NC="\033[0m"
 REP="$HOME/dotfiles"
 FILES=(
     zshrc
-    vimrc
     Xresources
     tmux.conf
+    "config/nvim/init.vim"
     "scripts"
     "Xresources.d"
     "config/awesome"
-    "config/compton"
+    "config/picom"
     "config/conky"
     "config/dunst"
     "config/openbox"
