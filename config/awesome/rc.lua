@@ -264,16 +264,18 @@ local mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 local clock_widget = wibox.container {
     widget = wibox.container.margin,
-    margins = 2,
+    margins = 4,
     {
         layout = wibox.layout.fixed.horizontal,
         spacing = 10,
         {
             widget = wibox.widget.textclock,
-            format = "<!-- <span color='" .. beautiful.bg_focus .. "'>%b %d</span> -->"
+            refresh = 60,
+            format = "<span color='" .. beautiful.bg_focus .. "'>%d/%m/%Y</span>"
         },
         {
             widget = wibox.widget.textclock,
+            refresh = 60,
             format = "%H:%M"
         }
     }
@@ -324,9 +326,16 @@ local battery_tooltip = awful.tooltip {
     preferred_alignments = { "middle", "front", "back" }
 }
 vicious.register(battery_widget, vicious.widgets.bat, function(widget, args)
-    widget:get_children_by_id("progress")[1]:set_value(args[2] / 100)
-    widget:get_children_by_id("percent")[1].text = args[2] .. "%"
     local status = args[1]
+    if status == "⌁" and args[2] == 0 then
+        widget:get_children_by_id("progress")[1]:set_value(1)
+        widget:get_children_by_id("percent")[1].text = ""
+        battery_tooltip:set_text("No battery detected")
+    else
+        widget:get_children_by_id("progress")[1]:set_value(args[2] / 100)
+        widget:get_children_by_id("percent")[1].text = args[2] .. "%"
+    battery_tooltip:set_text("Battery Level: " .. args[2] .. "%")
+    end
     -- local status_widget = widget:get_children_by_id("status")[1]
     -- if status == "⌁" then
     --     status_widget.text = ""
@@ -335,7 +344,6 @@ vicious.register(battery_widget, vicious.widgets.bat, function(widget, args)
     -- else
     --     status_widget.text = ""
     -- end
-    battery_tooltip:set_text("Battery Level: " .. args[2] .. "%")
 end, 1, "BAT0")
 
 -- Cpu
