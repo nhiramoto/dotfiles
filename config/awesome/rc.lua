@@ -398,6 +398,12 @@ local system_usage_widget = wibox.container {
     }
 }
 
+local ping_host = '192.168.0.1'
+local ping_widget = awful.widget.watch('bash -c "ping -c 1 ' .. ping_host .. ' | tail -n 1 | awk \'{print $4}\' | cut -d \'/\' -f 2"', 1,
+    function(widget, stdout)
+        widget:set_text(stdout .. 'ms')
+    end)
+
 -- Volume
 local volume_widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
@@ -538,6 +544,10 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             systray_widget,
+            spr5px,
+            spr,
+            spr5px,
+            ping_widget,
             spr5px,
             spr,
             spr5px,

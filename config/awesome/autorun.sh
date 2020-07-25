@@ -11,6 +11,7 @@ run xrdb $HOME/.Xresources
 run nm-applet
 run udiskie
 run dropbox
+run dunst
 run $HOME/.config/picom/launch.sh
 run $HOME/.config/conky/launch.sh
 run $HOME/.scripts/mon restore
