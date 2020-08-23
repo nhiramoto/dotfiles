@@ -8,7 +8,7 @@ local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
--- local naughty = require("naughty")
+local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 local vicious = require("vicious")
@@ -67,7 +67,8 @@ awful.layout.layouts = {
 hotkeys_popup.merge_duplicates = true
 
 -- Naughty (Notifications)
--- naughty.config.defaults.margin = beautiful.notification_margin
+naughty.config.defaults.margin = beautiful.notification_margin
+naughty.config.padding = 10
 
 -- }}}
 
@@ -76,18 +77,18 @@ hotkeys_popup.merge_duplicates = true
 local volume_popup = awful.popup {
     widget = {
         widget = wibox.container.margin,
-        margins = 10,
+        margins = 20,
         {
             layout = wibox.layout.fixed.vertical,
-            spacing = 10,
+            spacing = 20,
             {
                 widget = wibox.container.place,
                 halign = 'center',
                 {
                     widget = wibox.widget.imagebox,
                     image = beautiful.status_audio_on_huge,
-                    forced_height = 64,
-                    forced_width = 64
+                    forced_height = 96,
+                    forced_width = 96
                 },
             },
             {
@@ -98,7 +99,7 @@ local volume_popup = awful.popup {
                     id = 'percent',
                     align = 'center',
                     valign = 'center',
-                    font = beautiful.font_small
+                    font = beautiful.font_big
                 }
             },
             {
@@ -111,18 +112,20 @@ local volume_popup = awful.popup {
                     forced_height = 10,
                     forced_width = 150,
                     shape = function(cr, w, h)
-                        gears.shape.rounded_rect(cr, w, h, 2)
+                        gears.shape.rounded_rect(cr, w, h, 4)
                     end,
                     bar_shape = function(cr, w, h)
-                        gears.shape.rounded_rect(cr, w, h, 2)
+                        gears.shape.rounded_rect(cr, w, h, 4)
                     end
                 }
             }
         }
     },
     shape = function (c, w, h)
-        gears.shape.rounded_rect(c, w, h, 6)
+        gears.shape.rounded_rect(c, w, h, 8)
     end,
+    border_width = 2,
+    border_color = beautiful.border_focus,
     placement = awful.placement.centered,
     ontop = true,
     opacity = 0.9,
@@ -144,7 +147,7 @@ vicious.register(volume_popup.widget, vicious.widgets.volume, function (widget, 
     -- $1: Volume level, $2: Mute state
     local ismuted = {['♫'] = false, ['♩'] = true}
     widget:get_children_by_id('progress')[1]:set_value(ismuted[args[2]] and 0 or args[1] / 100)
-    widget:get_children_by_id("percent")[1].text = 'Volume: ' .. (ismuted[args[2]] and "0%" or args[1] .. "%")
+    widget:get_children_by_id("percent")[1].text = (ismuted[args[2]] and "0%" or args[1] .. "%")
 end, 0.2, "Master")
 
 -- }}}

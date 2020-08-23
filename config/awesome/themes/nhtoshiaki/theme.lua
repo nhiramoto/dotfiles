@@ -27,9 +27,10 @@ theme.color = {
 theme.panel           = theme.color.black
 
 -- {{{ Fonts
-theme.font      = "Exo 2 Semibold 9"
-theme.font_small = "Exo 2 Semibold 8"
-theme.font_big = "Exo 2 Semibold 10"
+theme.font      = "Exo 2 Semibold 10"
+theme.font_small = "Exo 2 Semibold 9"
+theme.font_big = "Exo 2 Semibold 12"
+theme.font_extra = "Exo 2 Semibold 14"
 -- }}}
 
 -- fg/bg colors {{{
@@ -90,11 +91,12 @@ end
 theme.notification_bg = theme.bg_normal
 theme.notification_fg = theme.fg_normal
 -- theme.notification_font = theme.font
-theme.notification_border_width = 0
+theme.notification_border_width = 10
 theme.notification_border_color = theme.notification_bg
 theme.notification_max_width = dpi(400)
 theme.notification_icon_size = dpi(64)
-theme.notification_margin = dpi(10)
+theme.notification_margin = dpi(12)
+theme.notification_font = theme.font
 theme.notification_shape = function(cr, width, height)
     gears.shape.partially_rounded_rect(cr, width, height, true, false, true, true)
 end
