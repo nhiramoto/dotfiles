@@ -11,10 +11,10 @@ configuration {
 }
 
 * {
-	background-color:            rgb(18, 30, 37);
+	background-color:            #242424;
 	text-color:                  #d3d7cf;
-	selbg:                       rgb(0, 86, 136);
-	actbg:                       rgb(22, 37, 46);
+	selbg:                       #3F51B5;
+	actbg:                       #202020;
 	urgbg:                       #e53935;
 	winbg:			     #26c6da;
 
@@ -39,7 +39,7 @@ configuration {
 	hide-scrollbar:              "true";
 	margin:                      0px;
 	padding:                     0px;
-	font:            "Roboto medium 10";
+	font:            "Roboto medium 12";
 }
 
 window {
@@ -91,7 +91,7 @@ element {
 entry {
 	expand:         true;
 	text-color:     @normal-foreground;
-	background-color: rgb(25, 41, 51);
+	background-color: #242424;
 	vertical-align: 1;
 	padding:        12px;
 	font:            "Roboto medium 13";

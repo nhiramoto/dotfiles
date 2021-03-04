@@ -8,7 +8,7 @@ local icons = require('theme.icons')
 local TagList = require('widget.tag-list')
 local clickable_container = require('widget.material.clickable-container')
 
-return function(screen, panel, action_bar_width)
+return function(screen, panel, action_bar_width, home_button_visible)
   -- Clock / Calendar 24h format
   local textclock = wibox.widget.textclock('<span font="Roboto Mono bold 11">%H\n%M</span>')
 
@@ -73,20 +73,26 @@ return function(screen, panel, action_bar_width)
     end
   )
 
-  return wibox.widget {
-    id = 'action_bar',
-    layout = wibox.layout.align.vertical,
-    forced_width = action_bar_width,
-    {
-      -- Left widgets
-      layout = wibox.layout.fixed.vertical,
-      home_button,
-      -- Create a taglist widget
-      TagList(screen)
-    },
-    --s.mytasklist, -- Middle widget
-    nil,
-    {
+  local top_buttons = nil
+
+  if (home_button_visible) then
+    top_buttons = {
+        -- Left widgets
+        layout = wibox.layout.fixed.vertical,
+        home_button,
+        -- Create a taglist widget
+        TagList(screen)
+    }
+  else
+    top_buttons = {
+        -- Left widgets
+        layout = wibox.layout.fixed.vertical,
+        -- Create a taglist widget
+        TagList(screen)
+    }
+  end
+
+  local bottom_buttons = {
       -- Right widgets
       layout = wibox.layout.fixed.vertical,
       wibox.container.margin(systray, dpi(10), dpi(10)),
@@ -95,6 +101,15 @@ return function(screen, panel, action_bar_width)
       require('widget.battery'),
       -- Clock
       --clock_widget
-    }
+  }
+
+  return wibox.widget {
+    id = 'action_bar',
+    layout = wibox.layout.align.vertical,
+    forced_width = action_bar_width,
+    top_buttons,
+    --s.mytasklist, -- Middle widget
+    nil,
+    bottom_buttons
   }
 end

@@ -36,14 +36,6 @@ local globalKeys =
   ),
   awful.key(
     {modkey},
-    'Space',
-    function()
-      _G.screen.primary.left_panel:toggle(true)
-    end,
-    {description = 'show main menu', group = 'awesome'}
-  ),
-  awful.key(
-    {altkey},
     'space',
     function()
       _G.screen.primary.left_panel:toggle(true)
@@ -136,7 +128,7 @@ local globalKeys =
   -- Standard program
   awful.key(
     {modkey},
-    'Enter',
+    'Return',
     function()
       awful.util.spawn_with_shell(apps.default.terminal)
     end,
@@ -207,22 +199,6 @@ local globalKeys =
       awful.tag.incncol(-1, nil, true)
     end,
     {description = 'decrease the number of columns', group = 'layout'}
-  ),
-  awful.key(
-    {modkey},
-    'space',
-    function()
-      awful.layout.inc(1)
-    end,
-    {description = 'select next', group = 'layout'}
-  ),
-  awful.key(
-    {modkey, 'Shift'},
-    'space',
-    function()
-      awful.layout.inc(-1)
-    end,
-    {description = 'select previous', group = 'layout'}
   ),
   awful.key(
     {modkey, 'Control'},

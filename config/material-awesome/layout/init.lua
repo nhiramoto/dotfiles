@@ -7,12 +7,14 @@ awful.screen.connect_for_each_screen(
   function(s)
     if s.index == 1 then
       -- Create the left_panel
-      s.left_panel = left_panel(s)
+      s.left_panel = left_panel(s, true)
       -- Create the Top bar
       s.top_panel = top_panel(s, true)
     else
+      -- Create the left_panel
+      s.left_panel = left_panel(s, false)
       -- Create the Top bar
-      s.top_panel = top_panel(s, false)
+      s.top_panel = top_panel(s, true)
     end
   end
 )
