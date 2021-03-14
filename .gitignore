@@ -9,3 +9,12 @@ config/awesome/themes/*
 Xresources.d/colors/*
 
 scripts/vars/
+
+xmonad/**/*.o
+xmonad/**/*.hi
+xmonad/**/*.errors
+xmonad/**/*-backup
+xmonad/**/*-linux
+xmonad/xpm/
+
+**/__pycache__/

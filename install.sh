@@ -23,6 +23,8 @@ FILES=(
     "config/ncmpcpp"
     "config/youtube-dl"
     "config/ranger"
+    "config/i3"
+    "config/qtile"
 )
 
 for f in ${FILES[@]}; do

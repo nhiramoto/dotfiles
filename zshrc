@@ -175,6 +175,8 @@ alias tsm="transmission-remote"
 alias tsmd="transmission-daemon"
 alias tsmc='tremc'
 alias yt='youtube-dl'
+alias ls="exa"
+alias la="exa -la"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
@@ -259,3 +261,6 @@ man() {
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Color Scripts (https://gitlab.com/dwt1/shell-color-scripts)
+#colorscript random

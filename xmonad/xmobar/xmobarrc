@@ -3,18 +3,21 @@
 Config { 
 
    -- appearance
-     font =         "xft:FontAwesome:size=10:medium,xft:Exo 2:size=10:medium:antialias=true"
-   , additionalFonts = ["xft:FontAwesome:size=10"]
-   , bgColor =      "#262626"
+     font =         "xft:FuraCode Nerd Font:weight=bold:pixelsize=14:antialias=true"
+   , additionalFonts = [ "xft:LiterationSans Nerd Font Mono:pixelsize=14:antialias=true:hinting=true"
+                       , "xft:Font Awesome 5 Free:pixelsize=14"
+                       ]
+   , bgColor =      "#1C1C1C"
    , fgColor =      "#BCBCBC"
-   , position =     Top
+   , position =     Static { xpos = 10, ypos = 5, width = 2540, height = 28 }
    , border =       NoBorder
    , borderColor =  "#646464"
+   , iconRoot = "/home/toshiaki/.xmonad/xpm/" -- default: "."
 
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = " %StdinReader% }{ %RJTT% | %dynnetwork% | %volume% | %battery% | %date% "
+   , template = "     <fn=1></fn>   %StdinReader% }{ %multicpu%      %memory%     %default:Master%    %dynnetwork%    %date%     "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -41,25 +44,25 @@ Config {
    , commands = 
 
         -- weather monitor
-        [ Run Weather "RJTT" [ "--template", "<skyCondition> (<fc=#4682B4><tempC></fc>°C)"
+        [ Run Weather "SBMT" [ "--template", "<fn=1>\xE302</fn>  <skyCondition> (<fc=#4682B4><tempC></fc>°C)"
                              ] 36000
 
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "--template" , "<dev> (<tx>kB/s|<rx>kB/s)"
+        , Run DynNetwork     [ "--template" , "<fc=#E5C07B><fn=1>\xf502</fn>  <fn=1>\xf0aa</fn> <rx> kB/s <fn=1>\xf0ab</fn> <tx> kB/s</fc>"
                              , "--Low"      , "1000"       -- units: B/s
                              , "--High"     , "5000"       -- units: B/s
-                             , "--low"      , "darkgreen"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkred"
+                             , "--low"      , "#5c6370"
+                             , "--normal"   , "#abb2bf"
+                             , "--high"     , "#93c379"
                              ] 10
 
         -- cpu activity monitor
-        , Run MultiCpu       [ "--template" , "Cpu: (<total0>%|<total1>%)"
+        , Run MultiCpu       [ "--template" , "<fn=1>\xf469</fn> <total0>%, <total1>%"
                              , "--Low"      , "50"         -- units: %
                              , "--High"     , "85"         -- units: %
-                             , "--low"      , "darkgreen"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkred"
+                             , "--low"      , "#5c6370"
+                             , "--normal"   , "#abb2bf"
+                             , "--high"     , "#e06c75"
                              ] 10
 
         -- cpu core temperature monitor
@@ -72,16 +75,16 @@ Config {
                              ] 50
                           
         -- memory usage monitor
-        , Run Memory         [ "--template" ,"Mem (<usedratio>%)"
+        , Run Memory         [ "--template" ,"<fn=1>\xf2db</fn> <usedratio>%"
                              , "--Low"      , "20"        -- units: %
                              , "--High"     , "90"        -- units: %
-                             , "--low"      , "darkgreen"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkred"
+                             , "--low"      , "#5c6370"
+                             , "--normal"   , "#abb2bf"
+                             , "--high"     , "#e06c75"
                              ] 10
 
         -- battery monitor
-        , Run Battery        [ "--template" , "\xf240 <acstatus>"
+        , Run Battery        [ "--template" , "<fn=1>\xf240</fn>  <acstatus>"
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "80"        -- units: %
                              , "--low"      , "darkred"
@@ -99,13 +102,15 @@ Config {
 
         -- time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date           "<fc=#ABABAB>%F (%a) %T</fc>" "date" 10
+        , Run Date           "<fc=#56B6C2><fn=1>\xF5F5</fn> %b %d %Y</fc>  <fc=#C678DD><fn=1>\xF43A</fn> %H:%M</fc>" "date" 50
 
         -- keyboard layout indicator
         , Run Kbd            [ ("us(dvorak)" , "<fc=#00008B>DV</fc>")
                              , ("us"         , "<fc=#8B0000>US</fc>")
                              ]
-        , Run Com "volume.sh" []  "volume" 10
+        , Run Volume "default" "Master" [
+                               "--template" , "<fc=#98C379><fn=1>\xF485</fn> <volume>%</fc>"
+                             ] 10
         , Run StdinReader
         ]
    }

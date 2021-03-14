@@ -47,15 +47,15 @@ padding-right = 3
 module-margin-left = 4
 module-margin = 1
 
-font-0 = Exo 2:style=medium:size=10;1
-font-1 = FantasqueSansMono Nerd Font:style=medium:size=10;1
-font-2 = DejaVu Sans:size=10;1
-font-3 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-4 = siji:pixelsize=10;1
+font-0 = Exo 2:style=semibold:size=12;1
+font-1 = Literation Sans Nerd Font:style=medium:size=12;1
+font-2 = DejaVu Sans:size=12;1
+font-3 = unifont:fontformat=truetype:size=10:antialias=false;0
+font-4 = siji:pixelsize=12;1
 
-modules-left = powermenu xwindow
+modules-left = powermenu xmonad
 modules-center = date
-modules-right = xkeyboard httpd ufw dropbox touchpad xbacklight volume network wlan battery
+modules-right = xkeyboard httpd ufw dropbox volume network wlan battery
 
 ;separator = |
 

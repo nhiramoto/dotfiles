@@ -14,6 +14,8 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.ZoomRow
 import XMonad.Layout.SubLayouts
 import XMonad.Layout.WindowNavigation
+import XMonad.Layout.NoFrillsDecoration
+import XMonad.Layout.Spacing
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -26,8 +28,40 @@ import Data.Bits ((.|.))
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
-myBar         = "xmobar /home/hyokan/.xmonad/xmobar/xmobarrc"
-myTerminal    = "termite"
+import qualified DBus as D
+import qualified DBus.Client as D
+import qualified Codec.Binary.UTF8.String as UTF8
+import XMonad.Hooks.DynamicLog
+
+-------------------------------------------------------------------------------
+-- Main
+-------------------------------------------------------------------------------
+main :: IO ()
+main = do
+    xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
+
+-------------------------------------------------------------------------------
+-- myConfig
+-------------------------------------------------------------------------------
+myConfig = def
+    { terminal           = myTerminal
+    , modMask            = myModMask
+    , borderWidth        = myBorderWidth
+    , normalBorderColor  = myNormalBorderColor
+    , focusedBorderColor = myFocusedBorderColor
+    , workspaces         = myWorkspaces
+    , startupHook        = myStartupHook
+    , layoutHook         = myLayouts
+    , manageHook         = myManageHook
+    , keys               = myKeys
+    , handleEventHook    = handleEventHook def <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
+    }
+
+-------------------------------------------------------------------------------
+-- Variables
+-------------------------------------------------------------------------------
+myBar         = "xmobar $HOME/.xmonad/xmobar/xmobarrc"
+myTerminal    = "alacritty"
 myLauncher    = "rofi -show drun"
 myModMask     = mod4Mask -- Win key or Super_L
 
@@ -36,28 +70,64 @@ myBorderWidth = 3
 myNormalBorderColor = "#1C1C1C"
 myFocusedBorderColor = "#8FAFD7"
 
--- Startup commands
+-- Colours
+fg        = "#ebdbb2"
+bg        = "#282828"
+gray      = "#a89984"
+bg1       = "#3c3836"
+bg2       = "#505050"
+bg3       = "#665c54"
+bg4       = "#7c6f64"
+
+green     = "#b8bb26"
+darkgreen = "#98971a"
+red       = "#fb4934"
+darkred   = "#cc241d"
+yellow    = "#fabd2f"
+blue      = "#83a598"
+purple    = "#d3869b"
+aqua      = "#8ec07c"
+white     = "#eeeeee"
+
+pur2      = "#5b51c9"
+blue2     = "#2266d0"
+
+-------------------------------------------------------------------------------
+-- Startup Hook
+-------------------------------------------------------------------------------
 myStartupHook = do
     spawn "xrdb -merge ~/.Xresources"
     spawn "xfce4-power-manager"
-    spawn "feh --bg-fill /home/hyokan/Pictures/default.png"
-    spawn "/home/hyokan/.config/compton/launch.sh"
-    spawn "/home/hyokan/.config/conky/launch.sh"
-    spawn "/home/hyokan/.dropbox-dist/dropboxd"
+    spawn "feh --bg-fill /home/toshiaki/Pictures/default.{jpg,png}"
+    spawn "/home/toshiaki/.config/picom/launch.sh"
+    spawn "/home/toshiaki/.config/conky/launch.sh"
+    spawn "/home/toshiaki/.dropbox-dist/dropboxd"
     spawn "setxkbmap -option ctrl:swapcaps"
-    spawn "stalonetray"
+    -- spawn "stalonetray"
     spawn "nm-applet"
     spawn "udiskie"
+    spawn "dunst"
+    spawn myBar
 
+-------------------------------------------------------------------------------
 -- Workspaces
-myWorkspaces = ["1: \xf0ac", "2: \xf121"] ++ map show ([3..9]) ++ ["10: \xf001"]
+-------------------------------------------------------------------------------
+myWorkspaces :: [String]
+myWorkspaces = ["\x03B1", "\x03B2", "\x03B3", "\x03B4"] ++ map show ([5..10])
 myWorkspaceKeys = [xK_1..xK_9] ++ [xK_0]
 
+-------------------------------------------------------------------------------
 -- Layouts
--- myLayouts = windowNavigation . subTabbed $ Tall 1 (3/100) (1/2) ||| Accordion ||| Grid ||| emptyBSP ||| Circle ||| zoomRow
-myLayouts = avoidStruts . smartBorders $ Tall 1 (3/100) (1/2) ||| Accordion ||| Grid ||| emptyBSP ||| Circle ||| zoomRow
+-------------------------------------------------------------------------------
 
+baseLayout = Tall 1 (3/100) (1/2) ||| Accordion ||| Grid ||| emptyBSP ||| Circle ||| zoomRow
+
+-- myLayouts = windowNavigation . subTabbed $ baseLayout
+myLayouts = avoidStruts $ smartBorders $ spacing 4 $ baseLayout
+
+-------------------------------------------------------------------------------
 -- Keybindings
+-------------------------------------------------------------------------------
 myKeys conf@(XConfig { XMonad.modMask = modMask }) =
   M.fromList $
     [
@@ -96,6 +166,7 @@ myKeys conf@(XConfig { XMonad.modMask = modMask }) =
     , ((myModMask, xK_Escape), io (exitWith ExitSuccess))
     , ((myModMask .|. shiftMask, xK_Escape), broadcastMessage ReleaseResources >> restart "xmonad" True)
     , ((myModMask .|. controlMask, xK_x), spawn $ "kill $(pidof xmobar); " ++ myBar)
+    , ((myModMask .|. controlMask, xK_p), spawn "systemctl suspend && i3lock-fancy -g -p")
 
     -- myBar
     , ((myModMask, xK_b), sendMessage ToggleStruts)
@@ -152,30 +223,14 @@ myManageHook = (composeAll . concat $
         setFullFloat = doF W.focusDown <+> doFullFloat
 
 myPP = xmobarPP
-    { ppCurrent = xmobarColor "#8FDFD7" "" . wrap "[" "]"
+    { ppCurrent = xmobarColor "#8FDFD7" "" . wrap "(" ")"
     , ppHidden  = xmobarColor "#BCBCBC" "" . wrap " " " "
     , ppSep     = " :: "
     , ppWsSep   = " "
-    -- , ppTitle   = " "
+    , ppTitle   = xmobarColor "#ABB2BF" "" . shorten 100
     -- , ppLayout  = const "Title Here"
     -- , ppOrder = \(ws:_:t:_) -> [ws, t]
     }
 
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
-myConfig = def
-    { terminal           = myTerminal
-    , modMask            = myModMask
-    , borderWidth        = myBorderWidth
-    , normalBorderColor  = myNormalBorderColor
-    , focusedBorderColor = myFocusedBorderColor
-    , workspaces         = myWorkspaces
-    , startupHook        = myStartupHook
-    , layoutHook         = myLayouts
-    , manageHook         = myManageHook
-    , keys               = myKeys
-    }
-
-main :: IO ()
-main = do
-    xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig

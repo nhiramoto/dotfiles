@@ -6,7 +6,7 @@ colorStopped=$(xgetres URxvt.color8 || echo "#555")
 
 # Interfaces name pattern (regex)
 wlan=^wlp2s0$
-wired=^enp8s0$
+wired=^enp2s0$
 usb=^enp0s20u[1-3]$
 
 # Icons
