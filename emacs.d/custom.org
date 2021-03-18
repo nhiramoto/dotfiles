@@ -26,7 +26,7 @@
   #+END_SRC
 
 * Paths
-
+  
 ** Custom theme directory
 
    #+BEGIN_SRC emacs-lisp
@@ -62,7 +62,7 @@
   Bind =C-n= to show sidebar projects tree view.
 
   #+BEGIN_SRC emacs-lisp
-    ;; (define-key evil-normal-state-map (kbd "C-n") 'treemacs)
+    (define-key evil-normal-state-map (kbd "C-n") 'treemacs)
   #+END_SRC
 
 ** =<escape>= keybindings
@@ -169,6 +169,13 @@
    #+BEGIN_SRC emacs-lisp
   (setq frame-title-format '((:eval (projectile-project-name))))
    #+END_SRC
+
+** Initial Buffer
+
+   #+BEGIN_SRC emacs-lisp
+   (setq initial-buffer-choice "~/.emacs.d/index.org")
+   #+END_SRC
+
 ** Inhibit statup message
 
    #+BEGIN_SRC emacs-lisp
@@ -301,7 +308,7 @@
 
    #+BEGIN_SRC emacs-lisp
    (setq linum-relative-current-symbol "")
-   (setq linum-relative-format "%3s ")
+   (setq linum-relative-format "%4s ")
    (setq linum-relative-global-mode nil)
    #+END_SRC
 
@@ -339,7 +346,7 @@
 ** Blinking cursor
 
    #+BEGIN_SRC emacs-lisp
-  (setq blink-cursor-mode nil)
+  (setq blink-cursor-mode 1)
    #+END_SRC
 
 ** Column number mode
@@ -560,7 +567,7 @@
   '((emacs-lisp . t)
     (ruby . t)
     (python . t)
-    (sh . t)  ; emacs-24 uses sh instead of shell
+    (shell . t)  ; emacs-24 uses sh instead of shell
     (js . t)
     (C . t)))
     #+END_SRC
@@ -684,7 +691,7 @@
    #+END_SRC
 ** Pretty symbols
 
-   #+BEGIN_SRC emacs-lips
+   #+BEGIN_SRC emacs-lisp
   (require 'pretty-symbols)
   (add-hook 'emacs-lisp-mode-hook (lambda () (pretty-symbols-mode t)))
    #+END_SRC
@@ -759,7 +766,7 @@
    #+END_SRC
 
 ** Helm
-
+   
    #+BEGIN_SRC emacs-lisp
    ;; (require 'helm-config)
    ;; (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
@@ -811,7 +818,7 @@
 ** Treemacs
 
    #+BEGIN_SRC emacs-lisp
-     ;; (require 'treemacs)
+     (require 'treemacs)
    #+END_SRC
 
 ** Disabled (for backup)

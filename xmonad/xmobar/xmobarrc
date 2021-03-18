@@ -1,9 +1,10 @@
 -- vi:syntax=haskell
+-- -*- mode: haskell -*-
 
 Config { 
 
    -- appearance
-     font =         "xft:FuraCode Nerd Font:weight=bold:pixelsize=14:antialias=true"
+     font =         "xft:JetbrainsMono Nerd Font:weight=bold:pixelsize=13:antialias=true,xft:Fura Code Nerd Font:weight=bold:pixelsize=14:antialias=true"
    , additionalFonts = [ "xft:LiterationSans Nerd Font Mono:pixelsize=14:antialias=true:hinting=true"
                        , "xft:Font Awesome 5 Free:pixelsize=14"
                        ]
@@ -17,7 +18,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "     <fn=1></fn>   %StdinReader% }{ %multicpu%      %memory%     %default:Master%    %dynnetwork%    %date%     "
+   , template = "     <fn=1></fn>   %StdinReader% }{     %dynnetwork%     %multicpu%     %memory%     %default:Master%     %date%     "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start

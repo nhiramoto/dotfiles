@@ -54,6 +54,7 @@ myConfig = def
     , layoutHook         = myLayouts
     , manageHook         = myManageHook
     , keys               = myKeys
+    , focusFollowsMouse  = True
     , handleEventHook    = handleEventHook def <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook
     }
 
@@ -98,7 +99,7 @@ blue2     = "#2266d0"
 myStartupHook = do
     spawn "xrdb -merge ~/.Xresources"
     spawn "xfce4-power-manager"
-    spawn "feh --bg-fill /home/toshiaki/Pictures/default.{jpg,png}"
+    spawn "feh --bg-fill /home/toshiaki/Pictures/default.{jpg,jpeg,png}"
     spawn "/home/toshiaki/.config/picom/launch.sh"
     spawn "/home/toshiaki/.config/conky/launch.sh"
     spawn "/home/toshiaki/.dropbox-dist/dropboxd"
@@ -160,13 +161,14 @@ myKeys conf@(XConfig { XMonad.modMask = modMask }) =
     , ((myModMask, xK_comma), onGroup W.focusDown')
 
     -- Kill current window
-    , ((myModMask .|. shiftMask, xK_q), kill)
+    , ((myModMask, xK_q), kill)
 
     -- Quit and Restart XMonad
-    , ((myModMask, xK_Escape), io (exitWith ExitSuccess))
+    , ((myModMask .|. controlMask, xK_Escape), io (exitWith ExitSuccess))
     , ((myModMask .|. shiftMask, xK_Escape), broadcastMessage ReleaseResources >> restart "xmonad" True)
     , ((myModMask .|. controlMask, xK_x), spawn $ "kill $(pidof xmobar); " ++ myBar)
     , ((myModMask .|. controlMask, xK_p), spawn "systemctl suspend && i3lock-fancy -g -p")
+    , ((myModMask, xK_l), spawn "i3lock-fancy -g -p")
 
     -- myBar
     , ((myModMask, xK_b), sendMessage ToggleStruts)
@@ -175,6 +177,8 @@ myKeys conf@(XConfig { XMonad.modMask = modMask }) =
     , ((myModMask, xK_w), spawn "google-chrome-stable")
     , ((myModMask, xK_r), spawn $ myTerminal ++ " -e ranger")
     , ((myModMask, xK_n), spawn $ myTerminal ++ " -e ncmpcpp")
+    , ((myModMask, xK_e), spawn "emacs")
+    , ((myModMask, xK_v), spawn $ myTerminal ++ " -e nvim")
 
     -- Media Keys
     , ((0, xF86XK_AudioRaiseVolume), spawn "amixer set Master 5%+")
@@ -223,7 +227,7 @@ myManageHook = (composeAll . concat $
         setFullFloat = doF W.focusDown <+> doFullFloat
 
 myPP = xmobarPP
-    { ppCurrent = xmobarColor "#8FDFD7" "" . wrap "(" ")"
+    { ppCurrent = xmobarColor "#8FDFD7" "" . wrap "[" "]"
     , ppHidden  = xmobarColor "#BCBCBC" "" . wrap " " " "
     , ppSep     = " :: "
     , ppWsSep   = " "

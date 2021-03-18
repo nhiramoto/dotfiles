@@ -11,6 +11,7 @@ FILES=(
     "config/nvim/init.vim"
     "scripts"
     "Xresources.d"
+    "emacs.d"
     "config/awesome"
     "config/picom"
     "config/conky"

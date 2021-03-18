@@ -85,7 +85,7 @@
 
     ### Text ###
 
-    font = Exo 2 10
+    font = JetbrainsMono Nerd Font 10
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -298,11 +298,11 @@
 
 [popup_sound_normal]
     msg_urgency = normal
-    script = /home/hyokan/.config/dunst/dunst_sound_normal.sh
+    script = /home/toshiaki/.config/dunst/dunst_sound_normal.sh
 
 [popup_sound_critical]
     msg_urgency = critical
-    script = /home/hyokan/.config/dunst/dunst_sound_critical.sh
+    script = /home/toshiaki/.config/dunst/dunst_sound_critical.sh
 
 #[espeak]
 #    summary = "*"

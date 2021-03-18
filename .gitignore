@@ -18,3 +18,12 @@ xmonad/**/*-linux
 xmonad/xpm/
 
 **/__pycache__/
+
+**/.cache/
+**/emacs.d/*.dat
+**/emacs.d/*.eld
+**/emacs.d/elpa/
+**/emacs.d/places
+**/emacs.d/recentf
+**/emacs.d/transient/
+**/emacs.d/url/

@@ -12,5 +12,5 @@ udiskie &
 # Dropbox
 . "$HOME/.dropbox-dist/dropboxd" &
 
-# Setup Monitors
-. "$HOME/.script/mon" "er"
+# Wallpaper
+feh --bg-fill "$HOME/Pictures/default."{png,jpeg,jpg} &

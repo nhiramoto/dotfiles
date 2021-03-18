@@ -5,8 +5,8 @@
 # Wallpaper
 feh --bg-fill "$HOME/Pictures/default."{png,jpeg,jpg} &
 
-# Compton
-. "$HOME/.config/compton/launch.sh" &
+# Picom
+. "$HOME/.config/picom/launch.sh" &
 
 # Conky
 . "$HOME/.config/conky/launch.sh" &

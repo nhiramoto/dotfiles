@@ -158,6 +158,7 @@ alias __openbox="$EDITOR $HOME/.config/openbox/rc.xml"
 alias __openboxmenu="$EDITOR $HOME/.config/openbox/menu.xml"
 alias __openboxenv="$EDITOR $HOME/.config/openbox/environment"
 alias __openboxauto="$EDITOR $HOME/.config/openbox/autostart"
+alias __alacritty="$EDITOR $HOME/.config/alacritty/alacritty.yml"
 
 alias open=xdg-open
 alias pacsize="expac -S -H M '%k/t%n'"
@@ -177,6 +178,7 @@ alias tsmc='tremc'
 alias yt='youtube-dl'
 alias ls="exa"
 alias la="exa -la"
+alias v='vim'
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
