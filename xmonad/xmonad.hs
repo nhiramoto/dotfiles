@@ -61,10 +61,15 @@ myConfig = def
 -------------------------------------------------------------------------------
 -- Variables
 -------------------------------------------------------------------------------
-myBar         = "xmobar $HOME/.xmonad/xmobar/xmobarrc"
-myTerminal    = "alacritty"
-myLauncher    = "rofi -show drun"
+
+xmonadConfigPath = "$HOME/.xmonad/xmonad.hs"
+xmobarConfigPath = "$HOME/.xmonad/xmobar/xmobarrc"
+
 myModMask     = mod4Mask -- Win key or Super_L
+myBar         = "xmobar " ++ xmobarConfigPath
+myLauncher    = "rofi -show drun"
+myTerminal    = "alacritty"
+myEditor      = "emacs"
 
 -- Borders
 myBorderWidth = 3
@@ -157,8 +162,8 @@ myKeys conf@(XConfig { XMonad.modMask = modMask }) =
     , ((myModMask .|. controlMask, xK_m), withFocused (sendMessage . MergeAll))
     , ((myModMask .|. controlMask, xK_u), withFocused (sendMessage . UnMerge))
 
-    , ((myModMask, xK_period), onGroup W.focusUp')
-    , ((myModMask, xK_comma), onGroup W.focusDown')
+    , ((myModMask, xK_i), onGroup W.focusUp')
+    , ((myModMask, xK_u), onGroup W.focusDown')
 
     -- Kill current window
     , ((myModMask, xK_q), kill)
@@ -167,11 +172,15 @@ myKeys conf@(XConfig { XMonad.modMask = modMask }) =
     , ((myModMask .|. controlMask, xK_Escape), io (exitWith ExitSuccess))
     , ((myModMask .|. shiftMask, xK_Escape), broadcastMessage ReleaseResources >> restart "xmonad" True)
     , ((myModMask .|. controlMask, xK_x), spawn $ "kill $(pidof xmobar); " ++ myBar)
-    , ((myModMask .|. controlMask, xK_p), spawn "systemctl suspend && i3lock-fancy -g -p")
-    , ((myModMask, xK_l), spawn "i3lock-fancy -g -p")
+    , ((myModMask .|. controlMask, xK_p), spawn "systemctl suspend && betterlockscreen -l pixel")
+    , ((myModMask .|. controlMask, xK_l), spawn "betterlockscreen -l pixel")
 
     -- myBar
     , ((myModMask, xK_b), sendMessage ToggleStruts)
+
+    -- Xmonad configurations
+    , ((myModMask, xK_period), spawn $ myEditor ++ " " ++ xmonadConfigPath)
+    , ((myModMask, xK_comma), spawn $ myEditor ++ " " ++ xmobarConfigPath)
 
     -- Launch programs
     , ((myModMask, xK_w), spawn "google-chrome-stable")

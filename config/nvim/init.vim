@@ -212,6 +212,7 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'romainl/Apprentice'
 Plug 'joshdick/onedark.vim'
+Plug 'cocopon/iceberg.vim'
 " Plug 'ying17zi/vim-live-latex-preview'
 " Plug 'ternjs/tern_for_vim'
 Plug 'severin-lemaignan/vim-minimap'
@@ -272,7 +273,7 @@ set cursorline
 set hlsearch
 set ruler
 set t_Co=256
-colorscheme onedark
+colorscheme base16-tomorrow-night
 
 " Fixed styles
 hi Comment cterm=italic
@@ -284,6 +285,8 @@ hi Folded cterm=italic ctermfg=238
 hi String cterm=italic
 hi Search ctermfg=0 ctermbg=120
 hi IncSearch ctermfg=120
+hi SignColumn ctermbg=233
+hi LineNr ctermbg=233
 
 " }}}
 

@@ -104,7 +104,7 @@ fi;
 
 # User configuration
 
-export PATH="$PATH:$HOME/.local/bin:$HOME/.scripts:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/apache-maven-3.3.9/bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/.scripts:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/apache-maven-3.3.9/bin:$HOME/.emacs.d/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh

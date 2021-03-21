@@ -6,12 +6,12 @@ MON1=HDMI-0
 MON2=DVI-D-0
 HDMICONN=$(xrandr | grep -i "$MON2" | cut -d " " -f 2)
 CURRENT_DESKTOP="${CURRENT_DESKTOP:-unknown}"
-MONMODE_FILE="$HOME/.scripts/vars/mon_mode.dat"
+MONMODE_FILE="$HOME/.scripts/system/vars/mon_mode.dat"
 
 function after_update_screen {
     PRIMARY="$1"
     SECONDARY="$2" 
-    . "$HOME/.scripts/hooks/after_update_screen.sh"
+    . "$HOME/.scripts/system/hooks/after_update_screen.sh"
 }
 
 if [[ -f "$MONMODE_FILE" && ( "$MODE" = "restore" || "$MODE" = "r" ) ]]; then

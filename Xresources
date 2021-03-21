@@ -2,7 +2,6 @@
 
 #include ".Xresources.d/xterm"
 #include ".Xresources.d/rxvt-unicode"
-#include ".Xresources.d/rofi"
 
 Xft.lcdfilter: lcddefault
 Xft.antialias: true
