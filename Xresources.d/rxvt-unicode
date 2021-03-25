@@ -14,10 +14,10 @@ URxvt.transparent: false
 ! URxvt.fading: 30
 
 ! Font
-URxvt.font: xft:Iosevka Nerd Font Mono:medium:antialias=true:pixelsize=13, xft:Iosevka Nerd Font Mono:semibold:pixelsize=13, xft:FuraCode NF Mono:medium:pixelsize=13, xft:MesloLGMDZ NF:style=Regular, xft:SourceCodePro:medium:pixelsize=11, xft:DejaVu Sans Mono:medium:pixelsize=11, xft:unifont:pixelsize=14, xft:monospace:pixelsize=14
-URxvt.italicFont: xft:Iosevka Nerd Font Mono:Italic:antialias=true:pixelsize=13
-URxvt.boldFont: xft:Iosevka Nerd Font Mono:Bold:antialias=true:pixelsize=13
-URxvt.boldItalicFont: xft:Iosevka Nerd Font Mono:Bold:Italic:antialias=true:pixelsize=13
+URxvt.font: xft:JetbrainsMono Nerd Font:medium:antialias=true:pixelsize=13, xft:Iosevka Nerd Font Mono:semibold:pixelsize=13, xft:FuraCode NF Mono:medium:pixelsize=13, xft:MesloLGMDZ NF:style=Regular, xft:SourceCodePro:medium:pixelsize=11, xft:DejaVu Sans Mono:medium:pixelsize=11, xft:unifont:pixelsize=14, xft:monospace:pixelsize=14
+URxvt.italicFont: xft:JetbrainsMono Nerd Font:Italic:antialias=true:pixelsize=13
+URxvt.boldFont: xft:JetbrainsMono Nerd Font:Bold:antialias=true:pixelsize=13
+URxvt.boldItalicFont: xft:JetbrainsMono Nerd Font:Bold:Italic:antialias=true:pixelsize=13
 
 URxvt.scrollBar: false
 
