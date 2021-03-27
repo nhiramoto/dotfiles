@@ -273,20 +273,20 @@ set cursorline
 set hlsearch
 set ruler
 set t_Co=256
-colorscheme base16-tomorrow-night
+colorscheme nord
 
 " Fixed styles
 hi Comment cterm=italic
-hi Normal ctermfg=249 ctermbg=233
-hi NonText ctermfg=236 ctermbg=233
-hi CursorLine ctermbg=234
-hi ColorColumn ctermbg=234
-hi Folded cterm=italic ctermfg=238
+" hi Normal ctermfg=249 ctermbg=233
+" hi NonText ctermfg=236 ctermbg=233
+" hi CursorLine ctermbg=234
+" hi ColorColumn ctermbg=234
+hi Folded cterm=italic
 hi String cterm=italic
-hi Search ctermfg=0 ctermbg=120
-hi IncSearch ctermfg=120
-hi SignColumn ctermbg=233
-hi LineNr ctermbg=233
+" hi Search ctermfg=0 ctermbg=120
+" hi IncSearch ctermfg=120
+" hi SignColumn ctermbg=233
+" hi LineNr ctermbg=233
 
 " }}}
 

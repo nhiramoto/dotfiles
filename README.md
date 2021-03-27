@@ -5,9 +5,9 @@
 ## Setup
 
 - **Distribution**: ArchLinux
-- **Desktop Environment**: Awesome WM
-- **Terminal Emulator**: rxvt-unicode
+- **Desktop Environment**: Qtile
+- **Terminal Emulator**: alacritty
 - **Shell**: zsh
-- **Color Scheme**: [Apprentice](https://github.com/romainl/Apprentice)
-- **Terminal Font**: Iosevka ([Nerd Font](https://nerdfonts.com))
-- **UI Font**: Hermit ([Nerd Font](https://nerdfonts.com))
+- **Color Scheme**: [Nord](https://www.nordtheme.com/)
+- **Terminal Font**: Jetbrains Mono ([Nerd Font](https://nerdfonts.com))
+- **UI Font**: Jetbrains Mono ([Nerd Font](https://nerdfonts.com))
