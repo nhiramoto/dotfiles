@@ -2,11 +2,14 @@
 # qtile:
 #   Command to run on start and restart.
 
-# Wallpaper
-feh --bg-fill "$HOME/Pictures/default."{png,jpeg,jpg} &
+function run {
+  if ! pgrep $1 ;
+  then
+    $@&
+  fi
+}
 
-# Picom
-. "$HOME/.config/picom/launch.sh" &
-
-# Conky
-. "$HOME/.config/conky/launch.sh" &
+run xrdb $HOME/.Xresources
+run feh --bg-fill $HOME/Pictures/{wallpaper,Wallpaper,default,Default}.{png,jpg}
+run $HOME/.config/picom/launch.sh
+run $HOME/.config/conky/launch.sh
