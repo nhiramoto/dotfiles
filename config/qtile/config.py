@@ -32,35 +32,35 @@ font_size = 13
 
 # Applications
 terminal = guess_terminal()
-launcher = 'rofi -show drun'
+launcher = os.path.expanduser('~/.config/rofi/bin/launcher_colorful')
 browser = 'google-chrome-stable'
 editor = 'emacsclient -c'
+player = terminal + ' -e ncmpcpp'
+rofi_apps = os.path.expanduser('~/.config/rofi/bin/menu_apps')
+rofi_quicklinks = os.path.expanduser('~/.config/rofi/bin/menu_quicklinks')
+rofi_mpd = os.path.expanduser('~/.config/rofi/bin/menu_mpd')
 
 # System
 lock_screen = 'betterlockscreen -l pixel'
-suspend = 'systemctl suspend & ' + lock_screen
+suspend = 'systemctl suspend'
 
 # Colors
 colors = {
-    'bg': '#1e232d',
-    'bga': '#2E3440',
-    'fg': '#d8dee9',
-    'black0': '#2E3440',
-    'black1': '#3B4252',
-    'black2': '#434C5E',
-    'black4': '#4C566A',
-    'white0': '#D8DEE9',
-    'white1': '#E5E9F0',
-    'white2': '#ECEFF4',
-    'red': '#bf616a',
-    'orange': '#D08770',
-    'yellow': '#EBCB8B',
-    'green': '#A3BE8C',
-    'pink': '#B48EAD',
-    'blue0': '#8FBCBB',
-    'blue1': '#88c0d0',
-    'blue2': '#81A1C1',
-    'blue3': '#5E81AC',
+    'bg': '#1E222A',
+    'bga': '#282C34',
+    'fg': '#ABB2BF',
+    'black0': '#5C6370',
+    'black1': '#4B5263',
+    'white0': '#ABB2BF',
+    'white1': '#3E4452',
+    'red0': '#E06C75',
+    'red1': '#BE5046',
+    'yellow0': '#E5C07B',
+    'green': '#98C379',
+    'pink': '#C678DD',
+    'blue0': '#61AFEF',
+    'blue1': '#61AFEF',
+    'cyan': '#56B6C2',
 }
 
 # Gradients
@@ -94,8 +94,8 @@ icons = {
 layout_theme = {
     'border_width': 3,
     'margin': 5,
-    'border_focus': 'd3dee9',
-    'border_normal': '3b4252',
+    'border_focus': colors['blue0'],
+    'border_normal': colors['bga'],
     'font': font,
     'grow_amount': 2,
 }
@@ -175,7 +175,11 @@ keys = [
     Key([mod], enter, lazy.spawn(terminal), desc='Launch terminal'),
     Key([mod], 'w', lazy.spawn(browser)),
     Key([mod], 'e', lazy.spawn(editor)),
+    Key([mod], 'n', lazy.spawn(player)),
     Key([mod], space, lazy.spawn(launcher)),
+    Key([mod], 'a', lazy.spawn(rofi_apps)),
+    Key([mod, shift], space, lazy.spawn(rofi_quicklinks)),
+    Key([mod], 'm', lazy.spawn(rofi_mpd)),
 
     # Toggle between different layouts as defined below
     Key([mod], tab, lazy.next_layout(), desc='Toggle between layouts'),
@@ -191,9 +195,9 @@ keys = [
     Key([mod, ctrl], 'p', lazy.spawn(suspend), desc='Lock and suspend system.'),
 
     # Media
-    # Key([], 'XF86AudioRaizeVolume', lazy.spawn('amixer sset Master 5%+')),
-    # Key([], 'XF86AudioLowerVolume', lazy.spawn('amixer sset Master 5%-')),
-    # Key([], 'XF86AudioMute', lazy.spawn('amixer sset Master toggle')),
+    Key([], 'XF86AudioRaiseVolume', lazy.spawn('amixer sset Master 5%+')),
+    Key([], 'XF86AudioLowerVolume', lazy.spawn('amixer sset Master 5%-')),
+    Key([], 'XF86AudioMute', lazy.spawn('amixer sset Master toggle')),
     Key([mod], 'Up', lazy.spawn('amixer sset Master 5%+')),
     Key([mod], 'Down', lazy.spawn('amixer sset Master 5%-')),
 ]
@@ -204,8 +208,8 @@ keys = [
 
 workspaces = [
     { 'label': icons['browser'], 'name': '1', 'key': '1', 'matches': [] },
-    { 'label': icons['code'], 'name': '2', 'key': '2', 'matches': [] },
-    { 'label': icons['remote'], 'name': '3', 'key': '3', 'matches': [] },
+    { 'label': icons['remote'], 'name': '2', 'key': '2', 'matches': [] },
+    { 'label': icons['code'], 'name': '3', 'key': '3', 'matches': [] },
     { 'label': '4', 'name': '4', 'key': '4', 'matches': [] },
     { 'label': '5', 'name': '5', 'key': '5', 'matches': [] },
     { 'label': '6', 'name': '6', 'key': '6', 'matches': [] },
@@ -259,6 +263,18 @@ layouts = [
     # layout.Zoomy(),
 ]
 
+# Floating Windows
+floating_layout = layout.Floating(float_rules=[
+    *layout.Floating.default_float_rules,
+    Match(wm_class='confirmreset'),
+    Match(wm_class='makebranch'),
+    Match(wm_class='maketag'),
+    Match(wm_class='ssh-askpass'),
+    Match(wm_class='gnome-calculator'),
+    Match(title='branchdialog'),
+    Match(title='pinentry'),
+])
+
 widget_defaults = dict(
     font=font,
     fontsize=font_size,
@@ -273,11 +289,15 @@ screens = [
         top=bar.Bar(
             [
                 widget.Sep(padding=10, foreground=colors['bg']),
-                widget.TextBox(text=icons['python'], foreground=colors['blue0']),
+                widget.TextBox(
+                    text=icons['python'],
+                    foreground=colors['blue0'],
+                    fontsize=20
+                ),
                 widget.GroupBox(
-                    highlight_color=gradients[0],
-                    highlight_method='block',
-                    block_highlight_text_color=colors['black0'],
+                    highlight_color=colors['bga'],
+                    highlight_method='line',
+                    block_highlight_text_color=colors['blue1'],
                     this_current_screen_border=colors['blue1'],
                     # this_screen_border='',
                     other_current_screen_border=colors['green'],
@@ -285,8 +305,10 @@ screens = [
                     foreground=colors['fg'],
                     background=colors['bg'],
                     hide_unused=True,
-                    padding=10,
-                    rounded=True
+                    #padding=10,
+                    rounded=True,
+                    font=font,
+                    fontsize=20
                 ),
                 widget.Prompt(),
                 widget.WindowName(),
@@ -309,7 +331,7 @@ screens = [
                 ),
                 widget.Net(
                     fmt=icons['network'] + '  {}',
-                    foreground=colors['blue2']
+                    foreground=colors['cyan']
                 ),
                 widget.Volume(
                     fmt=icons['volume'] + '  {}',
@@ -334,6 +356,45 @@ screens = [
             background=colors['bg']
         ),
     ),
+    Screen(
+        top=bar.Bar(
+            [
+                widget.Sep(padding=10, foreground=colors['bg']),
+                widget.TextBox(
+                    text=icons['python'],
+                    foreground=colors['blue0'],
+                    fontsize=20
+                ),
+                widget.GroupBox(
+                    highlight_color=colors['bga'],
+                    highlight_method='line',
+                    block_highlight_text_color=colors['blue1'],
+                    this_current_screen_border=colors['blue1'],
+                    # this_screen_border='',
+                    other_current_screen_border=colors['green'],
+                    # other_screen_border=colors['green'],
+                    foreground=colors['fg'],
+                    background=colors['bg'],
+                    hide_unused=True,
+                    #padding=10,
+                    rounded=True,
+                    font=font,
+                    fontsize=20
+                ),
+                widget.Prompt(),
+                widget.WindowName(),
+                widget.Chord(
+                    chords_colors={
+                        'launch': ('#ff0000', '#ffffff'),
+                    },
+                    name_transform=lambda name: name.upper(),
+                ),
+                widget.Sep(padding=10, foreground=colors['bg']),
+            ],
+            28,
+            background=colors['bg']
+        ),
+    ),
 ]
 
 # Drag floating layouts.
@@ -351,16 +412,6 @@ main = None
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
-floating_layout = layout.Floating(float_rules=[
-    # Run the utility of `xprop` to see the wm class and name of an X client.
-    *layout.Floating.default_float_rules,
-    Match(wm_class='confirmreset'),  # gitk
-    Match(wm_class='makebranch'),  # gitk
-    Match(wm_class='maketag'),  # gitk
-    Match(wm_class='ssh-askpass'),  # ssh-askpass
-    Match(title='branchdialog'),  # gitk
-    Match(title='pinentry'),  # GPG key password entry
-])
 auto_fullscreen = True
 focus_on_window_activation = 'smart'
 

@@ -222,7 +222,6 @@ Plug 'chriskempson/base16-vim'
 Plug 'Reewr/vim-monokai-phoenix'
 Plug 'micha/vim-colors-solarized'
 Plug 'dag/vim-fish'
-Plug 'nhooyr/elysian.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'maksimr/vim-jsbeautify'
@@ -248,6 +247,7 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax' 
 " Plug 'Shougo/neosnippet.vim'
 Plug 'tweekmonster/django-plus.vim'
+Plug 'tiagovla/tokyodark.nvim'
 
 call plug#end()
 
@@ -273,20 +273,20 @@ set cursorline
 set hlsearch
 set ruler
 set t_Co=256
-colorscheme nord
+colorscheme onedark
 
 " Fixed styles
 hi Comment cterm=italic
-" hi Normal ctermfg=249 ctermbg=233
-" hi NonText ctermfg=236 ctermbg=233
-" hi CursorLine ctermbg=234
-" hi ColorColumn ctermbg=234
+hi Normal ctermfg=249 ctermbg=233
+hi NonText ctermfg=236 ctermbg=233
+hi CursorLine ctermbg=234
+hi ColorColumn ctermbg=234
 hi Folded cterm=italic
 hi String cterm=italic
-" hi Search ctermfg=0 ctermbg=120
-" hi IncSearch ctermfg=120
-" hi SignColumn ctermbg=233
-" hi LineNr ctermbg=233
+hi Search ctermfg=0 ctermbg=120
+hi IncSearch ctermfg=120
+hi SignColumn ctermbg=233
+hi LineNr ctermbg=233
 
 " }}}
 

@@ -24,7 +24,8 @@ return {
     social = default_action,
     game = default_action,
     files = 'nautilus',
-    music = default_action
+    music = 'spotify',
+    remote_desk = 'anydesk'
   },
   -- List of apps to start once on start-up
   run_on_start_up = {
@@ -43,7 +44,7 @@ return {
     'xrdb $HOME/.Xresources',
     'udiskie',
     '$HOME/.config/picom/launch.sh',
-    '$HOME/.config/conky/launch.sh',
+    -- '$HOME/.config/conky/launch.sh',
     '$HOME/.scripts/mon restore'
   }
 }

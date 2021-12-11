@@ -13,13 +13,19 @@ local tags = {
   {
     icon = icons.remote_desk,
     type = 'any',
-    defaultApp = apps.default.editor,
+    defaultApp = apps.default.remote_desk,
     screen = 1
   },
   {
     icon = icons.code,
     type = 'code',
-    defaultApp = apps.default.social,
+    defaultApp = apps.default.editor,
+    screen = 1
+  },
+  {
+    icon = icons.tools,
+    type = 'any',
+    defaultApp = apps.default.rofi,
     screen = 1
   },
   {
@@ -29,21 +35,9 @@ local tags = {
     screen = 1
   },
   {
-    icon = icons.lab,
-    type = 'any',
-    defaultApp = apps.default.game,
-    screen = 1
-  },
-  {
-    icon = icons.lab,
-    type = 'any',
-    defaultApp = apps.default.rofi,
-    screen = 1
-  },
-  {
-    icon = icons.lab,
-    type = 'any',
-    defaultApp = apps.default.rofi,
+    icon = icons.social,
+    type = 'social',
+    defaultApp = apps.default.social,
     screen = 1
   },
   {
@@ -53,17 +47,21 @@ local tags = {
     screen = 1
   },
   {
-    icon = icons.tools,
+    icon = icons.lab,
     type = 'any',
     defaultApp = apps.default.rofi,
     screen = 1
   }
 }
 
+local layouts = {
+  default = awful.layout.suit.max
+}
+
 awful.layout.layouts = {
+  awful.layout.suit.max,
   awful.layout.suit.tile,
   awful.layout.suit.tile.top,
-  awful.layout.suit.max,
   awful.layout.suit.floating
 }
 
@@ -75,7 +73,7 @@ awful.screen.connect_for_each_screen(
         {
           icon = tag.icon,
           icon_only = true,
-          layout = awful.layout.suit.tile,
+          layout = layouts.default,
           gap_single_client = false,
           gap = 4,
           screen = s,

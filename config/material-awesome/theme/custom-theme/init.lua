@@ -22,7 +22,9 @@ theme.background.hue_800 = '#242424'
 theme.primary.hue_500 = '#3F51B5'
 
 local awesome_overrides = function(theme)
-  --
+
+  theme.wallpaper = os.getenv('HOME') .. '/Pictures/default.jpg'
+
 end
 return {
   theme = theme,

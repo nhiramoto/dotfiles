@@ -3,48 +3,44 @@ require('awful.autofocus')
 local beautiful = require('beautiful')
 local hotkeys_popup = require('awful.hotkeys_popup').widget
 
-local modkey = require('configuration.keys.mod').modKey
-local altkey = require('configuration.keys.mod').altKey
 local apps = require('configuration.apps')
+
+local kb = {
+  mod = require('configuration.keys.mod').modKey,
+  alt = require('configuration.keys.mod').altKey,
+  ctrl = 'Control',
+  esc = 'Escape'
+}
+
 -- Key bindings
 local globalKeys =
   awful.util.table.join(
   -- Hotkeys
-  awful.key({modkey}, 'F1', hotkeys_popup.show_help, {description = 'show help', group = 'awesome'}),
+  awful.key({kb.mod}, 'F1', hotkeys_popup.show_help, {description = 'show help', group = 'awesome'}),
   -- Tag browsing
-  awful.key({altkey, 'Control'}, 'w', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
-  awful.key({altkey, 'Control'}, 's', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
-  awful.key({altkey, 'Control'}, 'Up', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
-  awful.key({altkey, 'Control'}, 'Down', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
-  awful.key({modkey}, 'Escape', awful.tag.history.restore, {description = 'go back', group = 'tag'}),
+  awful.key({kb.alt, kb.ctrl}, 'w', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
+  awful.key({kb.alt, kb.ctrl}, 's', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
+  awful.key({kb.alt, kb.ctrl}, 'Up', awful.tag.viewprev, {description = 'view previous', group = 'tag'}),
+  awful.key({kb.alt, kb.ctrl}, 'Down', awful.tag.viewnext, {description = 'view next', group = 'tag'}),
+  awful.key({kb.mod}, kb.esc, awful.tag.history.restore, {description = 'go back', group = 'tag'}),
   -- Default client focus
-  awful.key(
-    {modkey},
-    'd',
-    function()
-      awful.client.focus.byidx(1)
-    end,
+  awful.key( {kb.alt, kb.ctrl}, 'd', function() awful.client.focus.byidx(1) end,
     {description = 'focus next by index', group = 'client'}
   ),
-  awful.key(
-    {modkey},
-    'a',
-    function()
-      awful.client.focus.byidx(-1)
-    end,
+  awful.key( {kb.alt, kb.ctrl}, 'a', function() awful.client.focus.byidx(-1) end,
     {description = 'focus previous by index', group = 'client'}
   ),
   awful.key(
-    {modkey},
+    {kb.mod},
     'space',
     function()
       _G.screen.primary.left_panel:toggle(true)
     end,
     {description = 'show main menu', group = 'awesome'}
   ),
-  awful.key({modkey}, 'u', awful.client.urgent.jumpto, {description = 'jump to urgent client', group = 'client'}),
+  awful.key({kb.mod}, 'u', awful.client.urgent.jumpto, {description = 'jump to urgent client', group = 'client'}),
   awful.key(
-    {altkey},
+    {kb.alt},
     'Tab',
     function()
       --awful.client.focus.history.previous()
@@ -56,7 +52,7 @@ local globalKeys =
     {description = 'Switch to next window', group = 'client'}
   ),
   awful.key(
-    {altkey, 'Shift'},
+    {kb.alt, 'Shift'},
     'Tab',
     function()
       --awful.client.focus.history.previous()
@@ -69,7 +65,7 @@ local globalKeys =
   ),
   -- Programms
   awful.key(
-    {modkey, 'Control'},
+    {kb.mod, kb.ctrl},
     'l',
     function()
       awful.spawn(apps.default.lock)
@@ -77,7 +73,7 @@ local globalKeys =
     {description = 'Lock the screen', group = 'awesome'}
   ),
   awful.key(
-    {'Control','Shift'},
+    {kb.ctrl,'Shift'},
     'Print',
     function()
       awful.util.spawn_with_shell(apps.default.delayed_screenshot)
@@ -85,7 +81,7 @@ local globalKeys =
     {description = 'Mark an area and screenshot it 10 seconds later (clipboard)', group = 'screenshots (clipboard)'}
   ),
   awful.key(
-    {altkey},
+    {kb.alt},
     'Print',
     function()
       awful.util.spawn_with_shell(apps.default.screenshot)
@@ -93,7 +89,7 @@ local globalKeys =
     {description = 'Take a screenshot of your active monitor and copy it to clipboard', group = 'screenshots (clipboard)'}
   ),
   awful.key(
-    {'Control'},
+    {kb.ctrl},
     'Print',
     function()
       awful.util.spawn_with_shell(apps.default.region_screenshot)
@@ -101,7 +97,7 @@ local globalKeys =
     {description = 'Mark an area and screenshot it to your clipboard', group = 'screenshots (clipboard)'}
   ),
   awful.key(
-    {modkey},
+    {kb.mod},
     'e',
     function()
       awful.util.spawn(apps.default.editor)
@@ -109,7 +105,7 @@ local globalKeys =
     {description = 'open a text/code editor', group = 'launcher'}
   ),
   awful.key(
-    {modkey},
+    {kb.mod},
     'w',
     function()
       awful.util.spawn(apps.default.browser)
@@ -118,7 +114,7 @@ local globalKeys =
   ),
   -- Open private browser/brave
   awful.key(
-    {modkey},
+    {kb.mod},
     'p',
     function()
       awful.util.spawn_with_shell('brave-browser')
@@ -127,17 +123,17 @@ local globalKeys =
   ),
   -- Standard program
   awful.key(
-    {modkey},
+    {kb.mod},
     'Return',
     function()
       awful.util.spawn_with_shell(apps.default.terminal)
     end,
     {description = 'open a terminal', group = 'launcher'}
   ),
-  awful.key({modkey, 'Control'}, 'r', _G.awesome.restart, {description = 'reload awesome', group = 'awesome'}),
-  awful.key({modkey, 'Control'}, 'q', _G.awesome.quit, {description = 'quit awesome', group = 'awesome'}),
+  awful.key({kb.mod, kb.ctrl}, 'r', _G.awesome.restart, {description = 'reload awesome', group = 'awesome'}),
+  awful.key({kb.mod, kb.ctrl}, 'q', _G.awesome.quit, {description = 'quit awesome', group = 'awesome'}),
   awful.key(
-    {altkey, 'Shift'},
+    {kb.alt, 'Shift'},
     'Right',
     function()
       awful.tag.incmwfact(0.05)
@@ -145,7 +141,7 @@ local globalKeys =
     {description = 'increase master width factor', group = 'layout'}
   ),
   awful.key(
-    {altkey, 'Shift'},
+    {kb.alt, 'Shift'},
     'Left',
     function()
       awful.tag.incmwfact(-0.05)
@@ -153,7 +149,7 @@ local globalKeys =
     {description = 'decrease master width factor', group = 'layout'}
   ),
   awful.key(
-    {altkey, 'Shift'},
+    {kb.alt, 'Shift'},
     'Down',
     function()
       awful.client.incwfact(0.05)
@@ -161,7 +157,7 @@ local globalKeys =
     {description = 'decrease master height factor', group = 'layout'}
   ),
   awful.key(
-    {altkey, 'Shift'},
+    {kb.alt, 'Shift'},
     'Up',
     function()
       awful.client.incwfact(-0.05)
@@ -169,7 +165,7 @@ local globalKeys =
     {description = 'increase master height factor', group = 'layout'}
   ),
   awful.key(
-    {modkey, 'Shift'},
+    {kb.mod, 'Shift'},
     'Left',
     function()
       awful.tag.incnmaster(1, nil, true)
@@ -177,7 +173,7 @@ local globalKeys =
     {description = 'increase the number of master clients', group = 'layout'}
   ),
   awful.key(
-    {modkey, 'Shift'},
+    {kb.mod, 'Shift'},
     'Right',
     function()
       awful.tag.incnmaster(-1, nil, true)
@@ -185,7 +181,7 @@ local globalKeys =
     {description = 'decrease the number of master clients', group = 'layout'}
   ),
   awful.key(
-    {modkey, 'Control'},
+    {kb.mod, kb.ctrl},
     'Left',
     function()
       awful.tag.incncol(1, nil, true)
@@ -193,7 +189,7 @@ local globalKeys =
     {description = 'increase the number of columns', group = 'layout'}
   ),
   awful.key(
-    {modkey, 'Control'},
+    {kb.mod, kb.ctrl},
     'Right',
     function()
       awful.tag.incncol(-1, nil, true)
@@ -201,7 +197,7 @@ local globalKeys =
     {description = 'decrease the number of columns', group = 'layout'}
   ),
   awful.key(
-    {modkey, 'Control'},
+    {kb.mod, kb.ctrl},
     'n',
     function()
       local c = awful.client.restore()
@@ -215,7 +211,7 @@ local globalKeys =
   ),
   -- Dropdown application
   awful.key(
-    {modkey},
+    {kb.mod},
     'z',
     function()
       _G.toggle_quake()
@@ -224,7 +220,7 @@ local globalKeys =
   ),
   -- Widgets popups
   --[[awful.key(
-    {altkey},
+    {kb.alt},
     'h',
     function()
       if beautiful.fs then
@@ -234,7 +230,7 @@ local globalKeys =
     {description = 'show filesystem', group = 'widgets'}
   ),
   awful.key(
-    {altkey},
+    {kb.alt},
     'w',
     function()
       if beautiful.weather then
@@ -311,14 +307,14 @@ local globalKeys =
   ),
   -- Screen management
   awful.key(
-    {modkey},
+    {kb.mod},
     'o',
     awful.client.movetoscreen,
     {description = 'move window to next screen', group = 'client'}
   ),
   -- Open default program for tag
   awful.key(
-    {modkey},
+    {kb.mod},
     't',
     function()
       awful.spawn(
@@ -350,7 +346,7 @@ for i = 1, 9 do
     globalKeys,
     -- View tag only.
     awful.key(
-      {modkey},
+      {kb.mod},
       '#' .. i + 9,
       function()
         local screen = awful.screen.focused()
@@ -363,7 +359,7 @@ for i = 1, 9 do
     ),
     -- Toggle tag display.
     awful.key(
-      {modkey, 'Control'},
+      {kb.mod, kb.ctrl},
       '#' .. i + 9,
       function()
         local screen = awful.screen.focused()
@@ -376,7 +372,7 @@ for i = 1, 9 do
     ),
     -- Move client to tag.
     awful.key(
-      {modkey, 'Shift'},
+      {kb.mod, 'Shift'},
       '#' .. i + 9,
       function()
         if _G.client.focus then
@@ -390,7 +386,7 @@ for i = 1, 9 do
     ),
     -- Toggle tag on focused client.
     awful.key(
-      {modkey, 'Control', 'Shift'},
+      {kb.mod, kb.ctrl, 'Shift'},
       '#' .. i + 9,
       function()
         if _G.client.focus then
