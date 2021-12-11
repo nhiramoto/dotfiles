@@ -27,7 +27,7 @@ _G.root.keys(require('configuration.keys.global'))
 awful.screen.connect_for_each_screen(
   function(s)
     -- If wallpaper is a function, call it with the screen
-    if beautiful.wallpaper then
+    if s ~= nil and beautiful.wallpaper then
         if type(beautiful.wallpaper) == "string" then
             if beautiful.wallpaper:sub(1, #"#") == "#" then
                 gears.wallpaper.set(beautiful.wallpaper)

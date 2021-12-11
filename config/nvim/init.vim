@@ -182,7 +182,6 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'airblade/vim-gitgutter'
 Plug 'mattn/emmet-vim'
 Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
 " Plug 'garbas/vim-snipmate'
 Plug 'SirVer/ultisnips'
 " Plug 'honza/vim-snippets'

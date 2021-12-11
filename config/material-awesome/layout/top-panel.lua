@@ -12,7 +12,7 @@ local dpi = require('beautiful').xresources.apply_dpi
 local icons = require('theme.icons')
 
 -- Clock / Calendar 24h format
-local textclock = wibox.widget.textclock('<span font="Roboto Mono bold 9">%d.%m.%Y | %H:%M</span>')
+local textclock = wibox.widget.textclock('<span font="Roboto Mono bold 11">%d/%m/%Y | %H:%M</span>')
 
 -- Clock / Calendar 12AM/PM fornat
 -- local textclock = wibox.widget.textclock('<span font="Roboto Mono bold 9">%d.%m.%Y\n  %I:%M %p</span>\n<span font="Roboto Mono bold 9">%p</span>')
@@ -22,11 +22,18 @@ local textclock = wibox.widget.textclock('<span font="Roboto Mono bold 9">%d.%m.
 local month_calendar = awful.widget.calendar_popup.month({
   screen = s,
   start_sunday = true,
-  week_numbers = true
+  week_numbers = true,
+  font = 'Roboto Mono bold 12',
+  long_weekdays = true,
+  style_header = {
+    fg_color = '#a3acdb',
+    bg_color = '#2C2C2C',
+    padding = 10
+  }
 })
 month_calendar:attach(textclock)
 
-local clock_widget = wibox.container.margin(textclock, dpi(13), dpi(13), dpi(8), dpi(8))
+local clock_widget = wibox.container.margin(textclock, dpi(11), dpi(11), dpi(6), dpi(6))
 
 local add_button = mat_icon_button(mat_icon(icons.plus, dpi(24)))
 add_button:buttons(
