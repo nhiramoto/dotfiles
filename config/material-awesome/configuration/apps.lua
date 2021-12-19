@@ -11,7 +11,7 @@ return {
   default = {
     terminal = 'alacritty',
     rofi = rofi_command,
-    lock = 'i3lock-fancy',
+    lock = 'i3lock-fancy-multimonitor',
     quake = 'alacritty',
     screenshot = '~/.config/awesome/configuration/utils/screenshot -m',
     region_screenshot = '~/.config/awesome/configuration/utils/screenshot -r',

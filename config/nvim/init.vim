@@ -247,6 +247,7 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 " Plug 'Shougo/neosnippet.vim'
 Plug 'tweekmonster/django-plus.vim'
 Plug 'tiagovla/tokyodark.nvim'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
 call plug#end()
 
@@ -272,7 +273,7 @@ set cursorline
 set hlsearch
 set ruler
 set t_Co=256
-colorscheme onedark
+colorscheme tokyodark
 
 " Fixed styles
 hi Comment cterm=italic

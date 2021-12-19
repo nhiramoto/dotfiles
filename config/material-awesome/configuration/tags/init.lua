@@ -55,7 +55,7 @@ local tags = {
 }
 
 local layouts = {
-  default = awful.layout.suit.max
+  default = awful.layout.suit.tile
 }
 
 awful.layout.layouts = {

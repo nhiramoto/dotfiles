@@ -25,25 +25,27 @@ return function(screen, panel, action_bar_width, home_button_visible)
   month_calendar:attach(textclock)
 
   local clock_widget = wibox.container.margin(textclock, dpi(13), dpi(13), dpi(8), dpi(8))
-  local systray = wibox.widget.systray()
-  systray:set_horizontal(false)
-  systray:set_base_size(24)
 
-  local menu_icon =
-    wibox.widget {
+  local menu_icon = wibox.widget {
     icon = icons.menu,
     size = dpi(24),
     widget = mat_icon
   }
 
-  local home_button =
+  local home_button = wibox.widget {
     wibox.widget {
-    wibox.widget {
-      menu_icon,
-      widget = clickable_container
-    },
-    bg = beautiful.primary.hue_500,
-    widget = wibox.container.background
+        wibox.widget {
+          menu_icon,
+          widget = clickable_container
+        },
+        bg = beautiful.primary.hue_500,
+        shape = function (cr, w, h)
+          gears.shape.rounded_rect(cr, w, h, 10)
+        end,
+        widget = wibox.container.background
+      },
+    margins = dpi(5),
+    widget = wibox.container.margin
   }
 
   home_button:buttons(
@@ -95,10 +97,9 @@ return function(screen, panel, action_bar_width, home_button_visible)
   local bottom_buttons = {
       -- Right widgets
       layout = wibox.layout.fixed.vertical,
-      wibox.container.margin(systray, dpi(10), dpi(10)),
       --require('widget.package-updater'),
       --require('widget.wifi'),
-      require('widget.battery'),
+      -- require('widget.battery'),
       -- Clock
       --clock_widget
   }

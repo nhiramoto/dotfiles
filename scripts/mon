@@ -4,7 +4,7 @@
 MODE=${1:-primary}
 MON1=HDMI-0
 MON2=DVI-D-0
-HDMICONN=$(xrandr | grep -i "$MON2" | cut -d " " -f 2)
+ISMON2CONN=$(xrandr | grep -i "$MON2" | cut -d " " -f 2)
 CURRENT_DESKTOP="${CURRENT_DESKTOP:-unknown}"
 MONMODE_FILE="$HOME/.scripts/vars/mon_mode.dat"
 
@@ -25,7 +25,7 @@ else
 fi
 
 # Check if $MON2 is connected
-if [[ "$HDMICONN" == "disconnected" && "MODE" != "primary" ]]; then
+if [[ "$ISMON2CONN" == "disconnected" && "MODE" != "primary" ]]; then
     MODE="primary"
     notify-send "Monitor" "Monitor $MON2 is not connected."
 fi

@@ -4,7 +4,7 @@ local gears = require('gears')
 local dpi = require('beautiful').xresources.apply_dpi
 
 -- Naughty presets
-naughty.config.padding = 8
+naughty.config.padding = 10
 naughty.config.spacing = 8
 
 naughty.config.defaults.timeout = 5
@@ -12,10 +12,13 @@ naughty.config.defaults.screen = 1
 naughty.config.defaults.position = 'bottom_left'
 naughty.config.defaults.margin = dpi(16)
 naughty.config.defaults.ontop = true
-naughty.config.defaults.font = 'Roboto Regular 10'
+naughty.config.defaults.font = 'Roboto Regular 12'
 naughty.config.defaults.icon = nil
 naughty.config.defaults.icon_size = dpi(32)
-naughty.config.defaults.shape = gears.shape.rounded_rect
+naughty.config.defaults.shape = function (cr, w, h)
+  gears.shape.partially_rounded_rect(cr, w, h, true, true, true, false, 20)
+  
+end
 naughty.config.defaults.border_width = 0
 naughty.config.defaults.hover_timeout = nil
 
