@@ -29,12 +29,5 @@ return {
             args = { "bash", "-l" },
             cwd = "~"
         }
-    },
-    ssh_domains = {
-        {
-            name = "sweda.nhiramoto",
-            remote_address = "127.0.0.1",
-            username = "nhiramoto"
-        }
     }
 }
