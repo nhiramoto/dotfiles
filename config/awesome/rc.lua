@@ -50,7 +50,7 @@ local editor = os.getenv("EDITOR") or "vim"
 local editor_cmd = terminal .. " -e " .. editor
 local awesome_config_file = os.getenv("HOME") .. "/.config/awesome/rc.lua"
 local theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/"
-local theme = "nhtoshiaki"
+local theme = "tokyodark"
 
 -- Load theme
 beautiful.init(theme_dir .. theme .. "/theme.lua")
@@ -274,7 +274,7 @@ local clock_widget = wibox.container {
         {
             widget = wibox.widget.textclock,
             refresh = 60,
-            format = "<span color='" .. beautiful.bg_focus .. "'>%d/%m/%Y</span>"
+            format = "<span color='" .. beautiful.color.green .. "'>%d/%m/%Y</span>"
         },
         {
             widget = wibox.widget.textclock,
@@ -506,9 +506,18 @@ awful.screen.connect_for_each_screen(function(s)
         filter  = awful.widget.taglist.filter.all,
         buttons = taglist_buttons,
         layout  = {
-            spacing = 10,
-            layout  = wibox.layout.fixed.horizontal
+            spacing = 15,
+            layout  = wibox.layout.fixed.vertical
         },
+        widget_template = {
+            {
+                id = 'text_role',
+                align = 'center',
+                widget = wibox.widget.textbox
+            },
+            id = 'background_role',
+            widget = wibox.container.background
+        }
     }
 
     -- Create a tasklist widget
@@ -526,7 +535,14 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox = awful.wibar({
         position = "top",
         screen = s,
-        height = 22,
+        height = 28,
+        bg = beautiful.panel
+    })
+
+    s.myleftwibox = awful.wibar({
+        position = "left",
+        screen = s,
+        width = 32,
         bg = beautiful.panel
     })
 
@@ -538,9 +554,6 @@ awful.screen.connect_for_each_screen(function(s)
             mylauncher,
             spr,
             spr4px,
-            s.mytaglist,
-            spr4px,
-            spr,
             s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
@@ -570,6 +583,11 @@ awful.screen.connect_for_each_screen(function(s)
             spr,
             s.mylayoutbox,
         },
+    }
+
+    s.myleftwibox:setup {
+        layout = wibox.layout.align.vertical,
+        s.mytaglist
     }
 
     -- Screen Wibar }}}
@@ -652,9 +670,9 @@ globalkeys = gears.table.join(
     -- Standard program
     awful.key({ super_key }, "Return", function () awful.spawn(terminal) end,
               { description = "Open a terminal.", group = "launcher" }),
-    awful.key({ super_key, shift_key   }, "Escape", awesome.restart,
+    awful.key({ super_key, ctrl_key   }, "r", awesome.restart,
               { description = "reload awesome", group = "awesome" }),
-    awful.key({ super_key, ctrl_key }, "Escape", awesome.quit,
+    awful.key({ super_key, ctrl_key }, "q", awesome.quit,
               { description = "quit awesome", group = "awesome" }),
 
     awful.key({ super_key, ctrl_key }, "l", function () awful.tag.incmwfact( 0.05) end,

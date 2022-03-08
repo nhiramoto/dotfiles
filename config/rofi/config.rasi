@@ -3,7 +3,7 @@ configuration {
 	width: 60;
 	lines: 10;
 	columns: 1;
-	font: "Recursive Casual 14";
+	font: "Arial 14";
 /*	bw: 1;*/
 /*	location: 0;*/
 	padding: 15;
