@@ -120,7 +120,7 @@ export TERM="rxvt-unicode-256color"
 # else
 #   export EDITOR='mvim'
 # fi
-export EDITOR='vim'
+export EDITOR='emacsclient -c'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"

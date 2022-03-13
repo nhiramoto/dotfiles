@@ -2,7 +2,8 @@
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
-require("awful.autofocus")
+-- Autofocus when tag switching
+local autofocus = require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
 -- Theme handling library
@@ -45,8 +46,8 @@ local ctrl_key = "Control"
 local alt_key = "Mod1"
 local shift_key = "Shift"
 
-local terminal = "alacritty"
-local editor = os.getenv("EDITOR") or "vim"
+local terminal = "wezterm"
+local editor = os.getenv("EDITOR") or "emacsclient -c"
 local editor_cmd = terminal .. " -e " .. editor
 local awesome_config_file = os.getenv("HOME") .. "/.config/awesome/rc.lua"
 local theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/"
@@ -362,7 +363,7 @@ local cpu_tooltip = awful.tooltip {
     mode = "outside",
     preferred_alignments = { "middle", "front", "back" }
 }
-vicious.register(cpu_widget, vicious.widgets.cpu, "$1", 1)
+vicious.register(cpu_widget, vicious.widgets.cpu, "$1", 3)
 
 local mem_widget = wibox.widget {
     widget = wibox.widget.graph,
@@ -376,7 +377,7 @@ local mem_tooltip = awful.tooltip {
     mode = "outside",
     preferred_alignments = { "middle", "front", "back" }
 }
-vicious.register(mem_widget, vicious.widgets.mem, "$1", 1)
+vicious.register(mem_widget, vicious.widgets.mem, "$1", 3)
 
 local system_usage_widget = wibox.container {
     widget = wibox.container.margin,
@@ -466,7 +467,6 @@ volume_widget:connect_signal('button::press', function() volume_menu:toggle() en
 
 -- Systray
 local systray_widget = wibox.widget.systray()
-systray_widget:set_base_size(16)
 
 -- Pacman
 local pacwidget = wibox.widget.textbox()
@@ -506,14 +506,20 @@ awful.screen.connect_for_each_screen(function(s)
         filter  = awful.widget.taglist.filter.all,
         buttons = taglist_buttons,
         layout  = {
-            spacing = 15,
-            layout  = wibox.layout.fixed.vertical
+            spacing = 2,
+            layout  = wibox.layout.fixed.horizontal
         },
         widget_template = {
             {
-                id = 'text_role',
-                align = 'center',
-                widget = wibox.widget.textbox
+                {
+                    align = 'center',
+                    widget = wibox.widget.textbox
+                },
+                top = 6,
+                bottom = 6,
+                left = 14,
+                right = 14,
+                widget = wibox.container.margin
             },
             id = 'background_role',
             widget = wibox.container.background
@@ -531,6 +537,38 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
 
+    local left_layout = {
+        layout = wibox.layout.fixed.horizontal,
+        s.mytasklist,
+        s.mypromptbox
+    }
+    local middle_layout = {
+        layout = wibox.layout.fixed.horizontal,
+        s.mytaglist
+    }
+    local right_layout = {
+        layout = wibox.layout.fixed.horizontal,
+        systray_widget,
+        spr5px,
+        spr,
+        spr5px,
+        system_usage_widget,
+        spr5px,
+        spr,
+        spr5px,
+        volume_widget,
+        spr5px,
+        spr,
+        spr5px,
+        battery_widget,
+        spr5px,
+        -- Clock
+        spr,
+        clock_widget,
+        spr,
+        s.mylayoutbox,
+    }
+
     -- Create the wibox
     s.mywibox = awful.wibar({
         position = "top",
@@ -539,55 +577,20 @@ awful.screen.connect_for_each_screen(function(s)
         bg = beautiful.panel
     })
 
-    s.myleftwibox = awful.wibar({
-        position = "left",
-        screen = s,
-        width = 32,
-        bg = beautiful.panel
-    })
-
-    -- Add widgets to the wibox
     s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            mylauncher,
-            spr,
-            spr4px,
-            s.mypromptbox,
+        layout = wibox.layout.stack,
+        {
+            layout = wibox.layout.align.horizontal,
+            left_layout,
+            nil,
+            right_layout
         },
-        s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            systray_widget,
-            spr5px,
-            spr,
-            spr5px,
-            ping_widget,
-            spr5px,
-            spr,
-            spr5px,
-            system_usage_widget,
-            spr5px,
-            spr,
-            spr5px,
-            volume_widget,
-            spr5px,
-            spr,
-            spr5px,
-            battery_widget,
-            spr5px,
-            -- Clock
-            spr,
-            clock_widget,
-            spr,
-            s.mylayoutbox,
-        },
-    }
-
-    s.myleftwibox:setup {
-        layout = wibox.layout.align.vertical,
-        s.mytaglist
+        {
+            middle_layout,
+            valign = "center",
+            halign = "center",
+            layout = wibox.container.place
+        }
     }
 
     -- Screen Wibar }}}
@@ -720,7 +723,7 @@ globalkeys = gears.table.join(
     -- Programs
     awful.key({ super_key }, "w", function(c) awful.spawn("google-chrome-stable") end,
         { description = "Open the browser", group = "launcher" }),
-    awful.key({ super_key }, "e", function(c) awful.spawn(terminal .. " -e vim") end,
+    awful.key({ super_key }, "e", function(c) awful.spawn(editor) end,
         { description = "Open GUI Text Editor", group = "launcher" }),
     awful.key({ super_key }, "r", function(c) awful.spawn(terminal .. " -e ranger") end,
         { description = "Open file manager", group = "launcher" }),

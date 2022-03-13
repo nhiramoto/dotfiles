@@ -138,15 +138,22 @@ module.exports = {
     //   `@company/project`
     //   `project#1.0.1`
     plugins: [
-        "hyper-night-owl"
+        'hyper-aura-theme',
+        'hyper-tabs-enhanced'
     ],
     // in development, you can create a directory under
     // `~/.hyper_plugins/local/` and include it here
     // to load it and avoid it being `npm install`ed
     localPlugins: [],
     keymaps: {
-    // Example
-    // 'window:devtools': 'cmd+alt+o',
-    },
+        'pane:next': 'alt+l',
+        'pane:prev': 'alt+h',
+        'pane:splitRight': 'alt+shift+l',
+        'pane:splitDown': 'alt+shift+j',
+        'pane:close': 'alt+w',
+        'tab:new': 'alt+t',
+        'tab:next': 'alt+shift+l',
+        'tab:prev': 'alt+shift+h',
+    }
 };
 //# sourceMappingURL=config-default.js.map
