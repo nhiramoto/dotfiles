@@ -95,6 +95,9 @@ augroup END
 " Disable Ex Mode
 map Q <Nop>
 
+" Leader key
+let mapleader = "\<Space>"
+
 " Clear Search Highlights
 nnoremap <silent> <Esc> :nohl<cr>
 
@@ -233,9 +236,9 @@ Plug 'editorconfig/editorconfig-vim'
 " Plug 'JamshedVesuna/vim-markdown-preview'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'ayu-theme/ayu-vim'
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf.vim'
 Plug 'khzaw/vim-conceal'
-Plug 'mtth/scratch.vim'
+" Plug 'mtth/scratch.vim'
 Plug 'jacoborus/tender.vim'
 Plug 'sjl/badwolf'
 Plug 'Lokaltog/vim-distinguished'
@@ -248,6 +251,13 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'tweekmonster/django-plus.vim'
 Plug 'tiagovla/tokyodark.nvim'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'folke/which-key.nvim'
+Plug 'akinsho/toggleterm.nvim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'jceb/vim-orgmode'
+Plug 'glepnir/dashboard-nvim'
 
 call plug#end()
 
@@ -446,13 +456,13 @@ nnoremap <silent> <M-/> :TmuxNavigatePrevious<cr>
 " }}}
 
 " Plugin: fzf {{{
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-x': 'split',
-  \ 'ctrl-v': 'vsplit' }
-let g:fzf_layout = { 'down': '~40%' }
-let g:fzf_command_prefix = 'Fzf'
-nnoremap <C-t> :FzfFiles<CR>
+" let g:fzf_action = {
+"   \ 'ctrl-t': 'tab split',
+"   \ 'ctrl-x': 'split',
+"   \ 'ctrl-v': 'vsplit' }
+" let g:fzf_layout = { 'down': '~40%' }
+" let g:fzf_command_prefix = 'Fzf'
+" nnoremap <C-t> :FzfFiles<CR>
 " }}}
 
 " Plugin: vim-instant-markdown {{{
@@ -489,6 +499,15 @@ let delimitMate_matchpairs = "(:),[:],{:}"
 
 " }}}
 
+" {{{ Plugin: Telescope
+
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" }}}
+
 " {{{ Plugin: Ale
 
 let g:ale_linters = {
@@ -498,8 +517,43 @@ let g:ale_linters = {
 
 " }}}
 
+" {{{ Plugin: which-key
+
+lua << EOF
+require("which-key").setup {
+}
+EOF
+
+" }}}
+
+" {{{ Plugin: ToggleTerm
+
+let g:toggleterm_terminal_mapping = '<C-t>'
+" or manually...
+autocmd TermEnter term://*toggleterm#*
+      \ tnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm direction=float"<CR>
+
+" By applying the mappings this way you can pass a count to your
+" mapping to open a specific window.
+" For example: 2<C-t> will open terminal 2
+nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm direction=float"<CR>
+inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm direction=float"<CR>
+
+" }}}
+
+" {{{ Plugin: CoC
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
+nnoremap <silent><nowait> <space>a :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <space>c :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <space><S-s> :<C-u>CocList -I symbols<cr>
+
+" }}}
+
 " {{{ vim-fake
-let g:fake_src_paths = ['/home/hyokan/.vim/fake/lorem']
+let g:fake_src_paths = ['/home/toshiaki/.vim/fake/lorem']
 
 "" Get a nonsense text like Lorem ipsum
 call fake#define('sentense', 'fake#capitalize('
@@ -515,6 +569,33 @@ call fake#define('lipsum', 'fake#gen("paragraph")')
 
 " {{{ Neosnippets
 " let g:neosnippet#disable_runtime_snippets = 0
+" }}}
+
+" {{{ Plugin: dashboard-vim
+
+let g:dashboard_default_executive='telescope.nvim'
+let g:dashboard_custom_header =<< trim END
+=================     ===============     ===============   ========  ========
+\\ . . . . . . .\\   //. . . . . . .\\   //. . . . . . .\\  \\. . .\\// . . //
+||. . ._____. . .|| ||. . ._____. . .|| ||. . ._____. . .|| || . . .\/ . . .||
+|| . .||   ||. . || || . .||   ||. . || || . .||   ||. . || ||. . . . . . . ||
+||. . ||   || . .|| ||. . ||   || . .|| ||. . ||   || . .|| || . | . . . . .||
+|| . .||   ||. _-|| ||-_ .||   ||. . || || . .||   ||. _-|| ||-_.|\ . . . . ||
+||. . ||   ||-'  || ||  `-||   || . .|| ||. . ||   ||-'  || ||  `|\_ . .|. .||
+|| . _||   ||    || ||    ||   ||_ . || || . _||   ||    || ||   |\ `-_/| . ||
+||_-' ||  .|/    || ||    \|.  || `-_|| ||_-' ||  .|/    || ||   | \  / |-_.||
+||    ||_-'      || ||      `-_||    || ||    ||_-'      || ||   | \  / |  `||
+||    `'         || ||         `'    || ||    `'         || ||   | \  / |   ||
+||            .===' `===.         .==='.`===.         .===' /==. |  \/  |   ||
+||         .=='   \_|-_ `===. .==='   _|_   `===. .===' _-|/   `==  \/  |   ||
+||      .=='    _-'    `-_  `='    _-'   `-_    `='  _-'   `-_  /|  \/  |   ||
+||   .=='    _-'          '-__\._-'         '-_./__-'         `' |. /|  |   ||
+||.=='    _-'                                                     `' |  /==.||
+=='    _-'                        N E O V I M                         \/   `==
+\   _-'                                                                `-_   /
+ `''                                                                      ``'
+END
+
 " }}}
 
 " Custom Functions {{{

@@ -120,7 +120,7 @@ export TERM="rxvt-unicode-256color"
 # else
 #   export EDITOR='mvim'
 # fi
-export EDITOR='emacsclient -c'
+export EDITOR='vim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -266,3 +266,5 @@ man() {
 
 # Color Scripts (https://gitlab.com/dwt1/shell-color-scripts)
 #colorscript random
+
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk

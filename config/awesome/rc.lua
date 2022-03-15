@@ -1,4 +1,4 @@
--- Imports {{{
+--Imports {{{
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -46,7 +46,7 @@ local ctrl_key = "Control"
 local alt_key = "Mod1"
 local shift_key = "Shift"
 
-local terminal = "wezterm"
+local terminal = "alacritty"
 local editor = os.getenv("EDITOR") or "emacsclient -c"
 local editor_cmd = terminal .. " -e " .. editor
 local awesome_config_file = os.getenv("HOME") .. "/.config/awesome/rc.lua"
@@ -549,10 +549,10 @@ awful.screen.connect_for_each_screen(function(s)
     local right_layout = {
         layout = wibox.layout.fixed.horizontal,
         systray_widget,
-        spr5px,
-        spr,
-        spr5px,
-        system_usage_widget,
+        -- spr5px,
+        -- spr,
+        -- spr5px,
+        -- system_usage_widget,
         spr5px,
         spr,
         spr5px,
