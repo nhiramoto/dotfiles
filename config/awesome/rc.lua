@@ -3,7 +3,7 @@
 local gears = require("gears")
 local awful = require("awful")
 -- Autofocus when tag switching
-local autofocus = require("awful.autofocus")
+require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
 -- Theme handling library
@@ -18,9 +18,9 @@ local vicious = require("vicious")
 -- Error handling {{{
 -- Startup errors
 if awesome.startup_errors then
-    -- naughty.notify({ preset = naughty.config.presets.critical,
-    --                  title = "Oops, there were errors during startup!",
-    --                  text = awesome.startup_errors })
+    naughty.notify({ preset = naughty.config.presets.critical,
+                     title = "Oops, there were errors during startup!",
+                     text = awesome.startup_errors })
 end
 
 -- Runtime errors
@@ -31,10 +31,9 @@ do
         if in_error then return end
         in_error = true
 
-        -- naughty.notify({ preset = naughty.config.presets.critical,
-        --                  title = "Oops, an error happened!",
-        --                  text = tostring(err) })
-        in_error = false
+        naughty.notify({ preset = naughty.config.presets.critical,
+                         title = "Oops, an error happened!",
+                         text = tostring(err) })
     end)
 end
 -- }}}
@@ -47,8 +46,8 @@ local alt_key = "Mod1"
 local shift_key = "Shift"
 
 local terminal = "alacritty"
-local editor = os.getenv("EDITOR") or "emacsclient -c"
-local editor_cmd = terminal .. " -e " .. editor
+local editor = 'neovide'
+local editor_term = 'vim'
 local awesome_config_file = os.getenv("HOME") .. "/.config/awesome/rc.lua"
 local theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/"
 local theme = "tokyodark"
@@ -125,7 +124,7 @@ local volume_popup = awful.popup {
     shape = function (c, w, h)
         gears.shape.rounded_rect(c, w, h, 8)
     end,
-    border_width = 2,
+    border_width = 0,
     border_color = beautiful.border_focus,
     placement = awful.placement.centered,
     ontop = true,
@@ -149,7 +148,7 @@ vicious.register(volume_popup.widget, vicious.widgets.volume, function (widget, 
     local ismuted = {['♫'] = false, ['♩'] = true}
     widget:get_children_by_id('progress')[1]:set_value(ismuted[args[2]] and 0 or args[1] / 100)
     widget:get_children_by_id("percent")[1].text = (ismuted[args[2]] and "0%" or args[1] .. "%")
-end, 0.2, "Master")
+end, 1, "Master")
 
 -- }}}
 
@@ -189,7 +188,7 @@ local placeon_bottomright_scaled = awful.placement.bottom_right + awful.placemen
 local myawesomemenu = {
    { "hotkeys", function() return false, hotkeys_popup.show_help end},
    { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome_config_file },
+   { "edit config", editor .. " " .. awesome_config_file },
    { "restart", awesome.restart },
    { "quit", function() awesome.quit() end}
 }
@@ -292,6 +291,7 @@ local clock_tooltip = awful.tooltip {
 }
 
 -- Battery
+--[[
 local battery_widget = wibox.widget {
     layout = wibox.layout.fixed.horizontal,
     spacing = 2,
@@ -349,6 +349,7 @@ vicious.register(battery_widget, vicious.widgets.bat, function(widget, args)
     --     status_widget.text = ""
     -- end
 end, 1, "BAT0")
+--]]
 
 -- Cpu
 local cpu_widget = wibox.widget {
@@ -363,7 +364,7 @@ local cpu_tooltip = awful.tooltip {
     mode = "outside",
     preferred_alignments = { "middle", "front", "back" }
 }
-vicious.register(cpu_widget, vicious.widgets.cpu, "$1", 3)
+-- vicious.register(cpu_widget, vicious.widgets.cpu, "$1", 3)
 
 local mem_widget = wibox.widget {
     widget = wibox.widget.graph,
@@ -377,7 +378,7 @@ local mem_tooltip = awful.tooltip {
     mode = "outside",
     preferred_alignments = { "middle", "front", "back" }
 }
-vicious.register(mem_widget, vicious.widgets.mem, "$1", 3)
+-- vicious.register(mem_widget, vicious.widgets.mem, "$1", 3)
 
 local system_usage_widget = wibox.container {
     widget = wibox.container.margin,
@@ -401,12 +402,6 @@ local system_usage_widget = wibox.container {
         }
     }
 }
-
-local ping_host = '192.168.0.1'
-local ping_widget = awful.widget.watch('bash -c "ping -c 1 ' .. ping_host .. ' | tail -n 1 | awk \'{print $4}\' | cut -d \'/\' -f 2"', 1,
-    function(widget, stdout)
-        widget:set_text(stdout .. 'ms')
-    end)
 
 -- Volume
 local volume_widget = wibox.widget {
@@ -467,25 +462,6 @@ volume_widget:connect_signal('button::press', function() volume_menu:toggle() en
 
 -- Systray
 local systray_widget = wibox.widget.systray()
-
--- Pacman
-local pacwidget = wibox.widget.textbox()
-local pacwidget_t = awful.tooltip({ objects = { pacwidget }, })
-vicious.register(pacwidget, vicious.widgets.pkg, function (widget, args)
-    local io = { popen = io.popen }
-    local s = io.popen("checkupdates")
-
-    local str = ''
-    local i = 0
-
-    for line in s:lines() do
-        str = str .. line .. "\n"
-        i = i + 1
-    end
-    pacwidget_t:set_text(str)
-    s:close()
-    return "PACMAN: " .. i .. "   "
-end, 1800, "Arch")
 
 -- Widgets }}}
 
@@ -557,10 +533,6 @@ awful.screen.connect_for_each_screen(function(s)
         spr,
         spr5px,
         volume_widget,
-        spr5px,
-        spr,
-        spr5px,
-        battery_widget,
         spr5px,
         -- Clock
         spr,
@@ -990,9 +962,9 @@ end)
 client.connect_signal("property::geometry", function (c)
     if c.floating == true then
         c.border_width = 2
-        c.shape = function(cr,w,h)
-            gears.shape.rounded_rect(cr, w, h, 6)
-        end
+        -- c.shape = function(cr,w,h)
+            -- gears.shape.rounded_rect(cr, w, h, 6)
+        -- end
     elseif #c.screen.tiled_clients == 1 then
         c.border_width = 0
         c.shape = gears.shape.rectangle
@@ -1025,31 +997,6 @@ client.connect_signal("request::titlebars", function(c)
     local titlebar = awful.titlebar(c, {
         size = 22
     })
-
-    -- titlebar : setup {
-    --     { -- Left
-    --         awful.titlebar.widget.closebutton    (c),
-    --         awful.titlebar.widget.floatingbutton (c),
-    --         awful.titlebar.widget.maximizedbutton(c),
-    --         -- awful.titlebar.widget.stickybutton   (c),
-    --         -- awful.titlebar.widget.ontopbutton    (c),
-    --         buttons = buttons,
-    --         layout  = wibox.layout.fixed.horizontal
-    --     },
-    --     { -- Middle
-    --         { -- Title
-    --             align  = "center",
-    --             widget = awful.titlebar.widget.titlewidget(c)
-    --         },
-    --         buttons = buttons,
-    --         layout  = wibox.layout.flex.horizontal
-    --     },
-    --     { -- Right
-    --         awful.titlebar.widget.iconwidget(c),
-    --         layout = wibox.layout.fixed.horizontal()
-    --     },
-    --     layout = wibox.layout.align.horizontal
-    -- }
 end)
 
 screen.connect_signal("property::geometry", function(s)

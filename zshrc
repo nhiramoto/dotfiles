@@ -120,7 +120,7 @@ export TERM="rxvt-unicode-256color"
 # else
 #   export EDITOR='mvim'
 # fi
-export EDITOR='vim'
+export EDITOR='neovide'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -268,3 +268,4 @@ man() {
 #colorscript random
 
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+export JDTLS_HOME=$HOME/.local/share/nvim/lsp_servers/jdtls
