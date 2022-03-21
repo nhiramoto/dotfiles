@@ -47,12 +47,6 @@ else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
-" convert tabs to spaces when reading file
-"autocmd! bufreadpost * set expandtab | retab! 4
-
-" convert tabs to spaces before writing file
-"autocmd! bufwritepre * set expandtab | retab! 4
-
 " Highlights Styles in tex files
 hi clear texItalStyle
 hi clear texBoldStyle
@@ -152,12 +146,6 @@ nnoremap <Leader>sl :so $VIMRUNTIME/syntax/hitest.vim<CR>
 
 " }}}
 
-" Abbreviations {{{
-
-" iabbrev {lhs} {rhs}
-
-" }}}
-
 " Language Settings {{{
 
 map <silent> <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -174,55 +162,28 @@ filetype off
 
 call plug#begin('~/.vim/plugged')
 
-"Plug 'tpope/vim-fugitive'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-" Plug 'ervandew/supertab'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-" Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 Plug 'mattn/emmet-vim'
 Plug 'MarcWeber/vim-addon-mw-utils'
-" Plug 'garbas/vim-snipmate'
 Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
 Plug 'raimondi/delimitmate'
-" Plug 'scrooloose/syntastic'
 Plug 'jshint/jshint'
-" Plug 'ap/vim-css-color'
-" Plug 'gko/vim-coloresque'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'nanotech/jellybeans.vim'
-Plug 'ciaranm/inkpot'
-Plug 'jonathanfilip/vim-lucius'
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'sheerun/vim-wombat-scheme'
-Plug 'tomasr/molokai'
-Plug 'w0ng/vim-hybrid'
-" Plug 'Yggdroot/indentLine'
-" Plug 'bronson/vim-trailing-whitespace'
-" Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plug 'bling/vim-bufferline'
-" Plug 'zenorocha/dracula-theme', {'rtp': 'vim/'}
-" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'nlknguyen/papercolor-theme'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'romainl/Apprentice'
 Plug 'joshdick/onedark.vim'
 Plug 'cocopon/iceberg.vim'
-" Plug 'ying17zi/vim-live-latex-preview'
-" Plug 'ternjs/tern_for_vim'
 Plug 'severin-lemaignan/vim-minimap'
-Plug 'morhetz/gruvbox'
-Plug 'w0rp/ale'
-Plug 'chriskempson/base16-vim'
-Plug 'Reewr/vim-monokai-phoenix'
-Plug 'micha/vim-colors-solarized'
 Plug 'dag/vim-fish'
 Plug 'arcticicestudio/nord-vim'
 Plug 'ryanoasis/vim-devicons'
@@ -250,7 +211,6 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 " Plug 'Shougo/neosnippet.vim'
 Plug 'tweekmonster/django-plus.vim'
 Plug 'tiagovla/tokyodark.nvim'
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'folke/which-key.nvim'
@@ -266,16 +226,6 @@ filetype plugin indent on
 " }}}
 
 " Appearance {{{
-
-" Gruvbox theme
-"let g:gruvbox_contrast_dark = 'medium'
-"let g:gruvbox_termcolors=16
-
-" Ayu theme
-"let ayucolor="mirage"
-
-" One Dark
-"let g:onedark_termcolors=256
 
 syntax on
 set background=dark
@@ -332,18 +282,6 @@ let g:airline_section_z = '%2l%#__restore__#%#__accent_bold#/%L%{g:airline_symbo
 
 " }}}
 
-" Plugin: Syntastic {{{
-" let g:syntastic_check_on_open=1
-" let g:syntastic_javascript_checkers = ['jshint']
-" let g:syntastic_javascript_jshint_exec='/usr/sbin/jshint'
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" let g:syntastic_always_populate_loc_list = 0
-" let g:syntastic_auto_loc_list = 0
-" let g:syntastic_check_on_wq = 0
-" }}}
-
 " Plugin: NERDTree {{{
 " autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
@@ -353,65 +291,6 @@ let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeWinPos = 'left'
 let NERDTreeShowHidden=1
-" }}}
-
-" Plugin: NERDCommenter {{{
-" let g:NERDScapeDelims = 1
-" let g:NERDCompactSexyComs = 1
-" let g:NERDDefaultAlign = 'left'
-" let g:NERDCommentEmptyLines = 1
-" let g:NERDTrimTrailingWhitespace = 1
-" }}}
-
-" Plugin: Rainbow Parentheses {{{
-" let g:rbpt_colorpairs = [
-"         \ ['blue',       '#FF6000'],
-"         \ ['cyan', '#00FFFF'],
-"         \ ['darkmagenta',    '#CC00FF'],
-"         \ ['yellow',   '#FFFF00'],
-"         \ ['red',     '#FF0000'],
-"         \ ['darkgreen',    '#00FF00'],
-"         \ ['White',         '#c0c0c0'],
-"         \ ['blue',       '#FF6000'],
-"         \ ['cyan', '#00FFFF'],
-"         \ ['darkmagenta',    '#CC00FF'],
-"         \ ['yellow',   '#FFFF00'],
-"         \ ['red',     '#FF0000'],
-"         \ ['darkgreen',    '#00FF00'],
-"         \ ['White',         '#c0c0c0'],
-"         \ ['blue',       '#FF6000'],
-"         \ ['cyan', '#00FFFF'],
-"         \ ['darkmagenta',    '#CC00FF'],
-"         \ ['yellow',   '#FFFF00'],
-"         \ ['red',     '#FF0000'],
-"         \ ['darkgreen',    '#00FF00'],
-"         \ ['White',         '#c0c0c0'],
-"         \ ]
-
-" let g:rbpt_max = 16
-" let g:rbpt_loadcmd_toggle = 0
-" au VimEnter * RainbowParenthesesToggle
-" au Syntax * RainbowParenthesesLoadRound
-" au Syntax * RainbowParenthesesLoadSquare
-" au Syntax * RainbowParenthesesLoadBraces
-" }}}
-
-" Plugin: Indent Lines {{{
-" let g:indentLine_color_term = 236
-" let g:indentLine_char = '¦'
-" let g:indentLine_leadingSpaceEnabled = 1
-" let g:indentLine_leadingSpaceChar = '·'
-" let g:indentLine_setConceal = 2
-" let g:indentLine_fileTypeExclude = ['json', 'md']
-" }}}
-
-" Plugin: CtrlP {{{
-" let g:ctrlp_map = '<c-p>'
-" let g:ctrlp_cmd = 'CtrlP'
-" let g:ctrlp_working_path_mode = 'ra'
-" let g:ctrlp_show_hidden = 1
-" set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-" set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 " }}}
 
 " Plugin: Multiple Cursors {{{
@@ -455,30 +334,6 @@ nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <M-/> :TmuxNavigatePrevious<cr>
 " }}}
 
-" Plugin: fzf {{{
-" let g:fzf_action = {
-"   \ 'ctrl-t': 'tab split',
-"   \ 'ctrl-x': 'split',
-"   \ 'ctrl-v': 'vsplit' }
-" let g:fzf_layout = { 'down': '~40%' }
-" let g:fzf_command_prefix = 'Fzf'
-" nnoremap <C-t> :FzfFiles<CR>
-" }}}
-
-" Plugin: vim-instant-markdown {{{
-" let g:instant_markdown_autostart = 1 " Autostart
-" let g:instant_markdown_open_to_the_world = 0 " Allow remote connection?
-" let g:instant_markdown_allow_unsafe_content = 0 " Allow scripts to run?
-" let g:instant_markdown_allow_external_content = 1 " Allow external content such as images, stylesheets and frames
-" }}}
-
-" Plugin: vim-markdown-preview {{{
-" let vim_markdown_preview_hotkey='<C-m>'
-" let vim_markdown_preview_browser=''
-" let vim_markdown_preview_pandoc=0
-" let vim_markdown_preview_use_xdg_open=1
-" }}}
-
 " Plugin: UltiSnips {{{
 
 let g:UltiSnipsUsePythonVersion = 3
@@ -505,15 +360,6 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
-" }}}
-
-" {{{ Plugin: Ale
-
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\   'python': ['pylint', 'flake8']
-\}
 
 " }}}
 
@@ -565,10 +411,6 @@ call fake#define('paragraph', 'join(map(range(fake#int(3,10)),"fake#gen(\"senten
 "" Alias
 call fake#define('lipsum', 'fake#gen("paragraph")')
 
-" }}}
-
-" {{{ Neosnippets
-" let g:neosnippet#disable_runtime_snippets = 0
 " }}}
 
 " {{{ Plugin: dashboard-vim
