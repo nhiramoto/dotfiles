@@ -1,8 +1,7 @@
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-local home = vim.loop.os_getenv('HOME')
-local jdtls_home = home .. '/.local/share/nvim/lsp_servers/jdtls'
+local jdtls_home = vim.fn.expand('~/.local/share/nvim/lsp_servers/jdtls')
 local launcher_jar = 'org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar'
-vim.notify('ftplugin:java: project_name=' .. project_name .. ', home=' .. home .. ', jdtls_home=' .. jdtls_home .. ', launcher_jar=' .. launcher_jar)
+print('ftplugin:java: project_name=' .. project_name .. ', jdtls_home=' .. jdtls_home .. ', launcher_jar=' .. launcher_jar)
 
 local ok, jdtls = pcall(require, 'jdtls')
 if not ok then

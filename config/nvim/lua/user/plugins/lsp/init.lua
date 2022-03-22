@@ -7,4 +7,4 @@ end
 require('user.plugins.lsp.lsp-installer')
 require('user.plugins.lsp.handlers').setup()
 
-lsp.jdtls.setup {}
+-- lsp.jdtls.setup {}
