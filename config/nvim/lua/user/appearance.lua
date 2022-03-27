@@ -9,7 +9,7 @@ vim.cmd [[set background=dark]]
 local colorscheme = 'material'
 
 -- Material theme variant
-vim.g.material_style = 'deep ocean'
+vim.g.material_style = 'darker'
 
 if colorscheme == 'kanagawa' then
     require('kanagawa').setup({

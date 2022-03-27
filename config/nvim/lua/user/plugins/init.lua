@@ -69,6 +69,7 @@ packer.startup(function()
       'nvim-telescope/telescope.nvim',
       requires = { {'nvim-lua/plenary.nvim'} }
     }
+    use 'ahmedkhalf/project.nvim'
     use 'nvim-telescope/telescope-project.nvim'
 
     -- Dashboard
@@ -100,3 +101,4 @@ require 'user.plugins.cmp'
 require 'user.plugins.toggleterm'
 require 'user.plugins.dashboard'
 require 'user.plugins.airline'
+require 'user.plugins.project_nvim'

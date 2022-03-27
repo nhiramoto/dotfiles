@@ -13,7 +13,7 @@ from libqtile.utils import guess_terminal
 ###############################################################################
 ### Vars
 ###############################################################################
-qtile_home = '~/.config/qtile'
+qtile_home = os.path.expanduser('~/.config/qtile')
 
 # Keys
 mod = 'mod4'
@@ -26,19 +26,16 @@ tab = 'Tab'
 esc = 'Escape'
 
 # Fonts
-font = 'CaskaydiaCove Nerd Font Medium'
-font_bold = 'CaskaydiaCove Nerd Font Bold'
+font = 'BlexMono Nerd Font SemiBold'
+font_bold = 'BlexMono Nerd Font Bold'
 font_size = 13
 
 # Applications
-terminal = guess_terminal()
-launcher = os.path.expanduser('~/.config/rofi/bin/launcher_colorful')
+terminal = 'alacritty'
+launcher = 'rofi -show drun'
 browser = 'google-chrome-stable'
-editor = 'emacsclient -c'
+editor = 'neovide'
 player = terminal + ' -e ncmpcpp'
-rofi_apps = os.path.expanduser('~/.config/rofi/bin/menu_apps')
-rofi_quicklinks = os.path.expanduser('~/.config/rofi/bin/menu_quicklinks')
-rofi_mpd = os.path.expanduser('~/.config/rofi/bin/menu_mpd')
 
 # System
 lock_screen = 'betterlockscreen -l pixel'
@@ -46,7 +43,7 @@ suspend = 'systemctl suspend'
 
 # Colors
 colors = {
-    'bg': '#1E222A',
+    'bg': '#1C1C1C',
     'bga': '#282C34',
     'fg': '#ABB2BF',
     'black0': '#5C6370',
@@ -88,6 +85,16 @@ icons = {
     'network': '\uf6ff',
     'hdd': '\uf0a0',
     'python': '\ue606',
+    '1': '\u3044\u3061',
+    '2': '\u306b',
+    '3': '\u3055\u3093',
+    '4': '\u3087\u3093',
+    '5': '\u3054',
+    '6': '\u308d\u304f',
+    '7': '\u306a\u306a',
+    '8': '\u306f\u3061',
+    '9': '\u304d\u3085\u3046',
+    '10': '\u3058\u3085\u3046',
 }
 
 # Layout Theme
@@ -120,12 +127,12 @@ def volume_toggle(qtile):
 ###############################################################################
 @hook.subscribe.startup
 def autorestart():
-    autorestart_script = os.path.expanduser(qtile_home + '/autorestart.sh')
+    autorestart_script = qtile_home + '/autorestart.sh'
     subprocess.call([autorestart_script])
 
 @hook.subscribe.startup_once
 def autostart():
-    autostart_script = os.path.expanduser(qtile_home + '/autostart.sh')
+    autostart_script = qtile_home + '/autostart.sh'
     subprocess.call([autostart_script])
 
 ###############################################################################
@@ -173,13 +180,14 @@ keys = [
 
     # Launch Applications
     Key([mod], enter, lazy.spawn(terminal), desc='Launch terminal'),
+    Key([mod], 'z', lazy.spawn(terminal), desc='Launch terminal'),
     Key([mod], 'w', lazy.spawn(browser)),
     Key([mod], 'e', lazy.spawn(editor)),
     Key([mod], 'n', lazy.spawn(player)),
     Key([mod], space, lazy.spawn(launcher)),
-    Key([mod], 'a', lazy.spawn(rofi_apps)),
-    Key([mod, shift], space, lazy.spawn(rofi_quicklinks)),
-    Key([mod], 'm', lazy.spawn(rofi_mpd)),
+    # Key([mod], 'a', lazy.spawn(rofi_apps)),
+    # Key([mod, shift], space, lazy.spawn(rofi_quicklinks)),
+    # Key([mod], 'm', lazy.spawn(rofi_mpd)),
 
     # Toggle between different layouts as defined below
     Key([mod], tab, lazy.next_layout(), desc='Toggle between layouts'),
@@ -187,8 +195,8 @@ keys = [
     Key([alt], 'F4', lazy.window.kill(), desc='Kill focused window'),
 
     # System
-    Key([mod, shift], esc, lazy.restart(), desc='Restart Qtile'),
-    Key([mod, ctrl], esc, lazy.shutdown(), desc='Shutdown Qtile'),
+    Key([mod, ctrl], 'r', lazy.restart(), desc='Restart Qtile'),
+    Key([mod, ctrl], 'q', lazy.shutdown(), desc='Shutdown Qtile'),
     Key([mod], 'r', lazy.spawncmd(),
         desc='Spawn a command using a prompt widget'),
     Key([mod, ctrl], 'o', lazy.spawn(lock_screen), desc='Lock screen'),
@@ -199,7 +207,7 @@ keys = [
     Key([], 'XF86AudioLowerVolume', lazy.spawn('amixer sset Master 5%-')),
     Key([], 'XF86AudioMute', lazy.spawn('amixer sset Master toggle')),
     Key([mod], 'Up', lazy.spawn('amixer sset Master 5%+')),
-    Key([mod], 'Down', lazy.spawn('amixer sset Master 5%-')),
+    Key([mod], 'Down', lazy.spawn('amixer sset Master 6%-')),
 ]
 
 ###############################################################################
@@ -208,13 +216,13 @@ keys = [
 
 workspaces = [
     { 'label': icons['browser'], 'name': '1', 'key': '1', 'matches': [] },
-    { 'label': icons['remote'], 'name': '2', 'key': '2', 'matches': [] },
-    { 'label': icons['code'], 'name': '3', 'key': '3', 'matches': [] },
-    { 'label': '4', 'name': '4', 'key': '4', 'matches': [] },
-    { 'label': '5', 'name': '5', 'key': '5', 'matches': [] },
-    { 'label': '6', 'name': '6', 'key': '6', 'matches': [] },
-    { 'label': '7', 'name': '7', 'key': '7', 'matches': [] },
-    { 'label': '8', 'name': '8', 'key': '8', 'matches': [] },
+    { 'label': icons['code'], 'name': '2', 'key': '2', 'matches': [] },
+    { 'label': icons['terminal'], 'name': '3', 'key': '3', 'matches': [] },
+    { 'label': icons['tools'], 'name': '4', 'key': '4', 'matches': [] },
+    { 'label': icons['5'], 'name': '5', 'key': '5', 'matches': [] },
+    { 'label': icons['6'], 'name': '6', 'key': '6', 'matches': [] },
+    { 'label': icons['7'], 'name': '7', 'key': '7', 'matches': [] },
+    { 'label': icons['8'], 'name': '8', 'key': '8', 'matches': [] },
     { 'label': icons['music'], 'name': '9', 'key': '9', 'matches': [] },
 ]
 
@@ -228,21 +236,8 @@ for ws in workspaces:
             desc='Switch to group {}'.format(ws['label']) ),
 
         Key([mod, shift], ws['key'], lazy.window.togroup(ws['name'], switch_group=False),
-            desc='Switch to & move focused window to group {}'.format(ws['label'])),
+            desc='Move focused window to group {}'.format(ws['label'])),
     ])
-
-"""
-
-groups = [Group(i) for i in '123456789']
-
-for g in groups:
-    keys.extend([
-        Key([mod], g.name, lazy.group[g.name].toscreen(toggle=False),
-            desc='Switch to group {}'.format(g.name)),
-        Key([mod, shift], g.name, lazy.window.togroup(g.name, switch_group=False),
-            desc='Switch focused window to group {}'.format(g.name))
-    ])
-"""
 
 ###############################################################################
 ### Layouts
@@ -311,7 +306,9 @@ screens = [
                     fontsize=20
                 ),
                 widget.Prompt(),
-                widget.WindowName(),
+                widget.WindowName(
+                    max_chars = 80
+                ),
                 widget.Chord(
                     chords_colors={
                         'launch': ('#ff0000', '#ffffff'),
@@ -319,7 +316,7 @@ screens = [
                     name_transform=lambda name: name.upper(),
                 ),
                 widget.CheckUpdates(
-                    display_format=icons['cube'] + '  {updates}',
+                    display_format='<span foreground="' + colors['yellow0'] + '">' + icons['cube'] + '</span>  {updates}',
                     custom_command='checkupdates+aur',
                 ),
                 widget.DF(
@@ -329,25 +326,29 @@ screens = [
                     visible_on_warn=True,
                     warn_color=colors['fg'],
                 ),
-                widget.Net(
-                    fmt=icons['network'] + '  {}',
-                    foreground=colors['cyan']
+                widget.Bluetooth(),
+                widget.CPUGraph(
+                    type='box',
+                    border_width=1,
+                    border_color=colors['bga']
                 ),
                 widget.Volume(
-                    fmt=icons['volume'] + '  {}',
-                    foreground=colors['blue0']
+                    fmt='<span foreground="' + colors['blue0'] + '">' + icons['volume'] + '</span>  {}'
                 ),
                 widget.Clock(
-                    fmt=icons['clock'] + '  {}',
-                    format='%H:%M',
-                    foreground=colors['pink']
+                    fmt='<span foreground="' + colors['pink'] + '">' + icons['clock'] + '</span>  {}',
+                    format='%H:%M'
+                    #foreground=colors['pink']
                 ),
                 widget.Clock(
-                    fmt=icons['calendar'] + '  {}',
-                    format='%a %d/%m/%Y',
-                    foreground=colors['green']
+                    fmt='<span foreground="' + colors['green'] + '">' + icons['calendar'] + '</span>  {}',
+                    format='%a %d/%m/%Y'
                 ),
-                widget.CurrentLayoutIcon(margin=10),
+                widget.CurrentLayoutIcon(
+                    margin=10,
+                    scale=.6,
+                    foreground=colors['fg']
+                ),
                 widget.Systray(),
                 # widget.QuickExit(),
                 widget.Sep(padding=10, foreground=colors['bg']),

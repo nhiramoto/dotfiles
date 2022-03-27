@@ -27,10 +27,10 @@ theme.color = {
 theme.panel           = theme.color.black
 
 -- {{{ Fonts
-theme.font      = "Exo 2 Semibold 10"
-theme.font_small = "Exo 2 Semibold 9"
-theme.font_big = "Exo 2 Semibold 12"
-theme.font_extra = "Exo 2 Semibold 14"
+theme.font      = "BlexMono Nerd Font Semibold 10"
+theme.font_small = "BlexMono Nerd Font Semibold 9"
+theme.font_big = "BlexMono Nerd Font Semibold 12"
+theme.font_extra = "BlexMono Nerd Font Semibold 14"
 -- }}}
 
 -- fg/bg colors {{{
@@ -60,9 +60,6 @@ theme.titlebar_bg_normal = theme.bg_normal
 -- }}}
 
 -- {{{ Taglist
-theme.taglist_shape = function (cr, w, h)
-    gears.shape.rounded_rect(cr, w, h)
-end
 theme.taglist_fg_normal = theme.fg_normal
 theme.taglist_fg_focus = theme.bg_normal
 theme.taglist_fg_occupied = theme.bg_focus

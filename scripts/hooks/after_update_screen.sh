@@ -8,7 +8,7 @@ echo "PRIMARY: $PRIMARY"
 echo "SECONDARY: $SECONDARY"
 
 function setWallpaper {
-    nitrogen --restore
+    nitrogen --restore || true
 }
 
 function launch_polybar {

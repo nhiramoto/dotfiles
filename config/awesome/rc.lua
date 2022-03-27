@@ -13,6 +13,15 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 local vicious = require("vicious")
+
+local ok, eminent = pcall(require, 'lib.eminent.eminent')
+if not ok then
+    naughty.notify({
+        preset = naughty.config.presets.critical,
+        title = 'Module eminent not found',
+        text = 'Module eminent was not found in the lib directory.'
+    })
+end
 -- }}}
 
 -- Error handling {{{
@@ -470,7 +479,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
     -- Screen Wibar {{{
     -- Create a promptbox for each screen
@@ -481,24 +490,31 @@ awful.screen.connect_for_each_screen(function(s)
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
         buttons = taglist_buttons,
+        style = {
+            shape = function (cr, w, h)
+                gears.shape.rounded_rect(cr, w, h)
+            end
+        },
         layout  = {
-            spacing = 2,
+            spacing = 5,
             layout  = wibox.layout.fixed.horizontal
         },
         widget_template = {
             {
                 {
-                    align = 'center',
-                    widget = wibox.widget.textbox
+                    {
+                        align = 'center',
+                        widget = wibox.widget.textbox,
+                        id = 'text_role'
+                    },
+                    margins = 8,
+                    widget = wibox.container.margin
                 },
-                top = 6,
-                bottom = 6,
-                left = 14,
-                right = 14,
-                widget = wibox.container.margin
+                id = 'background_role',
+                widget = wibox.container.background
             },
-            id = 'background_role',
-            widget = wibox.container.background
+            margins = 2,
+            widget = wibox.container.margin
         }
     }
 
@@ -515,28 +531,22 @@ awful.screen.connect_for_each_screen(function(s)
 
     local left_layout = {
         layout = wibox.layout.fixed.horizontal,
+        mylauncher,
+        s.mytaglist,
         s.mytasklist,
         s.mypromptbox
     }
     local middle_layout = {
         layout = wibox.layout.fixed.horizontal,
-        s.mytaglist
+        clock_widget,
     }
     local right_layout = {
         layout = wibox.layout.fixed.horizontal,
         systray_widget,
-        -- spr5px,
-        -- spr,
-        -- spr5px,
-        -- system_usage_widget,
         spr5px,
         spr,
         spr5px,
         volume_widget,
-        spr5px,
-        -- Clock
-        spr,
-        clock_widget,
         spr,
         s.mylayoutbox,
     }
@@ -545,7 +555,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mywibox = awful.wibar({
         position = "top",
         screen = s,
-        height = 28,
+        height = 30,
         bg = beautiful.panel
     })
 
@@ -591,6 +601,10 @@ globalkeys = gears.table.join(
     awful.key({ ctrl_key, alt_key }, "a", awful.tag.viewprev,
               { description = "Go to the previous tag.", group = "tag" }),
     awful.key({ ctrl_key, alt_key }, "d", awful.tag.viewnext,
+              { description = "Go to the next tag.", group = "tag" }),
+    awful.key({ ctrl_key, alt_key }, "w", awful.tag.viewprev,
+              { description = "Go to the previous tag.", group = "tag" }),
+    awful.key({ ctrl_key, alt_key }, "s", awful.tag.viewnext,
               { description = "Go to the next tag.", group = "tag" }),
 
     -- Focus
@@ -881,7 +895,22 @@ awful.rules.rules = {
                 "vlc-media-info", -- vlc current media information dialog
             }
         },
-        properties = { floating = true }
+        properties = {
+            floating = true,
+            placement = awful.placement.centered
+        }
+    },
+
+    -- Popup clients.
+    {
+        rule_any = {
+            role = { "pop-up", "GtkFileChooserDialog" }
+        },
+        properties = {
+            floating = true,
+            placement = awful.placement.centered,
+            above = true,
+        }
     },
 
     -- Picture N Picture
@@ -897,18 +926,6 @@ awful.rules.rules = {
             placement = function (c)
                 placeon_bottomright_scaled(c, { to_percent = 0.3, margins = 20 })
             end
-        }
-    },
-
-    -- Popup clients.
-    {
-        rule_any = {
-            role = { "pop-up", "GtkFileChooserDialog" }
-        },
-        properties = {
-            floating = true,
-            placement = awful.placement.centered,
-            above = true,
         }
     },
 
@@ -960,20 +977,19 @@ client.connect_signal("manage", function (c)
 end)
 
 client.connect_signal("property::geometry", function (c)
-    if c.floating == true then
-        c.border_width = 2
-        -- c.shape = function(cr,w,h)
-            -- gears.shape.rounded_rect(cr, w, h, 6)
-        -- end
-    elseif #c.screen.tiled_clients == 1 then
+    if c.floating == true or #c.screen.tiled_clients > 1 then
+        c.border_width = beautiful.border_width
+        c.border_color = beautiful.border_normal
+    elseif not c.floating and #c.screen.tiled_clients == 1 then
         c.border_width = 0
         c.shape = gears.shape.rectangle
-    else
-        for _, client in pairs(c.screen.tiled_clients) do
-            client.border_width = 2
-            client.shape = function(cr,w,h)
-                gears.shape.rounded_rect(cr, w, h, 6)
-            end
+     else
+         for _, client in pairs(c.screen.tiled_clients) do
+             client.border_width = beautiful.border_width
+             client.border_color = beautiful.border_normal
+             client.shape = function(cr,w,h)
+                 gears.shape.rounded_rect(cr, w, h, 6)
+             end
         end
     end
 end)
