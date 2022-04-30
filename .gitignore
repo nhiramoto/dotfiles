@@ -31,3 +31,5 @@ xmonad/xpm/
 **/*_git/
 
 **/lib/
+
+.vscode/

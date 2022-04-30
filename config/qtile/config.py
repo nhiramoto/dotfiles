@@ -1,13 +1,12 @@
 import os
-import subprocess
-import random
 
-from typing import List
+import subprocess
 
 from libqtile import hook, bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
-from libqtile.utils import guess_terminal
+
+import user
 
 
 ###############################################################################
@@ -99,8 +98,8 @@ icons = {
 
 # Layout Theme
 layout_theme = {
-    'border_width': 3,
-    'margin': 5,
+    'border_width': 1,
+    'margin': 2,
     'border_focus': colors['blue0'],
     'border_normal': colors['bga'],
     'font': font,
@@ -121,6 +120,12 @@ def volume_down(qtile):
 
 def volume_toggle(qtile):
     subprocess.call([volume_script, 'toggle'])
+
+def select_monitor_layout(qtile):
+    subprocess.call([os.path.expanduser('~/.scripts/rofi-scripts/select-monitor-layout.sh')])
+
+def power_menu(qtile):
+    subprocess.call([os.path.expanduser('~/.scripts/rofi-scripts/power-menu.sh')])
 
 ###############################################################################
 ### Autostart
@@ -170,6 +175,9 @@ keys = [
         desc='Grow window up'),
     Key([mod, ctrl], 'n', lazy.layout.normalize(),
         desc='Reset all window sizes'),
+    
+    Key([mod], 'f', lazy.window.toggle_floating(), desc='Toggle floating mode.'),
+    Key([mod, ctrl], 'f', lazy.window.toggle_fullscreen(), desc='Toggle fullscreen mode.'),
 
     # Toggle between split and unsplit sides of stack.
     # Split = all windows displayed
@@ -200,14 +208,16 @@ keys = [
     Key([mod], 'r', lazy.spawncmd(),
         desc='Spawn a command using a prompt widget'),
     Key([mod, ctrl], 'o', lazy.spawn(lock_screen), desc='Lock screen'),
-    Key([mod, ctrl], 'p', lazy.spawn(suspend), desc='Lock and suspend system.'),
+
+    Key([mod, ctrl], 'm', lazy.function(select_monitor_layout), desc='Select monitor layout.'),
+    Key([mod, ctrl], 'p', lazy.function(power_menu), desc='Power menu.'),
 
     # Media
     Key([], 'XF86AudioRaiseVolume', lazy.spawn('amixer sset Master 5%+')),
     Key([], 'XF86AudioLowerVolume', lazy.spawn('amixer sset Master 5%-')),
     Key([], 'XF86AudioMute', lazy.spawn('amixer sset Master toggle')),
     Key([mod], 'Up', lazy.spawn('amixer sset Master 5%+')),
-    Key([mod], 'Down', lazy.spawn('amixer sset Master 6%-')),
+    Key([mod], 'Down', lazy.spawn('amixer sset Master 5%-')),
 ]
 
 ###############################################################################

@@ -269,3 +269,10 @@ man() {
 
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
 export JDTLS_HOME=$HOME/.local/share/nvim/lsp_servers/jdtls
+
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+        source /etc/profile.d/vte.sh
+fi
+
+export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
+
