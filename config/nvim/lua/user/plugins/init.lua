@@ -96,7 +96,7 @@ end)
 
 require 'user.plugins.nvim-tree'
 require 'user.plugins.telescope'
-require 'user.plugins.lsp'
+-- require 'user.plugins.lsp'
 require 'user.plugins.cmp'
 require 'user.plugins.toggleterm'
 require 'user.plugins.dashboard'

@@ -44,13 +44,6 @@ ntree.setup {
             error = "",
         },
     },
-    show_icons = {
-        git = 1,
-        folders = 1,
-        files = 1,
-        folder_arrows = 1,
-        tree_width = 30
-    },
     update_cwd = true,
     update_focused_file = {
         enable = true,
