@@ -14,6 +14,7 @@ function setWallpaper {
 function launch_polybar {
     MONITOR1="$1"
     MONITOR2="$2" 
+    echo "MONITOR1: $MONITOR1, MONITOR2: $MONITOR2"
     . "$HOME/.config/polybar/launch.sh"
 }
 
@@ -32,7 +33,7 @@ function set_bspwm_desktops {
     fi
 }
 
-case "$CURRENT_DESKTOP" in
+case "$DESKTOP_SESSION" in
     "i3")
         launch_polybar "$PRIMARY" "$SECONDARY"
         launch_conky
@@ -43,6 +44,7 @@ case "$CURRENT_DESKTOP" in
         launch_conky
         ;;
     *)
+        echo "Desktop session $DESKTOP_SESSION not recognized."
         ;;
 esac
 

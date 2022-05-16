@@ -5,14 +5,17 @@
 
 # terminal emulator
 super + Return
-    termite
+    alacritty
 
 # program launcher
 super + space
     rofi -show drun
 
 alt + F2
-    dmenu_run
+    rofi -show run
+
+super + w
+    google-chrome-stable
 
 # make sxhkd reload its configuration files:
 super + Escape

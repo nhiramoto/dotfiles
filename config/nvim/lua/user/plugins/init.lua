@@ -92,13 +92,20 @@ packer.startup(function()
 
     -- Which Key
     use 'folke/which-key.nvim'
+
+    use 'baskerville/vim-sxhkdrc'
+
+    -- use 'mhartington/formatter.nvim'
+
+    use "lukas-reineke/lsp-format.nvim"
 end)
 
 require 'user.plugins.nvim-tree'
 require 'user.plugins.telescope'
--- require 'user.plugins.lsp'
+require 'user.plugins.lsp'
 require 'user.plugins.cmp'
 require 'user.plugins.toggleterm'
 require 'user.plugins.dashboard'
 require 'user.plugins.airline'
 require 'user.plugins.project_nvim'
+require 'user.plugins.format-config'

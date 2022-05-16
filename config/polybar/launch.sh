@@ -14,7 +14,7 @@ echo "Monitor2: $MONITOR2"
 # Launch bars
 if [[ $MONITOR1 ]]; then
     polybar -r top &
-    #polybar -r bottom &
+    polybar -r bottom &
 fi
 
 if [[ $MONITOR2 ]]; then

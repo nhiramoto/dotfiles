@@ -14,6 +14,7 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 local vicious = require("vicious")
 
+--[[
 local ok, eminent = pcall(require, 'lib.eminent.eminent')
 if not ok then
     naughty.notify({
@@ -23,6 +24,7 @@ if not ok then
     })
 end
 -- }}}
+]]--
 
 -- Error handling {{{
 -- Startup errors
@@ -56,10 +58,10 @@ local shift_key = "Shift"
 
 local terminal = "alacritty"
 local editor = 'neovide'
-local editor_term = 'vim'
+local editor_term = 'nvim'
 local awesome_config_file = os.getenv("HOME") .. "/.config/awesome/rc.lua"
 local theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/"
-local theme = "tokyodark"
+local theme = "aura"
 
 -- Load theme
 beautiful.init(theme_dir .. theme .. "/theme.lua")
@@ -198,8 +200,8 @@ local myawesomemenu = {
    { "hotkeys", function() return false, hotkeys_popup.show_help end},
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor .. " " .. awesome_config_file },
-   { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end}
+   { "restart awesome", awesome.restart },
+   { "logout", function() awesome.quit() end}
 }
 
 -- Root menu
@@ -276,19 +278,30 @@ local mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 local clock_widget = wibox.container {
     widget = wibox.container.margin,
-    margins = 4,
+    margins = 2,
     {
-        layout = wibox.layout.fixed.horizontal,
-        spacing = 10,
+        widget = wibox.container.background,
+        bg = beautiful.color.black2,
+        shape = function (cr, w, h)
+            gears.shape.rounded_rect(cr, w, h, 8)
+        end,
         {
-            widget = wibox.widget.textclock,
-            refresh = 60,
-            format = "<span color='" .. beautiful.color.green .. "'>%d/%m/%Y</span>"
-        },
-        {
-            widget = wibox.widget.textclock,
-            refresh = 60,
-            format = "%H:%M"
+            widget = wibox.container.margin,
+            margins = 2,
+            {
+                layout = wibox.layout.fixed.horizontal,
+                spacing = 10,
+                {
+                    widget = wibox.widget.textclock,
+                    refresh = 60,
+                    format = "<span color='" .. beautiful.color.green .. "'>%d/%m/%Y</span>"
+                },
+                {
+                    widget = wibox.widget.textclock,
+                    refresh = 60,
+                    format = "%H:%M"
+                }
+            }
         }
     }
 }
@@ -298,6 +311,8 @@ local clock_tooltip = awful.tooltip {
     mode = "outside",
     preferred_alignments = { "middle", "front", "back" }
 }
+local calendar_popup = awful.widget.calendar_popup.month()
+calendar_popup:attach(clock_widget, 'tc', { on_hover = false })
 
 -- Battery
 --[[

@@ -7,33 +7,43 @@ fi
 
 export LANG="en_US.UTF-8"
 
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+# plugins=(
+#    git
+#    bgnotify
+#    zsh-syntax-highlighting
+#    themes
+#    zsh-256color
+#    zsh-autopair
+#    #zsh-autosuggestions
+#)
+
+source ~/.zsh/antigen/antigen.zsh
+
+antigen use oh-my-zsh
+
+antigen bundle git
+antigen bundle bgnotify
+antigen bundle command-not-found
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle hlissner/zsh-autopair
+antigen bundle chrissicool/zsh-256color
+
+antigen theme romkatv/powerlevel10k
+
+antigen apply
+
 zmodload zsh/zprof
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-#POWERLEVEL9K_MODE='nerdfont-complete'
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-#ZSH_THEME="tjkirch_mod2"
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir virtualenv anaconda pyenv rbenv root_indicator)
-#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vcs)
-#POWERLEVEL9K_DIR_SHOW_WRITABLE=true
 DEFAULT_USER="$USER"
-#POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-#POWERLEVEL9K_SHORTEN_DELIMITER=""
-#POWERLEVEL9K_SHORTEN_STRATEGY="truncate_with_package_name"
-#POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-#POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$''
-#POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=$''
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
@@ -78,20 +88,6 @@ function bgnotify_formatted {
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    git
-    bgnotify
-    zsh-syntax-highlighting
-    themes
-    zsh-256color
-    zsh-autopair
-    #zsh-autosuggestions
-)
-
 # Check cached .zcompdump once a day
 # https://gist.github.com/ctechols/ca1035271ad134841284
 autoload -Uz compinit
@@ -112,7 +108,7 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
-export TERM="rxvt-unicode-256color"
+export TERM="xterm-256color"
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -120,7 +116,8 @@ export TERM="rxvt-unicode-256color"
 # else
 #   export EDITOR='mvim'
 # fi
-export EDITOR='neovide'
+export EDITOR='nvim'
+export VISUAL='neovide'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -176,9 +173,9 @@ alias tsm="transmission-remote"
 alias tsmd="transmission-daemon"
 alias tsmc='tremc'
 alias yt='youtube-dl'
-alias ls="exa"
-alias la="exa -la"
-alias v='vim'
+alias ls="exa --icons -TL1"
+alias la="exa -la --icons --git -TL1"
+alias v="$EDITOR"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
@@ -235,7 +232,7 @@ function sd () {
 function chpwd_lsla () {
     emulate -L zsh
     if [[ "$PWD" != "$HOME" ]]; then
-        ls -la
+        exa -la
     fi
 }
 chpwd_functions=(${chpwd_functions[@]} "chpwd_lsla")
@@ -276,3 +273,10 @@ fi
 
 export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
 
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+    source /etc/profile.d/vte.sh
+fi
+
+if [ -d "$HOME/.config/rofi/bin" ]; then
+    export PATH=$HOME/.config/rofi/bin:$PATH
+fi

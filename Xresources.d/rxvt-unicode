@@ -1,6 +1,6 @@
 ! vim: filetype=xdefaults :
 
-#include "colors/nord.colors"
+#include "colors/tokyonight"
 
 !URxvt.termName: rxvt-unicode-256color
 URxvt.cursorBlink: true

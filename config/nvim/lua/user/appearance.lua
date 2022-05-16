@@ -6,7 +6,7 @@ vim.opt.termguicolors = true
 vim.cmd [[hi Comment cterm=italic]]
 vim.cmd [[set background=dark]]
 
-local colorscheme = 'material'
+local colorscheme = 'tokyodark'
 
 -- Material theme variant
 vim.g.material_style = 'darker'

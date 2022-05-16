@@ -1,6 +1,5 @@
 ----------------------------------------------------------
 --  "nhtoshiaki" awesome theme                          --
---    Based on "apprentice" color theme from vim        --
 --    By nhtoshiaki                                     --
 ----------------------------------------------------------
 

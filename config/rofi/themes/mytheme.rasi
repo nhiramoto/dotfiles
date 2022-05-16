@@ -1,0 +1,131 @@
+/**
+ * vim: filetype=css
+ */
+
+* {
+    text-color:  #a9b1d6;
+    background-color: #1a1b26;
+    dark: #1c1c1c;
+
+    // Black
+    black:       #1a1b26;
+    lightblack:  #4e5173;
+
+    //
+    // Red
+    red:         #f7768e;
+    lightred:    #f7768e;
+
+    //
+    // Green
+    green:       #9ece6a;
+    lightgreen:  #9ece6a;
+
+    //
+    // Yellow
+    yellow:      #e0af68;
+    lightyellow:     #e0af68;
+
+    //
+    // Blue
+    blue:      #7aa2f7;
+    lightblue:     #7aa2f7;
+
+    //
+    // Magenta
+    magenta:      #9a7ecc;
+    lightmagenta:     #9e7ecc;
+
+    //
+    // Cyan
+    cyan:      #4abaaf;
+    lightcyan:     #4abaaf;
+
+    //
+    // White
+    white:      #acb0d0;
+    lightwhite:     #acb0d0;
+
+    //
+    // Bold, Italic, Underline
+    highlight:     bold #ffffff;
+}
+window {
+    height: 20em;
+    width: 50em;
+    location: center;
+    anchor:   center;
+    border:  0;
+    text-color: @lightwhite;
+}
+mode-switcher {
+    border: 2px 0px 0px 0px;
+    background-color: @lightblack;
+    padding: 4px;
+}
+button selected {
+    border-color: @lightgreen;
+    text-color: @lightgreen;
+}
+inputbar {
+    background-color: @background-color;
+    text-color: @lightgreen;
+    padding: 15px;
+    border: 0px 0px 2px 0px;
+}
+prompt {
+    color: #5c64a3;
+}
+mainbox {
+    expand: true;
+    background-color: #1c1c1cee;
+    spacing: 1em;
+}
+listview {
+    columns: 3;
+    padding: 20px;
+    dynamic: true;
+    lines: 0;
+    cycle: false;
+}
+element {
+    padding: 10px;
+    border-radius: 10px;
+}
+element-text {
+    background-color: inherit;
+    text-color:       inherit;
+}
+element selected  normal {
+    background-color: @blue;
+    text-color: @black;
+}
+element normal active {
+    text-color: @lightblue;
+}
+element normal urgent {
+    text-color: @lightred;
+}
+element alternate normal {
+}
+element alternate active {
+    text-color: @lightblue;
+}
+element alternate urgent {
+    text-color: @lightred;
+}
+element selected active {
+    background-color: @lightblue;
+    text-color: @dark;
+}
+element selected urgent {
+    background-color: @lightred;
+    text-color: @dark;
+}
+error-message {
+    expand: true;
+    background-color: red;
+    border-color: darkred;
+    border: 2px;
+    padding: 1em;
+}

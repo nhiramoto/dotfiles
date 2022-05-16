@@ -33,7 +33,6 @@ if not c_ok then
 end
 
 ntree.setup {
-    auto_close = true,
     diagnostics = {
         enable = false,
         show_on_dirs = false,

@@ -5,13 +5,13 @@ MODE=${1:-primary}
 MON1=HDMI-0
 MON2=DVI-D-0
 ISMON2CONN=$(xrandr | grep -i "$MON2" | cut -d " " -f 2)
-CURRENT_DESKTOP="${CURRENT_DESKTOP:-unknown}"
+DESKTOP_SESSION="${DESKTOP_SESSION:-unknown}"
 MONMODE_FILE="$HOME/.scripts/vars/mon_mode.dat"
 
 function after_update_screen {
     PRIMARY="$1"
     SECONDARY="$2" 
-    . "$HOME/.scripts/hooks/after_update_screen.sh"
+    . "$HOME/.scripts/hooks/after_update_screen.sh" &
 }
 
 if [[ -f "$MONMODE_FILE" && ( "$MODE" = "restore" || "$MODE" = "r" ) ]]; then
@@ -19,6 +19,7 @@ if [[ -f "$MONMODE_FILE" && ( "$MODE" = "restore" || "$MODE" = "r" ) ]]; then
     if [[ -n "$FILE_CONTENT" ]]; then
         MODE=$FILE_CONTENT
     fi
+    echo "Restoring mode $MODE..."
 else
     mkdir -p "$(dirname $MONMODE_FILE)"
     touch "$MONMODE_FILE"
@@ -35,28 +36,28 @@ echo "MODE: $MODE"
 if [[ -n "$MODE" ]]; then
     case "$MODE" in
         "extend-right"|"er")
-            xrandr --output "$MON1" --primary --mode 2560x1080 --pos 0x0 --rotate normal --output "$MON2" --mode 1280x1024 --pos 2560x0 --rotate normal
-            after_update_screen "$MON1" "$MON2"
+            xrandr --output "$MON1" --primary --mode 2560x1080 --pos 0x0 --rotate normal --output "$MON2" --mode 1280x1024 --pos 2560x0 --rotate normal &
+            after_update_screen "$MON1" "$MON2" &
             echo "extend-right" > "$MONMODE_FILE"
             ;;
         "extend-left"|"el")
-            xrandr --output "$MON1" --primary --mode 2560x1080 --pos 1280x0 --rotate normal --output "$MON2" --mode 1280x1024 --pos 0x0 --rotate normal
-            after_update_screen "$MON1" "$MON2"
+            xrandr --output "$MON1" --primary --mode 2560x1080 --pos 1280x0 --rotate normal --output "$MON2" --mode 1280x1024 --pos 0x0 --rotate normal &
+            after_update_screen "$MON1" "$MON2" &
             echo "extend-left" > "$MONMODE_FILE"
             ;;
         "clone"|"c")
-            xrandr --output "$MON1" --primary --mode 2560x1080 --pos 0x0 --rotate normal --output "$MON2" --mode 1280x1024 --pos 0x0 --rotate normal
-            after_update_screen "$MON1"
+            xrandr --output "$MON1" --primary --mode 2560x1080 --pos 0x0 --rotate normal --output "$MON2" --mode 1280x1024 --pos 0x0 --rotate normal &
+            after_update_screen "$MON1" &
             echo "clone" > "$MONMODE_FILE"
             ;;
         "primary"|"primary-only"|"po"|"p")
-            xrandr --output "$MON1" --primary --mode 2560x1080 --pos 0x0 --rotate normal --output "$MON2" --off
-            after_update_screen "$MON1"
+            xrandr --output "$MON1" --primary --mode 2560x1080 --pos 0x0 --rotate normal --output "$MON2" --off &
+            after_update_screen "$MON1" &
             echo "primary" > "$MONMODE_FILE"
             ;;
         "secondary"|"secondary-only"|"so"|"s")
-            xrandr --output "$MON1" --off --output "$MON2" --primary --mode 1280x1024 --pos 0x0 --rotate normal
-            after_update_screen "$MON2"
+            xrandr --output "$MON1" --off --output "$MON2" --primary --mode 1280x1024 --pos 0x0 --rotate normal &
+            after_update_screen "$MON2" &
             echo "secondary" > "$MONMODE_FILE"
             ;;
         *)

@@ -1,5 +1,4 @@
 import os
-
 import subprocess
 
 from libqtile import hook, bar, layout, widget
@@ -31,7 +30,7 @@ font_size = 13
 
 # Applications
 terminal = 'alacritty'
-launcher = 'rofi -show drun'
+launcher = 'launcher_misc'
 browser = 'google-chrome-stable'
 editor = 'neovide'
 player = terminal + ' -e ncmpcpp'
@@ -75,7 +74,7 @@ icons = {
     'volume': '\uf027',
     'chip': '\uf2db',
     'browser': '\ue743',
-    'code': '\ue696',
+    'code': '\uf121',
     'terminal': '\uf120',
     'tools': '\uf7d9',
     'remote': '\ue066',
@@ -83,22 +82,12 @@ icons = {
     'cube': '\uf1b2',
     'network': '\uf6ff',
     'hdd': '\uf0a0',
-    'python': '\ue606',
-    '1': '\u3044\u3061',
-    '2': '\u306b',
-    '3': '\u3055\u3093',
-    '4': '\u3087\u3093',
-    '5': '\u3054',
-    '6': '\u308d\u304f',
-    '7': '\u306a\u306a',
-    '8': '\u306f\u3061',
-    '9': '\u304d\u3085\u3046',
-    '10': '\u3058\u3085\u3046',
+    'python': '\ue606'
 }
 
 # Layout Theme
 layout_theme = {
-    'border_width': 1,
+    'border_width': 2,
     'margin': 2,
     'border_focus': colors['blue0'],
     'border_normal': colors['bga'],
@@ -126,6 +115,9 @@ def select_monitor_layout(qtile):
 
 def power_menu(qtile):
     subprocess.call([os.path.expanduser('~/.scripts/rofi-scripts/power-menu.sh')])
+
+def rofi(qtile):
+    subprocess.call([os.path.expanduser('~/.config/rofi/bin/launcher_misc')])
 
 ###############################################################################
 ### Autostart
@@ -192,7 +184,7 @@ keys = [
     Key([mod], 'w', lazy.spawn(browser)),
     Key([mod], 'e', lazy.spawn(editor)),
     Key([mod], 'n', lazy.spawn(player)),
-    Key([mod], space, lazy.spawn(launcher)),
+    Key([mod], space, lazy.function(rofi)),
     # Key([mod], 'a', lazy.spawn(rofi_apps)),
     # Key([mod, shift], space, lazy.spawn(rofi_quicklinks)),
     # Key([mod], 'm', lazy.spawn(rofi_mpd)),
@@ -229,10 +221,10 @@ workspaces = [
     { 'label': icons['code'], 'name': '2', 'key': '2', 'matches': [] },
     { 'label': icons['terminal'], 'name': '3', 'key': '3', 'matches': [] },
     { 'label': icons['tools'], 'name': '4', 'key': '4', 'matches': [] },
-    { 'label': icons['5'], 'name': '5', 'key': '5', 'matches': [] },
-    { 'label': icons['6'], 'name': '6', 'key': '6', 'matches': [] },
-    { 'label': icons['7'], 'name': '7', 'key': '7', 'matches': [] },
-    { 'label': icons['8'], 'name': '8', 'key': '8', 'matches': [] },
+    { 'label': '5', 'name': '5', 'key': '5', 'matches': [] },
+    { 'label': '6', 'name': '6', 'key': '6', 'matches': [] },
+    { 'label': '7', 'name': '7', 'key': '7', 'matches': [] },
+    { 'label': '8', 'name': '8', 'key': '8', 'matches': [] },
     { 'label': icons['music'], 'name': '9', 'key': '9', 'matches': [] },
 ]
 
@@ -342,6 +334,11 @@ screens = [
                     border_width=1,
                     border_color=colors['bga']
                 ),
+                widget.MemoryGraph(
+                    type='box',
+                    border_width=1,
+                    border_color=colors['bga']
+                ),
                 widget.Volume(
                     fmt='<span foreground="' + colors['blue0'] + '">' + icons['volume'] + '</span>  {}'
                 ),
@@ -364,7 +361,8 @@ screens = [
                 widget.Sep(padding=10, foreground=colors['bg']),
             ],
             28,
-            background=colors['bg']
+            background=colors['bg'],
+            opacity=0.9
         ),
     ),
     Screen(

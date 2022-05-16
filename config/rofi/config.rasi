@@ -1,17 +1,16 @@
+/**
+ * vim: filetype=css
+ */
+
 configuration {
-    modi: "drun,run,window,ssh";
-	width: 60;
-	lines: 10;
-	columns: 1;
-	font: "Exo 2 Medium";
-/*	bw: 1;*/
+	modi: "window,run,ssh";
+	font: "BlexMono Nerd Font Medium 12";
 /*	location: 0;*/
-	padding: 15;
 /*	yoffset: 0;*/
 /*	xoffset: 0;*/
 /*	fixed-num-lines: true;*/
 	show-icons: true;
-	terminal: "alacritty";
+/*	terminal: "rofi-sensible-terminal";*/
 /*	ssh-client: "ssh";*/
 /*	ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";*/
 /*	run-command: "{cmd}";*/
@@ -19,53 +18,45 @@ configuration {
 /*	run-shell-command: "{terminal} -e {cmd}";*/
 /*	window-command: "wmctrl -i -R {window}";*/
 /*	window-match-fields: "all";*/
-/*  icon-theme: "Breeze Dark";*/
-/*	Drun-match-fields: "name,generic,exec,categories,keywords";*/
+	//icon-theme: '$HOME/.local/share/icons/DeepOcean/index.theme';
+/*	drun-match-fields: "name,generic,exec,categories,keywords";*/
 /*	drun-categories: ;*/
 /*	drun-show-actions: false;*/
 /*	drun-display-format: "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";*/
 /*	drun-url-launcher: "xdg-open";*/
 /*	disable-history: false;*/
 /*	ignored-prefixes: "";*/
-	sort: true;
-	sorting-method: "normal";
+/*	sort: false;*/
+/*	sorting-method: "normal";*/
 /*	case-sensitive: false;*/
 /*	cycle: true;*/
-	sidebar-mode: true;
+/*	sidebar-mode: false;*/
+/*	hover-select: false;*/
 /*	eh: 1;*/
 /*	auto-select: false;*/
 /*	parse-hosts: false;*/
 /*	parse-known-hosts: true;*/
 /*	combi-modi: "window,run";*/
-/* matching: "fuzzy"; */
+/*	matching: "normal";*/
 /*	tokenize: true;*/
 /*	m: "-5";*/
-	line-margin: 4;
-	line-padding: 10;
 /*	filter: ;*/
-/*	separator-style: "dash";*/
-/*	hide-scrollbar: false;*/
-	fullscreen: true;
-	fake-transparency: true;
 /*	dpi: -1;*/
 /*	threads: 0;*/
-/*	scrollbar-width: 8;*/
 /*	scroll-method: 0;*/
-/*	fake-background: "screenshot";*/
 /*	window-format: "{w}    {c}   {t}";*/
 /*	click-to-exit: true;*/
-/*	show-match: true;*/
-/* color-normal: "#1D1F21, #FFFFFF, #1D1F21, #81A2BE, #1D1F21" ;
-   color-urgent: "#1D1F21, #FFFFFF, #1D1F21, #F0C674, #1D1F21" ;
-   color-active: "#1D1F21, #FFFFFF, #1D1F21, #B5BD68, #1D1F21" ;
-   color-window: "#1D1F21, #1D1F21, #1D1F21" ; */
 /*	max-history-size: 25;*/
 /*	combi-hide-mode-prefix: false;*/
+/*	combi-display-format: "{mode} {text}";*/
+/*	matching-negate-char: '-' /* unsupported */;*/
 /*	cache-dir: ;*/
 /*	window-thumbnail: false;*/
 /*	drun-use-desktop-cache: false;*/
 /*	drun-reload-desktop-cache: false;*/
 /*	normalize-match: false;*/
+/*	steal-focus: false;*/
+/*	application-fallback-icon: ;*/
 /*	pid: "/run/user/1000/rofi.pid";*/
 /*	display-window: ;*/
 /*	display-windowcd: ;*/
@@ -74,7 +65,7 @@ configuration {
 /*	display-drun: ;*/
 /*	display-combi: ;*/
 /*	display-keys: ;*/
-/*	display-file-browser: ;*/
+/*	display-filebrowser: ;*/
 /*	kb-primary-paste: "Control+V,Shift+Insert";*/
 /*	kb-secondary-paste: "Control+v,Insert";*/
 /*	kb-clear-line: "Control+w";*/
@@ -92,10 +83,12 @@ configuration {
 /*	kb-remove-to-sol: "Control+u";*/
 /*	kb-accept-entry: "Control+j,Control+m,Return,KP_Enter";*/
 /*	kb-accept-custom: "Control+Return";*/
+/*	kb-accept-custom-alt: "Control+Shift+Return";*/
 /*	kb-accept-alt: "Shift+Return";*/
 /*	kb-delete-entry: "Shift+Delete";*/
 /*	kb-mode-next: "Shift+Right,Control+Tab";*/
 /*	kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab";*/
+/*	kb-mode-complete: "Control+l";*/
 /*	kb-row-left: "Control+Page_Up";*/
 /*	kb-row-right: "Control+Page_Down";*/
 /*	kb-row-up: "Up,Control+p,ISO_Left_Tab";*/
@@ -147,9 +140,14 @@ configuration {
 /*	me-select-entry: "MousePrimary";*/
 /*	me-accept-entry: "MouseDPrimary";*/
 /*	me-accept-custom: "Control+MouseDPrimary";*/
- }
+  timeout {
+      action: "kb-cancel";
+      delay:  0;
+  }
+  filebrowser {
+      directories-first: true;
+      sorting-method:    "name";
+  }
+}
 
-//@theme "rounded-nord-dark"
-//@theme "/home/toshiaki/.local/share/rofi/themes/spotlight-dark.rasi"
-//@theme "/home/toshiaki/.local/share/rofi/themes/spotlight-dark.rasi"
-@theme "/home/toshiaki/.local/share/rofi/themes/rounded-blue-dark.rasi"
+@theme "themes/mytheme.rasi"

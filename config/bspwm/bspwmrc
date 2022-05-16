@@ -7,8 +7,8 @@ sxhkd &
 ##
 
 # Monitors
-bspc eDP1 -d I II III IV V VI VII
-bspc HDMI1 -d VIII IX X
+bspc HDMI0 -d I II III IV V VI VII VIII IX X
+# bspc HDMI1 -d 
 
 bspc config remove_disabled_monitors    true
 bspc config remove_unplugged_monitors   true
@@ -56,12 +56,13 @@ function run {
     fi
 }
 
+run xsetroot -cursor_name left_ptr
+run $HOME/.scripts/mon r
 run $HOME/.config/polybar/launch.sh
 run nitrogen --restore
 run nm-applet
 run dropbox
 run xrdb $HOME/.Xresources
 run udiskie
-run $HOME/.config/compton/launch.sh
+run $HOME/.config/picom/launch.sh
 run $HOME/.config/conky/launch.sh
-

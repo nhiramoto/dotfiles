@@ -5,8 +5,26 @@ NC="\033[0m"
 
 REP="$HOME/dotfiles"
 FILES=(
+    "config/alacritty"
+    "config/awesome"
+    "config/conky"
+    "config/dunst"
+    "config/fish"
     "config/nvim/init.lua"
     "config/nvim/lua"
+    "config/picom"
+    "config/qtile"
+    "config/polybar"
+    "config/wezterm"
+    "config/bspwm"
+    "config/sxhkd"
+    "config/rofi"
+    "config/openbox"
+    "Xresources.d"
+    "Xresources"
+    "tmux.conf"
+    "zshrc"
+    "scripts"
 )
 
 for f in ${FILES[@]}; do
