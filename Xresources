@@ -2,6 +2,7 @@
 
 #include ".Xresources.d/xterm"
 #include ".Xresources.d/rxvt-unicode"
+#include ".Xresources.d/colors/tokyonight"
 
 Xft.lcdfilter: lcddefault
 Xft.antialias: true

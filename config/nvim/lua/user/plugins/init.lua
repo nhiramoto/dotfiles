@@ -56,13 +56,13 @@ packer.startup(function()
 
     -- Themes
     use 'tiagovla/tokyodark.nvim'
-    use 'rakr/vim-one'
     use 'sjl/badwolf'
     use 'jacoborus/tender.vim'
     use 'morhetz/gruvbox'
     use 'marko-cerovac/material.nvim'
     use { "Everblush/everblush.vim" }
     use 'rebelot/kanagawa.nvim'
+    use 'navarasu/onedark.nvim'
 
     -- Telescope
     use {

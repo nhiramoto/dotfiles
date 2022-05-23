@@ -3,8 +3,8 @@ local wezterm = require 'wezterm';
 return {
     initial_rows = 40,
     initial_cols = 120,
-    color_scheme = 'Tomorrow Night',
-    font = wezterm.font("CaskaydiaCove Nerd Font"),
+    color_scheme = 'Atom',
+    font = wezterm.font("JetBrainsMono Nerd Font"),
     font_size = 10.5,
     use_fancy_tab_bar = false,
     enable_tab_bar = true,

@@ -280,3 +280,7 @@ fi
 if [ -d "$HOME/.config/rofi/bin" ]; then
     export PATH=$HOME/.config/rofi/bin:$PATH
 fi
+
+if [ -z "$DESKTOP_SESSION" ]; then
+    set -x (gnome-keyring-daemon --start | string split "=")
+fi

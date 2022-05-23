@@ -7,7 +7,9 @@ local gears = require("gears")
 local theme_assets = require("beautiful.theme_assets")
 local themes_path = os.getenv("HOME") .. "/.config/awesome/themes"
 local thistheme_path = themes_path .. "/nhtoshiaki"
-local dpi = require("beautiful.xresources").apply_dpi
+local xres = require('beautiful.xresources')
+local dpi = xres.apply_dpi
+local xres_theme = xres.get_current_theme()
 
 local theme = {}
 
@@ -23,24 +25,24 @@ theme.color = {
 
 -- {{{ Styles
 
-theme.panel           = theme.color.black
+theme.panel           = xres_theme.background
 
 -- {{{ Fonts
-theme.font      = "BlexMono Nerd Font Semibold 10"
-theme.font_small = "BlexMono Nerd Font Semibold 9"
-theme.font_big = "BlexMono Nerd Font Semibold 12"
-theme.font_extra = "BlexMono Nerd Font Semibold 14"
+theme.font      = "JetBrainsMono Nerd Font Semibold 10"
+theme.font_small = "JetBrainsMono Nerd Font Semibold 9"
+theme.font_big = "JetBrainsMono Nerd Font Semibold 12"
+theme.font_extra = "JetBrainsMono Nerd Font Semibold 14"
 -- }}}
 
 -- fg/bg colors {{{
 
-theme.fg_normal  = theme.color.white
-theme.bg_normal  = theme.color.black
-theme.fg_focus   = theme.bg_normal
-theme.bg_focus   = theme.color.blue
-theme.fg_urgent  = theme.bg_normal
-theme.bg_urgent  = theme.color.red
-theme.bg_systray = theme.panel
+theme.fg_normal  = xres_theme.foreground
+theme.bg_normal  = xres_theme.background
+theme.fg_focus   = xres_theme.color0
+theme.bg_focus   = xres_theme.color4
+theme.fg_urgent  = xres_theme.color0
+theme.bg_urgent  = xres_theme.color1
+theme.bg_systray = xres_theme.background
 
 -- }}}
 
@@ -50,7 +52,7 @@ theme.gap_single_client = false
 theme.border_width  = dpi(2)
 theme.border_normal = theme.bg_normal
 theme.border_focus  = theme.bg_focus
-theme.border_marked = theme.color.yellow
+theme.border_marked = xres_theme.color3
 -- }}}
 
 -- {{{ Titlebars
@@ -63,7 +65,7 @@ theme.taglist_fg_normal = theme.fg_normal
 theme.taglist_fg_focus = theme.bg_normal
 theme.taglist_fg_occupied = theme.bg_focus
 theme.taglist_fg_urgent = theme.fg_urgent
-theme.taglist_bg_normal = theme.color.red
+theme.taglist_bg_normal = xres_theme.color1
 theme.taglist_bg_focus = theme.bg_focus
 theme.taglist_bg_urgent = theme.bg_urgent
 -- }}}
@@ -86,7 +88,6 @@ end
 -- {{{ Notification
 theme.notification_bg = theme.bg_normal
 theme.notification_fg = theme.fg_normal
--- theme.notification_font = theme.font
 theme.notification_border_width = 10
 theme.notification_border_color = theme.notification_bg
 theme.notification_max_width = dpi(400)
@@ -141,8 +142,8 @@ theme.titlebar_bg_focus = theme.bg_focus
 --theme.border_widget    = "#3F3F3F"
 
 theme.fg_widget = theme.fg_normal
-theme.bg_widget = theme.color.black2
-theme.widget_border_color = theme.color.white
+theme.bg_widget = xres_theme.color8
+theme.widget_border_color = xres_theme.color7
 
 theme.progressbar_bg = theme.bg_widget
 theme.progressbar_fg = theme.bg_focus
@@ -154,9 +155,9 @@ theme.progressbar_shape = gears.shape.rounded_bar
 theme.progressbar_bar_shape = gears.shape.rounded_bar
 
 theme.graph_bg_normal = theme.bg_widget
-theme.graph_fg1 = theme.color.blue
-theme.graph_fg2 = theme.color.green
-theme.graph_fg3 = theme.color.yellow
+theme.graph_fg1 = xres_theme.color4
+theme.graph_fg2 = xres_theme.color2
+theme.graph_fg3 = xres_theme.color3
 
 theme.systray_icon_spacing = dpi(8)
 

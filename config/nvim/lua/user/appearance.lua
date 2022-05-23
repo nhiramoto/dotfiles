@@ -6,7 +6,7 @@ vim.opt.termguicolors = true
 vim.cmd [[hi Comment cterm=italic]]
 vim.cmd [[set background=dark]]
 
-local colorscheme = 'tokyodark'
+local colorscheme = 'onedark'
 
 -- Material theme variant
 vim.g.material_style = 'darker'
@@ -25,6 +25,11 @@ elseif colorscheme == 'material' then
             variables = false
         }
     })
+elseif colorscheme == 'onedark' then
+    require('onedark').setup {
+        style = 'darker'
+    }
+    require('onedark').load()
 end
 
 local ok, _ = pcall(vim.cmd, 'colorscheme ' .. colorscheme)
