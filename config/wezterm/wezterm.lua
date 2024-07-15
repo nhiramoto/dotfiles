@@ -1,33 +1,39 @@
 local wezterm = require 'wezterm';
 
-return {
-    initial_rows = 40,
-    initial_cols = 120,
-    color_scheme = 'Atom',
-    font = wezterm.font("JetBrainsMono Nerd Font"),
-    font_size = 10.5,
-    use_fancy_tab_bar = false,
-    enable_tab_bar = true,
-    hide_tab_bar_if_only_one_tab = true,
-    window_decorations = 'TITLE | RESIZE',
-    window_close_confirmation = 'AlwaysPrompt',
-    keys = {
-        { key='w', mods='ALT', action=wezterm.action{CloseCurrentPane={confirm=false}} },
-        { key='w', mods='CTRL', action=wezterm.action{CloseCurrentTab={confirm=true}} },
-        { key='h', mods='ALT', action=wezterm.action{ActivatePaneDirection="Left"} },
-        { key='j', mods='ALT', action=wezterm.action{ActivatePaneDirection="Down"} },
-        { key='k', mods='ALT', action=wezterm.action{ActivatePaneDirection="Up"} },
-        { key='l', mods='ALT', action=wezterm.action{ActivatePaneDirection="Right"} },
-        { key='l', mods='ALT|SHIFT', action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}} },
-        { key='j', mods='ALT|SHIFT', action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}} },
-        { key='t', mods='CTRL', action=wezterm.action{SpawnTab="CurrentPaneDomain"} },
-        { key='x', mods='ALT', action="ShowLauncher" },
-    },
-    launch_menu = {
-        {
-            label = "Bash",
-            args = { "bash", "-l" },
-            cwd = "~"
-        }
+local config = wezterm.config_builder()
+
+if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
+    config.default_prog = { 'powershell.exe' }
+end
+
+config.initial_rows = 40
+config.initial_cols = 120
+config.color_scheme = 'Atom'
+config.font = wezterm.font("JetBrainsMono Nerd Font")
+config.font_size = 10.5
+config.use_fancy_tab_bar = false
+config.enable_tab_bar = true
+config.hide_tab_bar_if_only_one_tab = true
+config.window_decorations = 'TITLE | RESIZE'
+config.window_close_confirmation = 'AlwaysPrompt'
+config.keys = {
+    { key='w', mods='ALT', action=wezterm.action{CloseCurrentPane={confirm=false}} },
+    { key='w', mods='CTRL', action=wezterm.action{CloseCurrentTab={confirm=true}} },
+    { key='h', mods='ALT', action=wezterm.action{ActivatePaneDirection="Left"} },
+    { key='j', mods='ALT', action=wezterm.action{ActivatePaneDirection="Down"} },
+    { key='k', mods='ALT', action=wezterm.action{ActivatePaneDirection="Up"} },
+    { key='l', mods='ALT', action=wezterm.action{ActivatePaneDirection="Right"} },
+    { key='l', mods='ALT|SHIFT', action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}} },
+    { key='j', mods='ALT|SHIFT', action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}} },
+    { key='t', mods='CTRL', action=wezterm.action{SpawnTab="CurrentPaneDomain"} },
+    { key='x', mods='ALT', action="ShowLauncher" },
+}
+config.launch_menu = {
+    {
+        label = "Bash",
+        args = { "bash", "-l" },
+        cwd = "~"
     }
 }
+
+return config
