@@ -18,7 +18,7 @@ config.window_decorations = 'TITLE | RESIZE'
 config.window_close_confirmation = 'AlwaysPrompt'
 config.keys = {
     { key='w', mods='ALT', action=wezterm.action{CloseCurrentPane={confirm=false}} },
-    { key='w', mods='CTRL', action=wezterm.action{CloseCurrentTab={confirm=true}} },
+    { key='q', mods='ALT|SHIFT', action=wezterm.action{CloseCurrentPane={confirm=true}} }
     { key='h', mods='ALT', action=wezterm.action{ActivatePaneDirection="Left"} },
     { key='j', mods='ALT', action=wezterm.action{ActivatePaneDirection="Down"} },
     { key='k', mods='ALT', action=wezterm.action{ActivatePaneDirection="Up"} },
