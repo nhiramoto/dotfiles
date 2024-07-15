@@ -8,7 +8,7 @@ end
 
 config.initial_rows = 40
 config.initial_cols = 120
-config.color_scheme = 'Atom'
+config.color_scheme = 'Kanagawa Dragon (Gogh)'
 config.font = wezterm.font("JetBrainsMono Nerd Font")
 config.font_size = 10.5
 config.use_fancy_tab_bar = false
