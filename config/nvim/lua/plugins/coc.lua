@@ -31,7 +31,9 @@ return {
     -- Use `[g` and `]g` to navigate diagnostics
     -- Use `:CocDiagnostics` to get all diagnostics of current buffer in location list
     keyset("n", "[g", "<Plug>(coc-diagnostic-prev)", {silent = true})
+    keyset("n", "gE", "<Plug>(coc-diagnostic-prev)", {silent = true})
     keyset("n", "]g", "<Plug>(coc-diagnostic-next)", {silent = true})
+    keyset("n", "ge", "<Plug>(coc-diagnostic-next)", {silent = true})
 
     -- GoTo code navigation
     keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
@@ -104,21 +106,21 @@ return {
     ---@diagnostic disable-next-line: redefined-local
     local opts = {silent = true, nowait = true}
     -- Show all diagnostics
-    keyset("n", "<space>a", ":<C-u>CocList diagnostics<cr>", opts)
+    keyset("n", "<leader>a", ":<C-u>CocList diagnostics<cr>", opts)
     -- Manage extensions
-    keyset("n", "<space>e", ":<C-u>CocList extensions<cr>", opts)
+    keyset("n", "<leader>e", ":<C-u>CocList extensions<cr>", opts)
     -- Show commands
-    keyset("n", "<space>c", ":<C-u>CocList commands<cr>", opts)
+    keyset("n", "<leader>c", ":<C-u>CocList commands<cr>", opts)
     -- Find symbol of current document
-    keyset("n", "<space>o", ":<C-u>CocList outline<cr>", opts)
+    keyset("n", "<leader>o", ":<C-u>CocList outline<cr>", opts)
     -- Search workspace symbols
-    keyset("n", "<space>s", ":<C-u>CocList -I symbols<cr>", opts)
+    keyset("n", "<leader>s", ":<C-u>CocList -I symbols<cr>", opts)
     -- Do default action for next item
-    keyset("n", "<space>j", ":<C-u>CocNext<cr>", opts)
+    keyset("n", "<leader>j", ":<C-u>CocNext<cr>", opts)
     -- Do default action for previous item
-    keyset("n", "<space>k", ":<C-u>CocPrev<cr>", opts)
+    keyset("n", "<leader>k", ":<C-u>CocPrev<cr>", opts)
     -- Resume latest coc list
-    keyset("n", "<space>p", ":<C-u>CocListResume<cr>", opts)
+    keyset("n", "<leader>p", ":<C-u>CocListResume<cr>", opts)
 
     -- Flutter
     keyset('n', '<leader>fc', '<cmd>CocList --input=flutter commands<cr>', opts)

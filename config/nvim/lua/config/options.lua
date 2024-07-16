@@ -32,3 +32,5 @@ vim.opt.signcolumn = 'yes'
 vim.opt.textwidth = 0
 vim.opt.wrapmargin = 0
 vim.opt.wrap = false
+
+vim.opt.exrc = true

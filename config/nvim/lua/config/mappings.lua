@@ -18,4 +18,4 @@ end)
 vim.keymap.set('n', '<leader>st', '<cmd>vsplit<bar>Telescope find_files<cr>', { noremap = true, silent = true })
 
 -- Nvim Tree
-vim.keymap.set('n', '<c-n>', '<cmd>NvimTreeToggle<cr>', { noremap = true, silent = true })
+vim.keymap.set('n', '<C-f>', '<cmd>NvimTreeToggle<cr>', { noremap = true, silent = true })
