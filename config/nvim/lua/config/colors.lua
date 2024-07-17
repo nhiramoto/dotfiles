@@ -1,6 +1,1 @@
-require('kanagawa').setup({
-  commentStyle = { italic = true },
-  theme = 'wave'
-})
-
-vim.cmd('colorscheme kanagawa-dragon')
+vim.cmd('colorscheme tokyonight-night')
