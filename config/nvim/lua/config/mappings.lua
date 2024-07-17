@@ -19,3 +19,6 @@ vim.keymap.set('n', '<leader>st', '<cmd>vsplit<bar>Telescope find_files<cr>', { 
 
 -- Nvim Tree
 vim.keymap.set('n', '<C-f>', '<cmd>NvimTreeToggle<cr>', { noremap = true, silent = true })
+
+vim.keymap.set('n', '<leader>rl', '<cmd>OverseerToggle<cr>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>rr', '<cmd>OverseerRun<cr>', { noremap = true, silent = true })
