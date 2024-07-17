@@ -3,5 +3,5 @@ return {
   { "rebelot/kanagawa.nvim" },
   { 'dart-lang/dart-vim-plugin' },
   { 'nvim-tree/nvim-web-devicons' },
-  { 'mg979/vim-visual-multi' }
+  { 'mg979/vim-visual-multi' },
 }
