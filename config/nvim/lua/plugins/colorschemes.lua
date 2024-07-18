@@ -1,4 +1,5 @@
 return {
+  { "rebelot/kanagawa.nvim" },
   {
     "folke/tokyonight.nvim",
     lazy = false,
@@ -9,5 +10,6 @@ return {
         functions = { italic = true },
       }
     },
-  }
+  },
+  { 'projekt0n/github-nvim-theme' }
 }
