@@ -3,6 +3,7 @@ return {
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   config = function()
     local telescope = require('telescope')
+    telescope.load_extension('flutter')
     telescope.setup({
       pickers = {
         find_files = {
