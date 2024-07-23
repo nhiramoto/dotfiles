@@ -34,3 +34,5 @@ vim.opt.wrapmargin = 0
 vim.opt.wrap = false
 
 vim.opt.exrc = true
+
+vim.opt.shortmess = 'I'

@@ -5,9 +5,12 @@ return {
     local telescope = require('telescope')
     telescope.load_extension('flutter')
     telescope.setup({
+      defaults = {
+        theme = 'ivy',
+      },
       pickers = {
         find_files = {
-          hidden = true
+          hidden = true,
         }
       }
     })

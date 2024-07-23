@@ -34,9 +34,10 @@ return {
           renameFilesWithClasses = 'prompt',
           updateImportsOnRename = true,
         }
+      },
+      dev_log = {
+        open_cmd = 'tabedit',
       }
     }
-    
-    vim.keymap.set('n', '<leader>r', require('telescope').extensions.flutter.commands, { desc = 'Open command Flutter' })
   end
 }

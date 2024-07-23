@@ -1,4 +1,4 @@
-return {
+--[[return {
   'nvimdev/dashboard-nvim',
   event = 'VimEnter',
   dependencies = { {'nvim-tree/nvim-web-devicons'}, {'MaximilianLloyd/ascii.nvim', dependencies = {'MunifTanjim/nui.nvim'} } },
@@ -11,4 +11,5 @@ return {
       }
     }
   end,
-}
+}--]]
+return {}
