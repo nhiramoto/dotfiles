@@ -5,6 +5,8 @@ end
 
 -- Tabs/Buffers
 keyset('n', '<leader>tc', '<cmd>tabe<cr>', opts('Nova aba.'))
+keyset('n', '<leader>tn', '<cmd>tabn<cr>', opts('Próxima aba.'))
+keyset('n', '<leader>tn', '<cmd>tabp<cr>', opts('Aba anterior.'))
 keyset('n', '<leader>bn', '<cmd>bn<cr>', opts('Próximo buffer.'))
 keyset('n', '<leader>bp', '<cmd>bp<cr>', opts('Buffer anterior'))
 keyset('n', '<leader>bd', '<cmd>bd<cr>', opts('Deletar buffer.'))
