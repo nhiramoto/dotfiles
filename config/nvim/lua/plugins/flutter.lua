@@ -37,6 +37,22 @@ return {
       },
       dev_log = {
         open_cmd = 'tabedit',
+      },
+      debugger = {
+        enabled = true,
+        register_configurations = function(paths)
+          local dap = require('dap')
+          local flutterExec = vim.fn.resolve(vim.fn.exepath('flutter'))
+          dap.adapters.dart = {
+            type = 'executable',
+            command = vim.fn.exepath('cmd'),
+            args = { '/c', flutterExec, 'debug_adapter' },
+            options = {
+              detached = false,
+            },
+          }
+          dap.configurations.dart = {}
+        end
       }
     }
   end

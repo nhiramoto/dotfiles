@@ -36,7 +36,7 @@ keyset('n', 'gd', builtin.lsp_definitions, opts('[Telescope] Ir para definição
 keyset('n', 'gi', builtin.lsp_implementations, opts('[Telescope] Ir/Listar implementações.'))
 keyset('n', '<leader>ts', builtin.git_status, opts('[Telescope] Listar status do git.'))
 keyset('n', '<leader>fr', extensions.flutter.commands, opts('[Telescope] Listar comandos Flutter.'))
-keyset('n', '<C-r>', builtin.jumplist, opts('[Telescope] Listar jumplist.'))
+keyset('n', '<leader>tj', builtin.jumplist, opts('[Telescope] Listar jumplist.'))
 keyset('n', '<leader>tr', builtin.registers, opts('[Telescope] Listar registros.'))
 
 -- LSP
@@ -53,11 +53,26 @@ keyset('n', '<leader>.', '<cmd>OverseerRun<cr>', opts('[Overseer] Executar taref
 
 -- Nvim DAP
 local dap = require('dap')
+local widgets = require('dap.ui.widgets')
 keyset('n', '<leader>db', dap.toggle_breakpoint, opts('[dap] Alternar breakpoint.'))
-keyset('n', '<leader>dc', dap.continue, opts('[dap] Continuar.'))
-keyset('n', '<leader>do', dap.step_over, opts('[dap] Step Over.'))
-keyset('n', '<leader>di', dap.step_into, opts('[dap] Step Into.'))
+keyset('n', '<leader>dx', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+keyset('n', '<F5>', dap.continue, opts('[dap] Continuar.'))
+keyset('n', '<F10>', dap.step_over, opts('[dap] Step Over.'))
+keyset('n', '<F11>', dap.step_into, opts('[dap] Step Into.'))
+keyset('n', '<F12>', dap.step_out, opts('[dap] Step Into.'))
 keyset('n', '<leader>dr', dap.repl.open, opts('[dap] Repl open.'))
+keyset({'n', 'v'}, '<leader>dh', function()
+  widgets.hover()
+end, opts('[dap] Widgets hover.'))
+keyset({'n', 'v'}, '<leader>dp', function()
+  widgets.preview()
+end, opts('[dap] Preview.'))
+keyset('n', '<leader>df', function()
+  widgets.centered_float(widgets.frames)
+end, opts('[dap] Frames.'))
+keyset('n', '<leader>ds', function()
+  widgets.centered_float(widgets.scopes)
+end, opts('[dap] Scopes.'))
 
 -- Hover
 local hover = require('hover')
@@ -65,3 +80,16 @@ keyset("n", "K", hover.hover, {desc = "hover.nvim"})
 keyset("n", "gK", hover.hover_select, {desc = "hover.nvim (select)"})
 keyset("n", "<C-p>", function() hover.hover_switch("previous") end, {desc = "hover.nvim (previous source)"})
 keyset("n", "<C-n>", function() hover.hover_switch("next") end, {desc = "hover.nvim (next source)"})
+
+-- LuaSnip
+local ls = require("luasnip")
+
+keyset({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
+keyset({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
+keyset({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
+
+keyset({"i", "s"}, "<C-E>", function()
+	if ls.choice_active() then
+		ls.change_choice(1)
+	end
+end, {silent = true})
